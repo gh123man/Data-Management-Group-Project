@@ -56,4 +56,9 @@ public class Exhibit extends Table {
         if (mCAnimalCapacity) changelist.put(ANIMAL_CAPACITY, mAnimalCapacity);
         return changelist;
     }
+
+    @Override
+    protected boolean isNew() {
+        return mId == null;
+    }
 }

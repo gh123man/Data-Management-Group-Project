@@ -83,4 +83,9 @@ public class Person extends Table {
         if (mCAddressId) changelist.put(ADDRESS_ID, mAddressId);
         return changelist;
     }
+
+    @Override
+    protected boolean isNew() {
+        return mId == null;
+    }
 }

@@ -9,4 +9,5 @@ public abstract class Table {
 
     public abstract String getTableName();
     protected abstract Map<String, Object> getChanged();
+    protected abstract boolean isNew();
 }

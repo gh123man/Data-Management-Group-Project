@@ -96,4 +96,9 @@ public class Address extends Table {
         if (mCZipCode) changelist.put(ZIP_CODE, mZipCode);
         return changelist;
     }
+
+    @Override
+    protected boolean isNew() {
+        return mId == null;
+    }
 }

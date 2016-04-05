@@ -66,4 +66,9 @@ public class Employee extends Table {
         if (mCJob) changelist.put(JOB, mJob);
         return changelist;
     }
+
+    @Override
+    protected boolean isNew() {
+        return mId == null;
+    }
 }

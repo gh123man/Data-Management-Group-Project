@@ -50,4 +50,9 @@ public class JobType extends Table {
         return changelist;
     }
 
+    @Override
+    protected boolean isNew() {
+        return mId == null;
+    }
+
 }

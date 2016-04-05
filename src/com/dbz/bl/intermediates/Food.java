@@ -62,4 +62,9 @@ public class Food extends Table {
         if (mCUnitCost) changelist.put(UNIT_COST, mUnitCost);
         return changelist;
     }
+
+    @Override
+    protected boolean isNew() {
+        return mId == null;
+    }
 }

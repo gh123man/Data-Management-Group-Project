@@ -49,4 +49,9 @@ public class Location extends Table {
         if (mCName) changelist.put(NAME, mName);
         return changelist;
     }
+
+    @Override
+    protected boolean isNew() {
+        return mId == null;
+    }
 }
