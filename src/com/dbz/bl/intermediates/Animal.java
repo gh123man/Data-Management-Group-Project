@@ -3,19 +3,22 @@ package com.dbz.bl.intermediates;
 import com.sun.org.apache.xerces.internal.impl.dv.xs.AbstractDateTimeDV;
 
 import javax.print.attribute.standard.MediaSize;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by brian on 4/5/16.
  */
-public class Animal extends Table {
+public class Animal implements UpdatableTable {
 
     public static final String NAME         = "Name";
     public static final String ANIMAL_CLASS = "AnimalClassID";
     public static final String EXHIBIT_ID   = "ExhibitID";
     public static final String GENDER       = "Gender";
     public static final String AGE          = "Age";
+    public static final String[] columnNames = new String[] { NAME, ANIMAL_CLASS, EXHIBIT_ID, GENDER, AGE };
 
     public enum Gender {
         Male,
@@ -88,7 +91,12 @@ public class Animal extends Table {
     }
 
     @Override
-    protected Map<String, Object> getChanged() {
+    public List<String> getColumnNames() {
+        return Arrays.asList(columnNames);
+    }
+
+    @Override
+    public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCName) changelist.put(NAME, mName);
         if (mCAnimalClassId) changelist.put(ANIMAL_CLASS, mAnimalClassId);
@@ -99,7 +107,7 @@ public class Animal extends Table {
     }
 
     @Override
-    protected boolean isNew() {
+    public boolean isNew() {
         return mId == null;
     }
 }

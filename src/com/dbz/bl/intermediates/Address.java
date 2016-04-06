@@ -1,18 +1,21 @@
 package com.dbz.bl.intermediates;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by brian on 4/4/16.
  */
-public class Address extends Table {
+public class Address implements UpdatableTable {
 
     public static final String STREET_1 = "Street1";
     public static final String STREET_2 = "Street2";
     public static final String CITY     = "City";
     public static final String STATE    = "State";
     public static final String ZIP_CODE = "ZipCOde";
+    public static final String[] columnNames = new String[] { STREET_1, STREET_2, CITY, STATE, ZIP_CODE };
 
     private Integer mId;
     private String mStreet1, mStreet2, mCity, mState, mZipCode;
@@ -87,7 +90,12 @@ public class Address extends Table {
     }
 
     @Override
-    protected Map<String, Object> getChanged() {
+    public List<String> getColumnNames() {
+        return Arrays.asList(columnNames);
+    }
+
+    @Override
+    public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCStreet1) changelist.put(STREET_1, mStreet1);
         if (mCStreet2) changelist.put(STREET_2, mStreet2);
@@ -98,7 +106,7 @@ public class Address extends Table {
     }
 
     @Override
-    protected boolean isNew() {
+    public boolean isNew() {
         return mId == null;
     }
 }

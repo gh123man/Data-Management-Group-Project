@@ -1,33 +1,36 @@
 package com.dbz.bl.intermediates;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by brian on 4/4/16.
  */
-public class Membership extends Table {
+public class Membership implements UpdatableTable {
 
     public static final String PERSON_ID       = "PersonID";
-    public static final String EXPERATION_DATE = "ExpirationDate";
+    public static final String EXPIRATION_DATE = "ExpirationDate";
+    public static final String[] columnNames = new String[] { PERSON_ID, EXPIRATION_DATE };
 
     private Integer mId;
-    private Date mExperationDate;
+    private Date mExpirationDate;
     private Integer mPersonId;
 
     private boolean mCPersonId, mCExperationDate;
 
     public Membership(Integer personId, Date date) {
         mPersonId = personId;
-        mExperationDate = date;
+        mExpirationDate = date;
         mCExperationDate = mCPersonId = false;
     }
 
     protected Membership(Integer id, Integer personId, Date date) {
         mId = id;
         mPersonId = personId;
-        mExperationDate = date;
+        mExpirationDate = date;
         mCExperationDate = mCPersonId = false;
     }
 
@@ -38,7 +41,7 @@ public class Membership extends Table {
         return mPersonId;
     }
     public Date getExperationDate() {
-        return mExperationDate;
+        return mExpirationDate;
     }
 
 
@@ -47,7 +50,7 @@ public class Membership extends Table {
         mCPersonId = true;
     }
     public void setDate(Date v) {
-        mExperationDate = v;
+        mExpirationDate = v;
         mCExperationDate = true;
     }
 
@@ -57,15 +60,20 @@ public class Membership extends Table {
     }
 
     @Override
-    protected Map<String, Object> getChanged() {
+    public List<String> getColumnNames() {
+        return Arrays.asList(columnNames);
+    }
+
+    @Override
+    public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCPersonId) changelist.put(PERSON_ID, mPersonId);
-        if (mCExperationDate) changelist.put(EXPERATION_DATE, mExperationDate);
+        if (mCExperationDate) changelist.put(EXPIRATION_DATE, mExpirationDate);
         return changelist;
     }
 
     @Override
-    protected boolean isNew() {
+    public boolean isNew() {
         return mId == null;
     }
 

@@ -1,13 +1,13 @@
 package com.dbz.bl.intermediates;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by brian on 4/4/16.
  */
-public abstract class Table {
+public interface Table {
 
-    public abstract String getTableName();
-    protected abstract Map<String, Object> getChanged();
-    protected abstract boolean isNew();
+    public String getTableName();
+    public List<String> getColumnNames();
 }

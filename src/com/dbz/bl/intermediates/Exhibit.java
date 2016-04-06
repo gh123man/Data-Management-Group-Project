@@ -1,15 +1,18 @@
 package com.dbz.bl.intermediates;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by brian on 4/4/16.
  */
-public class Exhibit extends Table {
+public class Exhibit implements UpdatableTable {
 
     public static final String LOCATION        = "Location";
     public static final String ANIMAL_CAPACITY = "AnimalCapacity";
+    public static final String[] columnNames = new String[] { LOCATION, ANIMAL_CAPACITY };
 
     private Integer mId;
     public Integer mLocation, mAnimalCapacity;
@@ -50,7 +53,12 @@ public class Exhibit extends Table {
     }
 
     @Override
-    protected Map<String, Object> getChanged() {
+    public List<String> getColumnNames() {
+        return Arrays.asList(columnNames);
+    }
+
+    @Override
+    public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCLocation) changelist.put(LOCATION, mLocation);
         if (mCAnimalCapacity) changelist.put(ANIMAL_CAPACITY, mAnimalCapacity);
@@ -58,7 +66,7 @@ public class Exhibit extends Table {
     }
 
     @Override
-    protected boolean isNew() {
+    public boolean isNew() {
         return mId == null;
     }
 }
