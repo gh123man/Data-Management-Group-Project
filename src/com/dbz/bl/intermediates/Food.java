@@ -23,7 +23,7 @@ public class Food implements UpdatableTable {
     public Food(String name, Float unitCost) {
         mName = name;
         mUnitCost = unitCost;
-        mCName = mCUnitCost = false;
+        mCName = mCUnitCost = true;
     }
 
     protected Food(Integer id, String name, Float unitCost) {
@@ -74,5 +74,10 @@ public class Food implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }

@@ -27,7 +27,7 @@ public class EmployeeExhibit implements UpdatableTable {
         mIsNew = false;
         mEmployeeId = employeeId;
         mExhibitId = exhibitId;
-        mCEmployeeId = mCExhibitId = false;
+        mCEmployeeId = mCExhibitId = true;
     }
 
     private EmployeeExhibit setNew(boolean isNew) {
@@ -72,5 +72,10 @@ public class EmployeeExhibit implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mIsNew;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return EMPLOYEE_ID + " = " + mEmployeeId + " and " + EXHIBIT_ID + " = " + mExhibitId;
     }
 }

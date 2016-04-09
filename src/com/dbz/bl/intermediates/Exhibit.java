@@ -21,7 +21,7 @@ public class Exhibit implements UpdatableTable {
     public Exhibit(Integer location, Integer animalCap) {
         mLocation = location;
         mAnimalCapacity = animalCap;
-        mCLocation = mCAnimalCapacity = false;
+        mCLocation = mCAnimalCapacity = true;
     }
 
     protected Exhibit(Integer id, Integer location, Integer animalCap) {
@@ -68,5 +68,10 @@ public class Exhibit implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }

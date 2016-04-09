@@ -27,7 +27,7 @@ public class Person implements UpdatableTable {
         mMiddleInitial = middleI;
         mLastName = lname;
         mAddressId = addressId;
-        mCFirstName = mCMiddleInitial = mCLastName = mCAddressId = false;
+        mCFirstName = mCMiddleInitial = mCLastName = mCAddressId = true;
     }
 
     protected Person(Integer id, String fname, String middleI, String lname, Integer addressId) {
@@ -96,5 +96,10 @@ public class Person implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }

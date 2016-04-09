@@ -36,7 +36,7 @@ public class Animal implements UpdatableTable {
         mExhibitId = exhibitId;
         mGender = gender;
         mAge = age;
-        mCName = mCGender = mCAnimalClassId = mCExhibitId = mCAge = false;
+        mCName = mCGender = mCAnimalClassId = mCExhibitId = mCAge = true;
     }
 
     protected Animal(Integer id, String name, Integer animalClass, Integer exhibitId, String gender, Integer age) {
@@ -109,5 +109,10 @@ public class Animal implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }

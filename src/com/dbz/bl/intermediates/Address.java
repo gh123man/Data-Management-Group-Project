@@ -27,7 +27,7 @@ public class Address implements UpdatableTable {
         mCity = city;
         mState = state;
         mZipCode = zipCode;
-        mCStreet1 = mCStreet2 = mCCity = mCState = mCZipCode = false;
+        mCStreet1 = mCStreet2 = mCCity = mCState = mCZipCode = true;
     }
 
     protected Address(Integer id, String street1, String street2, String city, String state, String zipCode) {
@@ -108,5 +108,10 @@ public class Address implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }

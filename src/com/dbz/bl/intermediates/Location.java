@@ -20,7 +20,7 @@ public class Location implements UpdatableTable {
 
     public Location(String name) {
         mName = name;
-        mCName = false;
+        mCName = true;
     }
 
     protected Location(Integer id, String name) {
@@ -61,5 +61,10 @@ public class Location implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }

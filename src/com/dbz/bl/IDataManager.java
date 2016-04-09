@@ -12,18 +12,22 @@ import java.util.List;
 public interface IDataManager {
 
     interface CommitEventHandler {
-        void onCommit();
+        void onCommit(UpdatableTable query);
     }
 
-    interface GetEventHandler {
-        void onGet(List<Table> results);
+    interface ExecEventHandler {
+        void onExec(Query query, List<Table> results);
     }
 
-    interface InvalidRequestHandler {
-        void onError(DataManagerBackend.InvalidRequestException  e);
+    interface InvalidCommitHandler {
+        void onError(UpdatableTable query, Exception e);
     }
 
-    void commit(final UpdatableTable table, final CommitEventHandler handler, final InvalidRequestHandler errorHandler);
+    interface InvalidExecHandler {
+        void onError(Query query, Exception e);
+    }
 
-    void exec(final Query query, final GetEventHandler handler, final InvalidRequestHandler errorHandler);
+    void commit(final UpdatableTable table, final CommitEventHandler handler, final InvalidCommitHandler errorHandler);
+
+    void exec(final Query query, final ExecEventHandler handler, final InvalidExecHandler errorHandler);
 }

@@ -22,7 +22,7 @@ public class Employee implements UpdatableTable {
         mPersonId = personId;
         mSalary = salary;
         mJob = job;
-        mCPersonId = mCSalary = mCJob = false;
+        mCPersonId = mCSalary = mCJob = true;
     }
 
     protected Employee(Integer id, Integer personId, Integer salary, Integer job) {
@@ -78,5 +78,10 @@ public class Employee implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }

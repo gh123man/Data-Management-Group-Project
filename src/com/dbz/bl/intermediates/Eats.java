@@ -10,12 +10,12 @@ import java.util.Map;
  */
 public class Eats implements UpdatableTable {
 
-    public static final String EMPLOYEE_ID = "AnimalID";
-    public static final String EXHIBIT_ID  = "FoodID";
-    public static final String[] columnNames = new String[] { EMPLOYEE_ID, EXHIBIT_ID };
+    public static final String ANIMAL_ID = "AnimalID";
+    public static final String FOOD_ID   = "FoodID";
+    public static final String[] columnNames = new String[] { ANIMAL_ID, FOOD_ID };
 
-    public Integer mAnimalId, mExhibitId;
-    private boolean mCAnimalId, mCExhibitId;
+    public Integer mAnimalId, mFoodId;
+    private boolean mCAnimalId, mCFoodId;
     private boolean mIsNew;
 
     public static Eats makeNew(Integer animalId, Integer exhibitId) {
@@ -25,12 +25,13 @@ public class Eats implements UpdatableTable {
     public Eats(Integer animalId, Integer exhibitId) {
         mIsNew = false;
         mAnimalId = animalId;
-        mExhibitId = exhibitId;
-        mCAnimalId = mCExhibitId = false;
+        mFoodId = exhibitId;
+        mCAnimalId = mCFoodId = false;
     }
 
     private Eats setNew(boolean isNew) {
         mIsNew = isNew;
+        mCAnimalId = mCFoodId = true;
         return this;
     }
 
@@ -38,7 +39,7 @@ public class Eats implements UpdatableTable {
         return mAnimalId;
     }
     public Integer getExhibitId() {
-        return mExhibitId;
+        return mFoodId;
     }
 
     public void setAnimalId(Integer v) {
@@ -46,8 +47,8 @@ public class Eats implements UpdatableTable {
         mCAnimalId = true;
     }
     public void setExhibitId(Integer v) {
-        mExhibitId = v;
-        mCExhibitId = true;
+        mFoodId = v;
+        mCFoodId = true;
     }
 
     @Override
@@ -63,13 +64,18 @@ public class Eats implements UpdatableTable {
     @Override
     public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
-        if (mCAnimalId) changelist.put(EMPLOYEE_ID, mAnimalId);
-        if (mCExhibitId) changelist.put(EXHIBIT_ID, mExhibitId);
+        if (mCAnimalId) changelist.put(ANIMAL_ID, mAnimalId);
+        if (mCFoodId) changelist.put(FOOD_ID, mFoodId);
         return changelist;
     }
 
     @Override
     public boolean isNew() {
         return mIsNew;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return ANIMAL_ID + " = " + mAnimalId + " and " + FOOD_ID + " = " + mFoodId;
     }
 }

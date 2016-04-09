@@ -24,7 +24,7 @@ public class Membership implements UpdatableTable {
     public Membership(Integer personId, Date date) {
         mPersonId = personId;
         mExpirationDate = date;
-        mCExperationDate = mCPersonId = false;
+        mCExperationDate = mCPersonId = true;
     }
 
     protected Membership(Integer id, Integer personId, Date date) {
@@ -75,6 +75,11 @@ public class Membership implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 
 }

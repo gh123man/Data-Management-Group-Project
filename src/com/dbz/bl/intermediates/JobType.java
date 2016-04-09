@@ -20,7 +20,7 @@ public class JobType implements UpdatableTable {
 
     public JobType(String name) {
         mName = name;
-        mCName = false;
+        mCName = true;
     }
 
     protected JobType(Integer id, String name) {
@@ -61,6 +61,11 @@ public class JobType implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 
 }

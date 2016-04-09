@@ -20,7 +20,7 @@ public class AnimalClass implements UpdatableTable {
 
     public AnimalClass(String name) {
         mName = name;
-        mCName = false;
+        mCName = true;
     }
 
     protected AnimalClass(Integer id, String name) {
@@ -61,5 +61,10 @@ public class AnimalClass implements UpdatableTable {
     @Override
     public boolean isNew() {
         return mId == null;
+    }
+
+    @Override
+    public String getInsertCond() {
+        return "ID = " + mId;
     }
 }
