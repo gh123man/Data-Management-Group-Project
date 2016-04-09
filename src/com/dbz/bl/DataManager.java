@@ -3,6 +3,8 @@ package com.dbz.bl;
 import com.dbz.bl.intermediates.UpdatableTable;
 import com.dbz.bl.query.Query;
 
+import java.sql.Connection;
+
 /**
  * Created by brian on 4/6/16.
  */
@@ -10,7 +12,7 @@ public class DataManager implements IDataManager {
 
     private final DataManagerBackend mDataManagerBackend;
 
-    public DataManager(ConnectionManager conn) {
+    public DataManager(Connection conn) {
         mDataManagerBackend = new DataManagerBackend(conn);
     }
 

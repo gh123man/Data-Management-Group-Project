@@ -4,18 +4,21 @@ import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.UpdatableTable;
 import com.dbz.bl.query.Query;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 /**
  * Created by brian on 4/5/16.
  */
 public class DataManagerBackend {
-    private final ConnectionManager mConn;
+    private final Connection mConn;
 
-    public DataManagerBackend(ConnectionManager conn) {
+    public DataManagerBackend(Connection conn) {
         if (conn == null) {
-            throw new IllegalArgumentException("ConnectionManager must not be null.");
+            throw new IllegalArgumentException("Connection must not be null.");
         }
         mConn = conn;
     }
@@ -27,7 +30,6 @@ public class DataManagerBackend {
      * @param table
      */
     public void commit(UpdatableTable table) throws InvalidRequestException {
-        // TODO Convert to queries and execute
     }
 
     /**
@@ -39,11 +41,23 @@ public class DataManagerBackend {
     public List<Table> exec(Query query) throws InvalidRequestException {
         // TODO
         try {
-            mConn.executeQuery(query);
+            executeQuery(query);
         } catch (SQLException e) {
             throw new InvalidRequestException(query);
         }
         return null;
+    }
+
+    // TODO Handle stored procedures
+    private ResultSet executeQuery(Query query) throws SQLException {
+        ResultSet rs = null;
+        try (Statement stmt = mConn.createStatement()) {
+            if ( stmt.execute(query.getQuery()) ) {
+                rs = stmt.getResultSet();
+            }
+            stmt.close();
+        }
+        return rs;
     }
 
     // We could just throw the SQL exception instead of using this.
@@ -52,5 +66,13 @@ public class DataManagerBackend {
         public InvalidRequestException(Query query) {
             super(String.format(query.getQuery()));
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        String queryStr = "CREATE TABLE IF NOT EXISTS Person( ID INT PRIMARY KEY AUTO_INCREMENT, FirstName VARCHAR(128) NOT NULL, MiddleInitial VARCHAR(1) NOT NULL, LastName VARCHAR(128) NOT NULL);";
+        Connection conn = ConnectionProvider.getConnection();
+        DataManagerBackend mgr = new DataManagerBackend(conn);
+        mgr.executeQuery(new Query(queryStr));
+        conn.close();
     }
 }

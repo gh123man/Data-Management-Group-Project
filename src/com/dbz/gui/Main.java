@@ -1,7 +1,6 @@
 package com.dbz.gui;
 
 import com.dbz.bl.DataManager;
-import com.dbz.bl.ConnectionManager;
 import com.dbz.bl.ConnectionProvider;
 
 import javax.swing.*;
@@ -24,7 +23,7 @@ public class Main
     public static void main(String[] args)
     {
         try {
-            adm = new DataManager(new ConnectionManager(ConnectionProvider.getConnection()));
+            adm = new DataManager(ConnectionProvider.getConnection());
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(1);
