@@ -20,7 +20,7 @@ public class CustomerPanel extends JPanel
 {
     // GUI components
     private static JButton getMailingList = new JButton("Get Mailing List");
-    private static JScrollPane dataview = new JScrollPane();
+    private static JScrollPane dataviewpane;
     private static JTable mailinglist;
 
     // DB components
@@ -75,9 +75,9 @@ public class CustomerPanel extends JPanel
             tm.addColumn(s);
 
         mailinglist = new JTable(tm);
-        dataview = new JScrollPane(mailinglist);
+        dataviewpane = new JScrollPane(mailinglist);
 
-        view.add(dataview);
+        view.add(dataviewpane);
         add(view, BorderLayout.SOUTH);
     }
 }
