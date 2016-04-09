@@ -1,7 +1,6 @@
 package com.dbz.gui;
 
-import com.dbz.bl.AsyncDataManager;
-import com.dbz.bl.query.Query;
+import com.dbz.bl.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +12,9 @@ public class ZooManagementPanel extends JPanel
     private static JButton getExhibitCapacities = new JButton("Get Exhibit Capacities");
     private static JButton getExhibitAvailability = new JButton("Get Exhibit Availability");
     private static JButton getExpenseBreakdown = new JButton("Get Expense Breakdown");
-    private final AsyncDataManager adm;
+    private final DataManager adm;
 
-    public ZooManagementPanel(AsyncDataManager adm)
+    public ZooManagementPanel(DataManager adm)
     {
         getExhibitCapacities.addActionListener(new ActionListener() {
             @Override

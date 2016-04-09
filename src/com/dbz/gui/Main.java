@@ -1,18 +1,16 @@
 package com.dbz.gui;
 
-import com.dbz.bl.AsyncDataManager;
+import com.dbz.bl.DataManager;
 import com.dbz.bl.ConnectionManager;
 import com.dbz.bl.ConnectionProvider;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.sql.SQLException;
 
 public class Main
 {
-    private static AsyncDataManager adm;
+    private static DataManager adm;
 
     private static JFrame frame = new JFrame("DBZ");
     private static JPanel mainPanel = new JPanel();
@@ -26,7 +24,7 @@ public class Main
     public static void main(String[] args)
     {
         try {
-            adm = new AsyncDataManager(new ConnectionManager(ConnectionProvider.getConnection()));
+            adm = new DataManager(new ConnectionManager(ConnectionProvider.getConnection()));
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(1);

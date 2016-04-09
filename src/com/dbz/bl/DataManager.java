@@ -1,59 +1,45 @@
 package com.dbz.bl;
 
-import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.UpdatableTable;
 import com.dbz.bl.query.Query;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-
 /**
- * Created by brian on 4/5/16.
+ * Created by brian on 4/6/16.
  */
-public class DataManager {
-    private final ConnectionManager mConn;
+public class DataManager implements IDataManager {
+
+    private final DataManagerBackend mDataManagerBackend;
 
     public DataManager(ConnectionManager conn) {
-        if (conn == null) {
-            throw new IllegalArgumentException("ConnectionManager must not be null.");
-        }
-        mConn = conn;
+        mDataManagerBackend = new DataManagerBackend(conn);
     }
 
-    /**
-     * Takes a table instance
-     *  - If the table instance exists, update changed fields
-     *  - If the table instance is new, insert the data
-     * @param table
-     */
-    public void commit(UpdatableTable table) throws InvalidRequestException {
-        // TODO Convert to queries and execute
+    public DataManager(DataManagerBackend mgnr) {
+        if (mgnr == null) {
+            throw new IllegalArgumentException("DataManagerBackend must not be null.");
+        }
+        mDataManagerBackend = mgnr;
     }
 
-    /**
-     * Takes a query instance
-     *  - Returns a result set from the query result
-     * @param query
-     * @return
-     */
-    public List<Table> get(Query query) throws InvalidRequestException {
-        // TODO
-        try {
-            mConn.executeQuery(query);
-        } catch (SQLException e) {
-            throw new InvalidRequestException(query);
-        }
-        return null;
+    public void commit(final UpdatableTable table, final CommitEventHandler handler, final InvalidRequestHandler errorHandler) {
+        new Thread(() -> {
+            try {
+                mDataManagerBackend.commit(table);
+                handler.onCommit();
+            } catch (DataManagerBackend.InvalidRequestException e) {
+                errorHandler.onError(e);
+            }
+        }).start();
     }
 
-    // We could just throw the SQL exception instead of using this.
-    public static class InvalidRequestException extends Exception {
-        private static final String ERR_FORMAT = String.format("The following query is invalid: [%s]");
-        public InvalidRequestException(Query query) {
-            super(String.format(query.getQuery()));
-        }
+    public void exec(final Query query, final GetEventHandler handler, final InvalidRequestHandler errorHandler)  {
+        new Thread(() -> {
+            try {
+                handler.onGet(mDataManagerBackend.exec(query));
+            } catch (DataManagerBackend.InvalidRequestException e) {
+                errorHandler.onError(e);
+            }
+        }).start();
     }
+
 }

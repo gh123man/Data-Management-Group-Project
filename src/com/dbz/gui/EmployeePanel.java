@@ -1,6 +1,6 @@
 package com.dbz.gui;
 
-import com.dbz.bl.AsyncDataManager;
+import com.dbz.bl.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +12,9 @@ public class EmployeePanel extends JPanel
     private static JButton getEmployeeInfo = new JButton("Get Employee Contact Info");
     private static JButton removeEmployee = new JButton("Remove Employee");
     private static JButton addEmployee = new JButton("Add Employee");
-    private final AsyncDataManager adm;
+    private final DataManager adm;
 
-    public EmployeePanel(AsyncDataManager adm)
+    public EmployeePanel(DataManager adm)
     {
         getEmployeeInfo.addActionListener(new ActionListener() {
             @Override

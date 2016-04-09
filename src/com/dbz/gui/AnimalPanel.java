@@ -1,6 +1,6 @@
 package com.dbz.gui;
 
-import com.dbz.bl.AsyncDataManager;
+import com.dbz.bl.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +14,9 @@ public class AnimalPanel extends JPanel
     private static JButton removeAnimal = new JButton("Remove Animal");
     private static JButton addAnimal = new JButton("Add Animal");
     private static JButton moveAnimal = new JButton("Move Animal");
-    private final AsyncDataManager adm;
+    private final DataManager adm;
 
-    public AnimalPanel(AsyncDataManager adm)
+    public AnimalPanel(DataManager adm)
     {
         getAnimals.addActionListener(new ActionListener() {
             @Override

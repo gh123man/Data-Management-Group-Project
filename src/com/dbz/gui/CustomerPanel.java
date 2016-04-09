@@ -1,6 +1,6 @@
 package com.dbz.gui;
 
-import com.dbz.bl.AsyncDataManager;
+import com.dbz.bl.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +10,9 @@ import java.awt.event.ActionListener;
 public class CustomerPanel extends JPanel
 {
     private static JButton getMailingList = new JButton("Get Mailing List");
-    private final AsyncDataManager adm;
+    private final DataManager adm;
 
-    public CustomerPanel(AsyncDataManager adm)
+    public CustomerPanel(DataManager adm)
     {
         getMailingList.addActionListener(new ActionListener() {
             @Override
