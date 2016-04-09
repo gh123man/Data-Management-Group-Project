@@ -6,6 +6,7 @@ import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.Animal;
 import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.UpdatableTable;
+import com.dbz.bl.query.GetAnimalsByName;
 import com.dbz.bl.query.Query;
 
 import java.sql.SQLException;
@@ -19,7 +20,6 @@ public class DataManagerExample1 implements IDataManager.ExecEventHandler,
         IDataManager.InvalidCommitHandler,
         IDataManager.InvalidExecHandler {
 
-
     /**
      *
      * This example is good for a big class that does lots db operations as
@@ -31,18 +31,29 @@ public class DataManagerExample1 implements IDataManager.ExecEventHandler,
      */
     public void doStuff() throws SQLException {
         DataManager dm = new DataManager(ConnectionProvider.getConnection());
-        Animal animal = new Animal("a", 1, 2, "F", 12);
+        // Create a new Animal
+        Animal animal = new Animal("bob", 1, 2, "F", 12);
+
+        // Add it to the DB
         dm.commit(animal, this, this);
+
+        // Now query it
+        dm.exec(new GetAnimalsByName("bob"), this, this);
+
+
     }
 
     @Override
     public void onCommit(UpdatableTable query) {
-        //handle stuff
+        //handle successful commit
     }
 
     @Override
     public void onExec(Query query, List<Table> results) {
-        //handle stuff
+        // This is an ugly cast. If someone can come up with a clean way
+        // to fix this, go for it. otherwise lets just deal with it.
+        List<Animal> animalsNamedBob = (List<Animal>)(List) results;
+
     }
 
     @Override

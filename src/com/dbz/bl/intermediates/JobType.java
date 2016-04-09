@@ -23,7 +23,9 @@ public class JobType implements UpdatableTable {
         mCName = true;
     }
 
-    protected JobType(Integer id, String name) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  JobType(Integer id, String name) {
         mId = id;
         mName = name;
         mCName = false;

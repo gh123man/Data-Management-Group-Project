@@ -13,6 +13,7 @@ import java.util.Map;
  */
 public class Animal implements UpdatableTable {
 
+    public static final String ID           = "ID";
     public static final String NAME         = "Name";
     public static final String ANIMAL_CLASS = "AnimalClassID";
     public static final String EXHIBIT_ID   = "ExhibitID";
@@ -39,7 +40,9 @@ public class Animal implements UpdatableTable {
         mCName = mCGender = mCAnimalClassId = mCExhibitId = mCAge = true;
     }
 
-    protected Animal(Integer id, String name, Integer animalClass, Integer exhibitId, String gender, Integer age) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public Animal(Integer id, String name, Integer animalClass, Integer exhibitId, String gender, Integer age) {
         mId = id;
         mName = name;
         mAnimalClassId = animalClass;

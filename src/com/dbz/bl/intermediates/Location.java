@@ -23,7 +23,9 @@ public class Location implements UpdatableTable {
         mCName = true;
     }
 
-    protected Location(Integer id, String name) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  Location(Integer id, String name) {
         mId = id;
         mName = name;
         mCName = false;

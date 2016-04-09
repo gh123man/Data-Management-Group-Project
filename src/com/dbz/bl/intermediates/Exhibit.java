@@ -24,7 +24,9 @@ public class Exhibit implements UpdatableTable {
         mCLocation = mCAnimalCapacity = true;
     }
 
-    protected Exhibit(Integer id, Integer location, Integer animalCap) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  Exhibit(Integer id, Integer location, Integer animalCap) {
         mId = id;
         mLocation = location;
         mAnimalCapacity = animalCap;

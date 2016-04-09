@@ -26,7 +26,9 @@ public class Food implements UpdatableTable {
         mCName = mCUnitCost = true;
     }
 
-    protected Food(Integer id, String name, Float unitCost) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  Food(Integer id, String name, Float unitCost) {
         mId = id;
         mName = name;
         mUnitCost = unitCost;

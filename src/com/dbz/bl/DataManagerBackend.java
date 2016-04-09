@@ -41,6 +41,8 @@ public class DataManagerBackend {
             query += "UPDATE " + table.getTableName() + " SET " + paramMapToUpdateString(table.getChanged()) + " WHERE " + table.getInsertCond();
         }
         executeQuery(query);
+        // TODO: make the Insert section populate the ID and return the original object.
+        // This will require some refactoring
     }
 
     /**
@@ -50,13 +52,16 @@ public class DataManagerBackend {
      * @return
      */
     public List<Table> exec(Query query) throws InvalidRequestException {
-        // TODO
-//        try {
-////            executeQuery(query);
-//        } catch (SQLException e) {
-//            throw new InvalidRequestException(query);
-//        }
-        return null;
+        ArrayList<Table> results = new ArrayList<>();
+        try {
+            ResultSet rs = executeQuery(query.getQuery());
+            while (rs.next()) {
+                results.add(query.mapResult(rs));
+            }
+        } catch (SQLException e) {
+            throw new InvalidRequestException(query);
+        }
+        return results;
     }
 
     // TODO Handle stored procedures

@@ -30,7 +30,9 @@ public class Person implements UpdatableTable {
         mCFirstName = mCMiddleInitial = mCLastName = mCAddressId = true;
     }
 
-    protected Person(Integer id, String fname, String middleI, String lname, Integer addressId) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  Person(Integer id, String fname, String middleI, String lname, Integer addressId) {
         mId = id;
         mFirstName = fname;
         mMiddleInitial = middleI;

@@ -25,7 +25,9 @@ public class Employee implements UpdatableTable {
         mCPersonId = mCSalary = mCJob = true;
     }
 
-    protected Employee(Integer id, Integer personId, Integer salary, Integer job) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  Employee(Integer id, Integer personId, Integer salary, Integer job) {
         mId = id;
         mPersonId = personId;
         mSalary = salary;

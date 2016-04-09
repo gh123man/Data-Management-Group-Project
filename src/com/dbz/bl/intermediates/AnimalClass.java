@@ -23,7 +23,9 @@ public class AnimalClass implements UpdatableTable {
         mCName = true;
     }
 
-    protected AnimalClass(Integer id, String name) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  AnimalClass(Integer id, String name) {
         mId = id;
         mName = name;
         mCName = false;

@@ -3,8 +3,10 @@ package com.dbz.examples;
 import com.dbz.bl.ConnectionProvider;
 import com.dbz.bl.DataManager;
 import com.dbz.bl.intermediates.Animal;
+import com.dbz.bl.query.GetAnimalsByName;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by brian on 4/9/16.
@@ -28,6 +30,15 @@ public class DataManagerExample2 {
             // Handle success
         }, (table, e) -> {
             // Handle fail
+        });
+
+
+        dm.exec(new GetAnimalsByName("bob"), (query, results) -> {
+            // This is an ugly cast. If someone can come up with a clean way
+            // to fix this, go for it. otherwise lets just deal with it.
+            List<Animal> animalsNamedBob = (List<Animal>)(List) results;
+        }, (query, e) -> {
+            // Handle error
         });
     }
 

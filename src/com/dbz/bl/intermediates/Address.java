@@ -30,7 +30,9 @@ public class Address implements UpdatableTable {
         mCStreet1 = mCStreet2 = mCCity = mCState = mCZipCode = true;
     }
 
-    protected Address(Integer id, String street1, String street2, String city, String state, String zipCode) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  Address(Integer id, String street1, String street2, String city, String state, String zipCode) {
         mId = id;
         mStreet1 = street1;
         mStreet2 = street2;

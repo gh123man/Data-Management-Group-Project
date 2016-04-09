@@ -27,7 +27,9 @@ public class Membership implements UpdatableTable {
         mCExperationDate = mCPersonId = true;
     }
 
-    protected Membership(Integer id, Integer personId, Date date) {
+    // ONLY FOR BACKEND USE - may need refactoring
+    // Cant be protected due to package structure
+    public  Membership(Integer id, Integer personId, Date date) {
         mId = id;
         mPersonId = personId;
         mExpirationDate = date;
