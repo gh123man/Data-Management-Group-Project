@@ -1,6 +1,6 @@
 package com.dbz.gui;
 
-import com.dbz.bl.DataManager;
+import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.Membership;
 import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.query.Query;
@@ -24,9 +24,9 @@ public class CustomerPanel extends JPanel
     private static JTable mailinglist;
 
     // DB components
-    private final DataManager adm;
+    private final IDataManager adm;
 
-    public CustomerPanel(DataManager adm)
+    public CustomerPanel(IDataManager adm)
     {
         getMailingList.addActionListener(new ActionListener() {
             @Override

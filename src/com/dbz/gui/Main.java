@@ -2,6 +2,7 @@ package com.dbz.gui;
 
 import com.dbz.bl.DataManager;
 import com.dbz.bl.ConnectionProvider;
+import com.dbz.bl.IDataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 
 public class Main
 {
-    private static DataManager adm;
+    private static IDataManager adm;
 
     private static JFrame frame = new JFrame("DBZ");
     private static JPanel mainPanel = new JPanel();

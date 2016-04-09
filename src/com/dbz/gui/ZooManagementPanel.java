@@ -23,9 +23,9 @@ public class ZooManagementPanel extends JPanel
     private static JScrollPane dataviewpane;
     private static JTable mgmtview;
 
-    private final DataManager adm;
+    private final IDataManager adm;
 
-    public ZooManagementPanel(DataManager adm)
+    public ZooManagementPanel(IDataManager adm)
     {
         getCapacitiesAvailability.addActionListener(new ActionListener() {
             @Override
