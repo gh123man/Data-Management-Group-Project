@@ -3,8 +3,8 @@ package com.dbz.gui;
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.Membership;
 import com.dbz.bl.intermediates.Table;
+import com.dbz.bl.query.GetMailingList;
 import com.dbz.bl.query.Query;
-import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +38,7 @@ public class CustomerPanel extends JPanel
                 for (String column : Membership.columnNames)
                     tm.addColumn(column);
 
-                adm.exec(new RawQuery("Select * From Membership"), new ExecEventHandler() {
+                adm.exec(new GetMailingList(), new ExecEventHandler() {
                 @Override
                 public void onExec(Query query, List<Table> results) {
                     List<Membership> membs = (List<Membership>)(List)results ;
