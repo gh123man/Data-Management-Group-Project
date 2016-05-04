@@ -1,6 +1,6 @@
 package com.dbz.bl.query;
 
-import com.dbz.bl.intermediates.Membership;
+import com.dbz.bl.intermediates.RealTable.Membership;
 import com.dbz.bl.intermediates.Table;
 
 import java.sql.ResultSet;

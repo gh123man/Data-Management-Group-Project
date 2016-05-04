@@ -1,4 +1,6 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
+
+import com.dbz.bl.intermediates.UpdatableTable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,31 +10,27 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Food implements UpdatableTable {
+public class Location implements UpdatableTable {
 
     public static final String NAME = "Name";
-    public static final String UNIT_COST = "UnitCost";
-    public static final String[] columnNames = new String[] { NAME, UNIT_COST };
+    public static final String[] columnNames = new String[] { NAME };
 
     private Integer mId;
     private String mName;
-    private Float mUnitCost;
 
-    private boolean mCName, mCUnitCost;
+    private boolean mCName;
 
-    public Food(String name, Float unitCost) {
+    public Location(String name) {
         mName = name;
-        mUnitCost = unitCost;
-        mCName = mCUnitCost = true;
+        mCName = true;
     }
 
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
-    public  Food(Integer id, String name, Float unitCost) {
+    public  Location(Integer id, String name) {
         mId = id;
         mName = name;
-        mUnitCost = unitCost;
-        mCName = mCUnitCost = false;
+        mCName = false;
     }
 
     public Integer getID() {
@@ -41,23 +39,15 @@ public class Food implements UpdatableTable {
     public String getName() {
         return mName;
     }
-    public Float getUnitCost() {
-        return mUnitCost;
-    }
 
     public void setName(String v) {
         mName = v;
         mCName = true;
     }
 
-    public void setUnitCost(Float v) {
-        mUnitCost = v;
-        mCUnitCost = true;
-    }
-
     @Override
     public String getTableName() {
-        return JobType.class.getName();
+        return Location.class.getName();
     }
 
     @Override
@@ -69,7 +59,6 @@ public class Food implements UpdatableTable {
     public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCName) changelist.put(NAME, mName);
-        if (mCUnitCost) changelist.put(UNIT_COST, mUnitCost);
         return changelist;
     }
 

@@ -1,7 +1,7 @@
 package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
-import com.dbz.bl.intermediates.Membership;
+import com.dbz.bl.intermediates.RealTable.Membership;
 import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.query.GetMailingList;
 import com.dbz.bl.query.Query;

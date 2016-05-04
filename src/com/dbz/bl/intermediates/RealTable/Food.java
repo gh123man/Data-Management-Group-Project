@@ -1,4 +1,6 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
+
+import com.dbz.bl.intermediates.UpdatableTable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,27 +10,31 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Location implements UpdatableTable {
+public class Food implements UpdatableTable {
 
     public static final String NAME = "Name";
-    public static final String[] columnNames = new String[] { NAME };
+    public static final String UNIT_COST = "UnitCost";
+    public static final String[] columnNames = new String[] { NAME, UNIT_COST };
 
     private Integer mId;
     private String mName;
+    private Float mUnitCost;
 
-    private boolean mCName;
+    private boolean mCName, mCUnitCost;
 
-    public Location(String name) {
+    public Food(String name, Float unitCost) {
         mName = name;
-        mCName = true;
+        mUnitCost = unitCost;
+        mCName = mCUnitCost = true;
     }
 
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
-    public  Location(Integer id, String name) {
+    public  Food(Integer id, String name, Float unitCost) {
         mId = id;
         mName = name;
-        mCName = false;
+        mUnitCost = unitCost;
+        mCName = mCUnitCost = false;
     }
 
     public Integer getID() {
@@ -37,15 +43,23 @@ public class Location implements UpdatableTable {
     public String getName() {
         return mName;
     }
+    public Float getUnitCost() {
+        return mUnitCost;
+    }
 
     public void setName(String v) {
         mName = v;
         mCName = true;
     }
 
+    public void setUnitCost(Float v) {
+        mUnitCost = v;
+        mCUnitCost = true;
+    }
+
     @Override
     public String getTableName() {
-        return Location.class.getName();
+        return JobType.class.getName();
     }
 
     @Override
@@ -57,6 +71,7 @@ public class Location implements UpdatableTable {
     public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCName) changelist.put(NAME, mName);
+        if (mCUnitCost) changelist.put(UNIT_COST, mUnitCost);
         return changelist;
     }
 

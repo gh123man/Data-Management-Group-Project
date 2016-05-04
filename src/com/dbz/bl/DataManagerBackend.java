@@ -55,12 +55,13 @@ public class DataManagerBackend {
         ArrayList<Table> results = new ArrayList<>();
         try {
             ResultSet rs = executeQuery(query.getQuery());
-            if (rs != null) {
+            if (rs != null && !rs.isClosed()) {
                 while (rs.next()) {
                     results.add(query.mapResult(rs));
                 }
             }
         } catch (SQLException e) {
+            e.printStackTrace(); //Very helpful for debugging
             throw new InvalidRequestException(query);
         }
         return results;

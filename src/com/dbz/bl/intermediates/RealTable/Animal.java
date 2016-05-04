@@ -1,8 +1,7 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.AbstractDateTimeDV;
+import com.dbz.bl.intermediates.UpdatableTable;
 
-import javax.print.attribute.standard.MediaSize;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

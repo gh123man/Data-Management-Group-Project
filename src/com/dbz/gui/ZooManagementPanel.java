@@ -1,19 +1,18 @@
 package com.dbz.gui;
 
-import com.dbz.bl.DataManager;
 import com.dbz.bl.IDataManager;
-import com.dbz.bl.intermediates.Exhibit;
+import com.dbz.bl.intermediates.RealTable.Exhibit;
 import com.dbz.bl.intermediates.Table;
+import com.dbz.bl.intermediates.VirtualTable.ExhibitOverview;
+import com.dbz.bl.query.ExhibitOverviewQuery;
 import com.dbz.bl.query.Query;
 import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import java.util.List;
 
 public class ZooManagementPanel extends JPanel
@@ -29,36 +28,21 @@ public class ZooManagementPanel extends JPanel
 
     public ZooManagementPanel(IDataManager adm)
     {
-        getCapacitiesAvailability.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                DefaultTableModel tm = new DefaultTableModel();
-                tm.addColumn("Name");
-                tm.addColumn("Capacity");
-                tm.addColumn("Availability");
+        getCapacitiesAvailability.addActionListener(e -> {
+            DefaultTableModel tm = new DefaultTableModel();
+            tm.addColumn("Name");
+            tm.addColumn("Capacity");
+            tm.addColumn("Availability");
 
-//                TODO: Query here needs to get all exhibits capacities, names, and the number of animals assigned
-//                to each exhibit ID. Query needs to do availability_exhibit - animal_count_assigned_exhibit for
-//                availability.
-                adm.exec(new RawQuery("Select * From Exhibit"), new IDataManager.ExecEventHandler() {
-                    @Override
-                    public void onExec(Query query, List<Table> results) {
-                        List<Exhibit> exhibits = (List<Exhibit>) (List) results;
-                        for (Exhibit exh : exhibits)
-                        {
-                            Object[] obj = {exh.getLocation(), exh.getmAnimalCapacity(), exh.getmAnimalCapacity()};
-                            tm.addRow(obj);
-                        }
-                    }
-                }, new IDataManager.InvalidExecHandler() {
-                    @Override
-                    public void onError(Query query, Exception e) {
-                        System.err.println("Error requesting exhibits");
-                    }
+            adm.exec(new ExhibitOverviewQuery(), (query, results) -> {
+                List<ExhibitOverview> exhibits = (List<ExhibitOverview>) (List) results;
+                exhibits.forEach(ex -> {
+                    Object[] obj = {ex.getName(), ex.getCapacity(), ex.getAnimalCount()};
+                    tm.addRow(obj);
                 });
-                mgmtview.setModel(tm);
-            }
+
+            }, (query, e1) -> System.err.println("Error requesting exhibits"));
+            mgmtview.setModel(tm);
         });
 
         getExpenseBreakdown.addActionListener(new ActionListener() {
