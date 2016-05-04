@@ -5,7 +5,7 @@ import com.dbz.bl.DataManager;
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Animal;
 import com.dbz.bl.intermediates.Table;
-import com.dbz.bl.intermediates.UpdatableTable;
+import com.dbz.bl.intermediates.RealTable.UpdatableTable;
 import com.dbz.bl.query.GetAnimalsByName;
 import com.dbz.bl.query.Query;
 

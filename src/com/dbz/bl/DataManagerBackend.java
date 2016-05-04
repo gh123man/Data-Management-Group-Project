@@ -1,9 +1,8 @@
 package com.dbz.bl;
 
 import com.dbz.bl.intermediates.Table;
-import com.dbz.bl.intermediates.UpdatableTable;
+import com.dbz.bl.intermediates.RealTable.UpdatableTable;
 import com.dbz.bl.query.Query;
-import com.dbz.bl.query.RawQuery;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

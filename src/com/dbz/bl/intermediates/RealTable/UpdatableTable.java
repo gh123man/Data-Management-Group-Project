@@ -1,4 +1,6 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
+
+import com.dbz.bl.intermediates.Table;
 
 import java.util.List;
 import java.util.Map;

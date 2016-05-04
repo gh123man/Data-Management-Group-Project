@@ -1,7 +1,5 @@
 package com.dbz.bl.intermediates.RealTable;
 
-import com.dbz.bl.intermediates.UpdatableTable;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
