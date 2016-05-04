@@ -18,6 +18,8 @@ import java.util.List;
 
 public class ZooManagementPanel extends JPanel
 {
+    public static final String TITLE = "Zoo Management";
+
     private static JButton getCapacitiesAvailability = new JButton("Show Exhibit Capacities/Availability");
     private static JButton getExpenseBreakdown = new JButton("Get Expense Breakdown");
     private static JScrollPane dataviewpane;

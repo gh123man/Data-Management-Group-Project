@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 
 public class EmployeePanel extends JPanel
 {
+    public static final String TITLE = "Employees";
+
     private static JButton getEmployeeInfo = new JButton("Get Employee Contact Info");
     private static JButton removeEmployee = new JButton("Remove Employee");
     private static JButton addEmployee = new JButton("Add Employee");

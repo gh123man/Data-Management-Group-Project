@@ -18,6 +18,8 @@ import static com.dbz.bl.IDataManager.InvalidExecHandler;
 
 public class CustomerPanel extends JPanel
 {
+    public static final String TITLE = "Customers";
+
     // GUI components
     private static JButton getMailingList = new JButton("Get Mailing List");
     private static JScrollPane dataviewpane;

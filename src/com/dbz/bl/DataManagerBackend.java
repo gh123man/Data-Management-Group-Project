@@ -55,8 +55,10 @@ public class DataManagerBackend {
         ArrayList<Table> results = new ArrayList<>();
         try {
             ResultSet rs = executeQuery(query.getQuery());
-            while (rs.next()) {
-                results.add(query.mapResult(rs));
+            if (rs != null) {
+                while (rs.next()) {
+                    results.add(query.mapResult(rs));
+                }
             }
         } catch (SQLException e) {
             throw new InvalidRequestException(query);
