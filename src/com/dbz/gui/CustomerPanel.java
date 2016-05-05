@@ -31,18 +31,19 @@ public class CustomerPanel extends JPanel
                 tm.addColumn(column);
 
             adm.exec(new GetMailingListQuery(), (query, results) -> {
-                List<Membership> membs = (List<Membership>)(List)results ;
-                for (Membership memb : membs)
-                {
+                List<Membership> membs = (List<Membership>)(List) results;
+                for (Membership memb : membs) {
                     Object[] obj = {memb.getPersonId(), memb.getExperationDate()};
                     tm.addRow(obj);
                 }
-            }, (query, e1) -> System.err.println("Error getting mailing list."));
-            mailinglist.setModel(tm);
+                mailinglist.setModel(tm);
+            }, (query, e1) -> {
+                System.err.println("Error getting mailing list.");
+                mailinglist.setModel(tm);
+            });
+
         });
-
         this.adm = adm;
-
 
         setLayout(new BorderLayout());
         JPanel buttons = new JPanel();

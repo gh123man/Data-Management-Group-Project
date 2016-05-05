@@ -13,7 +13,7 @@ public class GetMailingListQuery extends Query {
 
     @Override
     public String getQuery() {
-        return "SELECT " + Membership.PERSON_ID + " " + Membership.EXPIRATION_DATE + " FROM " + Membership.class.getSimpleName();
+        return "SELECT " + Membership.PERSON_ID + ", " + Membership.EXPIRATION_DATE + " FROM " + Membership.class.getSimpleName();
     }
 
     @Override
