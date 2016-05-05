@@ -1,12 +1,10 @@
 package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
-import com.dbz.bl.intermediates.RealTable.Exhibit;
-import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.VirtualTable.ExhibitOverview;
+import com.dbz.bl.intermediates.VirtualTable.Expense;
 import com.dbz.bl.query.ExhibitOverviewQuery;
-import com.dbz.bl.query.Query;
-import com.dbz.bl.query.RawQuery;
+import com.dbz.bl.query.ExpenseBreakDownQuery;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -42,7 +40,6 @@ public class ZooManagementPanel extends JPanel
                     tm.addRow(obj);
                 });
                 mgmtview.setModel(tm);
-
             }, (query, e1) -> {
                 System.err.println("Error requesting exhibits");
                 mgmtview.setModel(tm);
@@ -50,38 +47,22 @@ public class ZooManagementPanel extends JPanel
 
         });
 
-        getExpenseBreakdown.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                DefaultTableModel tm = new DefaultTableModel();
-                tm.addColumn("Cost class");
-                tm.addColumn("$$$");
+        getExpenseBreakdown.addActionListener(e -> {
+            DefaultTableModel tm = new DefaultTableModel();
+            tm.addColumn("Cost class");
+            tm.addColumn("$$$");
 
-                adm.exec(new RawQuery(""), new IDataManager.ExecEventHandler() {
-                    @Override
-                    public void onExec(Query query, List<Table> results) {
-                        /*
-                        List<ExpenseBreakdown> expenses = (List<ExpenseBreakdown>)(List) results;
-                        for (ExpenseBreakdown expense : expenses)
-                        {
-                            Object[] obj =
-                            {
-                                expense.getClass(), // Employee-salary/Food/Etc
-                                expense.getDollarAmount(),
-                            };
-                            tm.addRow(obj);
-                        }
-                        * */
-                    }
-                }, new IDataManager.InvalidExecHandler() {
-                    @Override
-                    public void onError(Query query, Exception e) {
-
-                    }
+            adm.exec(new ExpenseBreakDownQuery(), (query, results) -> {
+                List<Expense> expenses = (List<Expense>)(List) results;
+                expenses.forEach(exp -> {
+                    Object[] obj = { exp.getName(), exp.getAmount() };
+                    tm.addRow(obj);
                 });
-                mgmtview.setModel(tm);;
-            }
+                mgmtview.setModel(tm);
+            }, (query, e1) -> {
+                System.err.println("Error requesting expenses");
+                mgmtview.setModel(tm);
+            });
         });
 
         this.adm = adm;
