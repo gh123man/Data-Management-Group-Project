@@ -53,7 +53,7 @@ public class Eats implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Eats.class.getName();
+        return Eats.class.getSimpleName();
     }
 
     @Override

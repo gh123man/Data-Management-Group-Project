@@ -77,7 +77,7 @@ public class Person implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Person.class.getName();
+        return Person.class.getSimpleName();
     }
 
     @Override

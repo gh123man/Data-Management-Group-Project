@@ -45,7 +45,7 @@ public class Location implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Location.class.getName();
+        return Location.class.getSimpleName();
     }
 
     @Override

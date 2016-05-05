@@ -60,7 +60,7 @@ public class Employee implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Employee.class.getName();
+        return Employee.class.getSimpleName();
     }
 
     @Override

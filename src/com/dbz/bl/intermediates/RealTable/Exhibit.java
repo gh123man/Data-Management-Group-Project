@@ -51,7 +51,7 @@ public class Exhibit implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Exhibit.class.getName();
+        return Exhibit.class.getSimpleName();
     }
 
     @Override

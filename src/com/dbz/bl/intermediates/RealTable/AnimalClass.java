@@ -45,7 +45,7 @@ public class AnimalClass implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return AnimalClass.class.getName();
+        return AnimalClass.class.getSimpleName();
     }
 
     @Override

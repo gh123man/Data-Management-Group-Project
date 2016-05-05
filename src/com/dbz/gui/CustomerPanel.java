@@ -2,19 +2,12 @@ package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Membership;
-import com.dbz.bl.intermediates.Table;
-import com.dbz.bl.query.GetMailingList;
-import com.dbz.bl.query.Query;
+import com.dbz.bl.query.GetMailingListQuery;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
-
-import static com.dbz.bl.IDataManager.ExecEventHandler;
-import static com.dbz.bl.IDataManager.InvalidExecHandler;
 
 public class CustomerPanel extends JPanel
 {
@@ -30,35 +23,22 @@ public class CustomerPanel extends JPanel
 
     public CustomerPanel(IDataManager adm)
     {
-        getMailingList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                /// We'll make new table models each click.
-                DefaultTableModel tm = new DefaultTableModel();
+        getMailingList.addActionListener(e -> {
+            /// We'll make new table models each click.
+            DefaultTableModel tm = new DefaultTableModel();
 
-                for (String column : Membership.columnNames)
-                    tm.addColumn(column);
+            for (String column : Membership.columnNames)
+                tm.addColumn(column);
 
-                adm.exec(new GetMailingList(), new ExecEventHandler() {
-                @Override
-                public void onExec(Query query, List<Table> results) {
-                    List<Membership> membs = (List<Membership>)(List)results ;
-
-                    for (Membership memb : membs)
-                    {
-                        Object[] obj = {memb.getPersonId(), memb.getExperationDate()};
-                        tm.addRow(obj);
-                    }
+            adm.exec(new GetMailingListQuery(), (query, results) -> {
+                List<Membership> membs = (List<Membership>)(List)results ;
+                for (Membership memb : membs)
+                {
+                    Object[] obj = {memb.getPersonId(), memb.getExperationDate()};
+                    tm.addRow(obj);
                 }
-                }, new InvalidExecHandler() {
-                @Override
-                public void onError(Query query, Exception e) {
-                    System.err.println("Error getting mailing list.");
-                }
-                });
-                mailinglist.setModel(tm);
-            }
+            }, (query, e1) -> System.err.println("Error getting mailing list."));
+            mailinglist.setModel(tm);
         });
 
         this.adm = adm;

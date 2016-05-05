@@ -45,7 +45,7 @@ public class JobType implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return JobType.class.getName();
+        return JobType.class.getSimpleName();
     }
 
     @Override

@@ -88,7 +88,7 @@ public class Address implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Address.class.getName();
+        return Address.class.getSimpleName();
     }
 
     @Override

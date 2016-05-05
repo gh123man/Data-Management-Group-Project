@@ -58,7 +58,7 @@ public class Membership implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Membership.class.getName();
+        return Membership.class.getSimpleName();
     }
 
     @Override
