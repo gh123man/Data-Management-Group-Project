@@ -37,12 +37,17 @@ public class ZooManagementPanel extends JPanel
             adm.exec(new ExhibitOverviewQuery(), (query, results) -> {
                 List<ExhibitOverview> exhibits = (List<ExhibitOverview>) (List) results;
                 exhibits.forEach(ex -> {
+                    System.out.println(ex.getName());
                     Object[] obj = {ex.getName(), ex.getCapacity(), ex.getAnimalCount()};
                     tm.addRow(obj);
                 });
+                mgmtview.setModel(tm);
 
-            }, (query, e1) -> System.err.println("Error requesting exhibits"));
-            mgmtview.setModel(tm);
+            }, (query, e1) -> {
+                System.err.println("Error requesting exhibits");
+                mgmtview.setModel(tm);
+            });
+
         });
 
         getExpenseBreakdown.addActionListener(new ActionListener() {

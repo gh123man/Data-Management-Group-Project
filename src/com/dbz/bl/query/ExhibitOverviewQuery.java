@@ -18,12 +18,11 @@ public class ExhibitOverviewQuery extends Query {
                 "FROM Exhibit " +
                 "LEFT JOIN Location " +
                 "ON Exhibit.Location = Location.ID " +
-                "GROUP BY Name, Cap;";
+                "GROUP BY Name, Cap";
     }
 
     @Override
-    public Table mapResult(ResultSet rs) throws SQLException
-    {
+    public Table mapResult(ResultSet rs) throws SQLException {
         return new ExhibitOverview(rs.getString("Name"), rs.getInt("Cap"), rs.getInt("AnimalCount"));
     }
 }

@@ -53,11 +53,15 @@ public class DataManagerBackend {
     public List<Table> exec(Query query) throws InvalidRequestException {
         ArrayList<Table> results = new ArrayList<>();
         try {
-            ResultSet rs = executeQuery(query.getQuery());
-            if (rs != null && !rs.isClosed()) {
-                while (rs.next()) {
-                    results.add(query.mapResult(rs));
+            try (Statement stmt = mConn.createStatement()) {
+                ResultSet rs = stmt.executeQuery(query.getQuery());
+                if (rs != null && !rs.isClosed()) {
+                    while (rs.next()) {
+                        results.add(query.mapResult(rs));
+                    }
                 }
+                stmt.close();
+
             }
         } catch (SQLException e) {
             e.printStackTrace(); //Very helpful for debugging
@@ -66,7 +70,6 @@ public class DataManagerBackend {
         return results;
     }
 
-    // TODO Handle stored procedures
     private ResultSet executeQuery(String query) throws SQLException {
         ResultSet rs = null;
         try (Statement stmt = mConn.createStatement()) {
@@ -106,13 +109,5 @@ public class DataManagerBackend {
         public InvalidRequestException(Query query) {
             super(String.format(query.getQuery()));
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        String queryStr = "CREATE TABLE IF NOT EXISTS Person( ID INT PRIMARY KEY AUTO_INCREMENT, FirstName VARCHAR(128) NOT NULL, MiddleInitial VARCHAR(1) NOT NULL, LastName VARCHAR(128) NOT NULL);";
-        Connection conn = ConnectionProvider.getConnection();
-        DataManagerBackend mgr = new DataManagerBackend(conn);
-        mgr.executeQuery(queryStr);
-        conn.close();
     }
 }
