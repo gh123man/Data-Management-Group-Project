@@ -12,26 +12,28 @@ public class Eats implements UpdatableTable {
 
     public static final String ANIMAL_ID = "AnimalID";
     public static final String FOOD_ID   = "FoodID";
-    public static final String[] columnNames = new String[] { ANIMAL_ID, FOOD_ID };
+    public static final String DAILY_QUANTITY   = "DailyQuantity";
+    public static final String[] columnNames = new String[] { ANIMAL_ID, FOOD_ID, DAILY_QUANTITY };
 
-    public Integer mAnimalId, mFoodId;
-    private boolean mCAnimalId, mCFoodId;
+    public Integer mAnimalId, mFoodId, mDailyQuantity;
+    private boolean mCAnimalId, mCFoodId, mCDailyQuantity;
     private boolean mIsNew;
 
-    public static Eats makeNew(Integer animalId, Integer exhibitId) {
-        return new Eats(animalId, exhibitId).setNew(true);
+    public static Eats makeNew(Integer animalId, Integer exhibitId, Integer dailyQuantity) {
+        return new Eats(animalId, exhibitId, dailyQuantity).setNew(true);
     }
 
-    public Eats(Integer animalId, Integer exhibitId) {
+    public Eats(Integer animalId, Integer exhibitId, Integer dailyQuantity) {
         mIsNew = false;
         mAnimalId = animalId;
         mFoodId = exhibitId;
-        mCAnimalId = mCFoodId = false;
+        mDailyQuantity = dailyQuantity;
+        mCAnimalId = mCFoodId = mCDailyQuantity = false;
     }
 
     private Eats setNew(boolean isNew) {
         mIsNew = isNew;
-        mCAnimalId = mCFoodId = true;
+        mCAnimalId = mCFoodId = mCDailyQuantity = isNew;
         return this;
     }
 
@@ -41,6 +43,7 @@ public class Eats implements UpdatableTable {
     public Integer getExhibitId() {
         return mFoodId;
     }
+    public Integer getDailyQuantity() { return mDailyQuantity; }
 
     public void setAnimalId(Integer v) {
         mAnimalId = v;
@@ -49,6 +52,10 @@ public class Eats implements UpdatableTable {
     public void setExhibitId(Integer v) {
         mFoodId = v;
         mCFoodId = true;
+    }
+    public void setDailyQuantity(Integer v) {
+        mDailyQuantity = v;
+        mCDailyQuantity = true;
     }
 
     @Override
@@ -66,6 +73,7 @@ public class Eats implements UpdatableTable {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCAnimalId) changelist.put(ANIMAL_ID, mAnimalId);
         if (mCFoodId) changelist.put(FOOD_ID, mFoodId);
+        if (mCDailyQuantity) changelist.put(DAILY_QUANTITY, mDailyQuantity);
         return changelist;
     }
 
@@ -76,6 +84,10 @@ public class Eats implements UpdatableTable {
 
     @Override
     public String getInsertCond() {
-        return ANIMAL_ID + " = " + mAnimalId + " and " + FOOD_ID + " = " + mFoodId;
+
+        return String.format("%s=%d and %s=%d and %s=%d",
+                             ANIMAL_ID, mAnimalId,
+                             FOOD_ID, mFoodId,
+                             DAILY_QUANTITY, mDailyQuantity);
     }
 }
