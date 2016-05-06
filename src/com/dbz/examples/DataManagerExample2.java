@@ -37,8 +37,6 @@ public class DataManagerExample2 {
             // This is an ugly cast. If someone can come up with a clean way
             // to fix this, go for it. otherwise lets just deal with it.
             List<Animal> animalsNamedBob = (List<Animal>)(List) results;
-        }, (query, e) -> {
-            // Handle error
         });
     }
 

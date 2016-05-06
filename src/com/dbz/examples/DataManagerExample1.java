@@ -17,8 +17,7 @@ import java.util.List;
  */
 public class DataManagerExample1 implements IDataManager.ExecEventHandler,
         IDataManager.CommitEventHandler,
-        IDataManager.InvalidCommitHandler,
-        IDataManager.InvalidExecHandler {
+        IDataManager.InvalidCommitHandler{
 
     /**
      *
@@ -38,7 +37,7 @@ public class DataManagerExample1 implements IDataManager.ExecEventHandler,
         dm.commit(animal, this, this);
 
         // Now query it
-        dm.exec(new GetAnimalsByName("bob"), this, this);
+        dm.exec(new GetAnimalsByName("bob"), this);
 
 
     }
@@ -58,11 +57,6 @@ public class DataManagerExample1 implements IDataManager.ExecEventHandler,
 
     @Override
     public void onError(UpdatableTable query, Exception e) {
-        //handle stuff
-    }
-
-    @Override
-    public void onError(Query query, Exception e) {
         //handle stuff
     }
 

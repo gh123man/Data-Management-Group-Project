@@ -41,9 +41,6 @@ public class ZooManagementPanel extends JPanel
                     tm.addRow(obj);
                 });
                 mgmtview.setModel(tm);
-            }, (query, e1) -> {
-                System.err.println("Error requesting exhibits");
-                mgmtview.setModel(tm);
             });
 
         });
@@ -59,9 +56,6 @@ public class ZooManagementPanel extends JPanel
                     Object[] obj = { exp.getName(), exp.getAmount() };
                     tm.addRow(obj);
                 });
-                mgmtview.setModel(tm);
-            }, (query, e1) -> {
-                System.err.println("Error requesting expenses");
                 mgmtview.setModel(tm);
             });
         });

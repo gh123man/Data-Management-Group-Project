@@ -23,11 +23,7 @@ public interface IDataManager {
         void onError(UpdatableTable query, Exception e);
     }
 
-    interface InvalidExecHandler {
-        void onError(Query query, Exception e);
-    }
-
     void commit(final UpdatableTable table, final CommitEventHandler handler, final InvalidCommitHandler errorHandler);
 
-    void exec(final Query query, final ExecEventHandler handler, final InvalidExecHandler errorHandler);
+    void exec(final Query query, final ExecEventHandler handler);
 }

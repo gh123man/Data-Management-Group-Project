@@ -37,9 +37,6 @@ public class CustomerPanel extends JPanel
                     tm.addRow(obj);
                 }
                 mailinglist.setModel(tm);
-            }, (query, e1) -> {
-                System.err.println("Error getting mailing list.");
-                mailinglist.setModel(tm);
             });
 
         });

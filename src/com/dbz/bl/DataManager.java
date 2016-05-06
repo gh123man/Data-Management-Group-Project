@@ -37,12 +37,12 @@ public class DataManager implements IDataManager {
         }).start();
     }
 
-    public void exec(final Query query, final ExecEventHandler handler, final InvalidExecHandler errorHandler)  {
+    public void exec(final Query query, final ExecEventHandler handler)  {
         new Thread(() -> {
             try {
                 handler.onExec(query, mDataManagerBackend.exec(query));
             } catch (DataManagerBackend.InvalidRequestException e) {
-                errorHandler.onError(query, e);
+                e.printStackTrace();
             }
         }).start();
     }
