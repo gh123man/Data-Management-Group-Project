@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 public class AnimalPanel extends JPanel
 {
+    public static final String TITLE = "Animals";
     private static JButton getAnimals = new JButton("Get Animals");
     private static JButton removeAnimal = new JButton("Remove Animal");
     private static JButton addAnimal = new JButton("Add Animal");

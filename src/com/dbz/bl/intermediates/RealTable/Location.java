@@ -1,4 +1,4 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class AnimalClass implements UpdatableTable {
+public class Location implements UpdatableTable {
 
     public static final String NAME = "Name";
     public static final String[] columnNames = new String[] { NAME };
@@ -18,14 +18,14 @@ public class AnimalClass implements UpdatableTable {
 
     private boolean mCName;
 
-    public AnimalClass(String name) {
+    public Location(String name) {
         mName = name;
         mCName = true;
     }
 
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
-    public  AnimalClass(Integer id, String name) {
+    public  Location(Integer id, String name) {
         mId = id;
         mName = name;
         mCName = false;
@@ -45,7 +45,7 @@ public class AnimalClass implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return AnimalClass.class.getName();
+        return Location.class.getSimpleName();
     }
 
     @Override

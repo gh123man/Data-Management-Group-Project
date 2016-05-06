@@ -1,4 +1,4 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ public class Employee implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Employee.class.getName();
+        return Employee.class.getSimpleName();
     }
 
     @Override

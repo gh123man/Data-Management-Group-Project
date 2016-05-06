@@ -1,6 +1,6 @@
 package com.dbz.bl.query;
 
-import com.dbz.bl.intermediates.Animal;
+import com.dbz.bl.intermediates.RealTable.Animal;
 import com.dbz.bl.intermediates.Table;
 
 import java.sql.ResultSet;

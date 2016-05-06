@@ -1,5 +1,6 @@
 package com.dbz.bl;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,6 +35,19 @@ public class ConnectionProvider {
             }
         }
         return sConn;
+    }
+
+    /**
+     * Convenience method to determine whether the database has already been loaded
+     * to avoid dealing with the data CSVs unless necessary.
+     *
+     * @return  true if the database already exists with the expected records.
+     */
+    public static boolean isDbAlreadyInitialized() {
+        // TODO Check for more than just the artifact H2 creates in case the
+        // create table initialization succeeded but loading the CSV data failed.
+        Path dbPath = Paths.get( DB_FILEPATH );
+        return Files.exists( dbPath );
     }
 
     public static void main( String[] args ) throws Exception {

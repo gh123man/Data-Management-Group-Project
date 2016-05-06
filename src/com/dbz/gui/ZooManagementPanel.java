@@ -1,23 +1,22 @@
 package com.dbz.gui;
 
-import com.dbz.bl.DataManager;
 import com.dbz.bl.IDataManager;
-import com.dbz.bl.intermediates.Exhibit;
-import com.dbz.bl.intermediates.Table;
-import com.dbz.bl.query.Query;
-import com.dbz.bl.query.RawQuery;
+import com.dbz.bl.intermediates.VirtualTable.ExhibitOverview;
+import com.dbz.bl.intermediates.VirtualTable.Expense;
+import com.dbz.bl.query.ExhibitOverviewQuery;
+import com.dbz.bl.query.ExpenseBreakDownQuery;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import java.util.List;
 
 public class ZooManagementPanel extends JPanel
 {
+    public static final String TITLE = "Zoo Management";
+
     private static JButton getCapacitiesAvailability = new JButton("Show Exhibit Capacities/Availability");
     private static JButton getExpenseBreakdown = new JButton("Get Expense Breakdown");
     private static JButton getFoodQuantity = new JButton("Food Quantity");
@@ -28,70 +27,43 @@ public class ZooManagementPanel extends JPanel
 
     public ZooManagementPanel(IDataManager adm)
     {
-        getCapacitiesAvailability.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                DefaultTableModel tm = new DefaultTableModel();
-                tm.addColumn("Name");
-                tm.addColumn("Capacity");
-                tm.addColumn("Availability");
+        getCapacitiesAvailability.addActionListener(e -> {
+            DefaultTableModel tm = new DefaultTableModel();
+            tm.addColumn("Name");
+            tm.addColumn("Capacity");
+            tm.addColumn("Availability");
 
-//                TODO: Query here needs to get all exhibits capacities, names, and the number of animals assigned
-//                to each exhibit ID. Query needs to do availability_exhibit - animal_count_assigned_exhibit for
-//                availability.
-                adm.exec(new RawQuery("Select * From Exhibit"), new IDataManager.ExecEventHandler() {
-                    @Override
-                    public void onExec(Query query, List<Table> results) {
-                        List<Exhibit> exhibits = (List<Exhibit>) (List) results;
-                        for (Exhibit exh : exhibits)
-                        {
-                            Object[] obj = {exh.getLocation(), exh.getmAnimalCapacity(), exh.getmAnimalCapacity()};
-                            tm.addRow(obj);
-                        }
-                    }
-                }, new IDataManager.InvalidExecHandler() {
-                    @Override
-                    public void onError(Query query, Exception e) {
-                        System.err.println("Error requesting exhibits");
-                    }
+            adm.exec(new ExhibitOverviewQuery(), (query, results) -> {
+                List<ExhibitOverview> exhibits = (List<ExhibitOverview>) (List) results;
+                exhibits.forEach(ex -> {
+                    System.out.println(ex.getName());
+                    Object[] obj = {ex.getName(), ex.getCapacity(), ex.getAnimalCount()};
+                    tm.addRow(obj);
                 });
                 mgmtview.setModel(tm);
-            }
+            }, (query, e1) -> {
+                System.err.println("Error requesting exhibits");
+                mgmtview.setModel(tm);
+            });
+
         });
 
-        getExpenseBreakdown.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                DefaultTableModel tm = new DefaultTableModel();
-                tm.addColumn("Cost class");
-                tm.addColumn("$$$");
+        getExpenseBreakdown.addActionListener(e -> {
+            DefaultTableModel tm = new DefaultTableModel();
+            tm.addColumn("Cost class");
+            tm.addColumn("$$$");
 
-                adm.exec(new RawQuery(""), new IDataManager.ExecEventHandler() {
-                    @Override
-                    public void onExec(Query query, List<Table> results) {
-                        /*
-                        List<ExpenseBreakdown> expenses = (List<ExpenseBreakdown>)(List) results;
-                        for (ExpenseBreakdown expense : expenses)
-                        {
-                            Object[] obj =
-                            {
-                                expense.getClass(), // Employee-salary/Food/Etc
-                                expense.getDollarAmount(),
-                            };
-                            tm.addRow(obj);
-                        }
-                        * */
-                    }
-                }, new IDataManager.InvalidExecHandler() {
-                    @Override
-                    public void onError(Query query, Exception e) {
-
-                    }
+            adm.exec(new ExpenseBreakDownQuery(), (query, results) -> {
+                List<Expense> expenses = (List<Expense>)(List) results;
+                expenses.forEach(exp -> {
+                    Object[] obj = { exp.getName(), exp.getAmount() };
+                    tm.addRow(obj);
                 });
-                mgmtview.setModel(tm);;
-            }
+                mgmtview.setModel(tm);
+            }, (query, e1) -> {
+                System.err.println("Error requesting expenses");
+                mgmtview.setModel(tm);
+            });
         });
 
         getFoodQuantity.addActionListener(new ActionListener() {

@@ -1,4 +1,4 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -88,7 +88,7 @@ public class Address implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Address.class.getName();
+        return Address.class.getSimpleName();
     }
 
     @Override

@@ -1,8 +1,5 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.AbstractDateTimeDV;
-
-import javax.print.attribute.standard.MediaSize;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +87,7 @@ public class Animal implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Animal.class.getName();
+        return Animal.class.getSimpleName();
     }
 
     @Override

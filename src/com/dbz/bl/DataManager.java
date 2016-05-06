@@ -1,8 +1,7 @@
 package com.dbz.bl;
 
-import com.dbz.bl.intermediates.UpdatableTable;
+import com.dbz.bl.intermediates.RealTable.UpdatableTable;
 import com.dbz.bl.query.Query;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.sql.Connection;
 import java.sql.SQLException;

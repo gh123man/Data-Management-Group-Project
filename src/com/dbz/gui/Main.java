@@ -1,18 +1,16 @@
 package com.dbz.gui;
 
-import com.dbz.bl.DataManager;
-import com.dbz.bl.ConnectionProvider;
 import com.dbz.bl.IDataManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class Main
 {
+    private static final String MAIN_TITLE="DBZ";
     private static IDataManager adm;
 
-    private static JFrame frame = new JFrame("DBZ");
+    private static JFrame frame = new JFrame(MAIN_TITLE);
     private static JPanel mainPanel = new JPanel();
     private static JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -21,17 +19,17 @@ public class Main
     private static JPanel animalTab;
     private static JPanel customerTab;
 
-    public static void main(String[] args)
-    {
-        try {
-            adm = new DataManager(ConnectionProvider.getConnection());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(1);
+    public Main(IDataManager adm) {
+        if (adm == null) {
+            // We can't do anything useful without a working data manager.
+            throw new IllegalArgumentException( "The data manager must not be null." );
         }
+        this.adm = adm;
+        initGui();
+    }
 
+    private void initGui() {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         mainPanel.setLayout(new FlowLayout());
         frame.getContentPane().add(mainPanel);
 
@@ -40,13 +38,15 @@ public class Main
         animalTab = new AnimalPanel(adm);
         customerTab = new CustomerPanel(adm);
 
-        tabbedPane.add("Zoo Management", mgmtTab);
-        tabbedPane.add("Employees", employeeTab);
-        tabbedPane.add("Animals", animalTab);
-        tabbedPane.add("Customers", customerTab);
+        tabbedPane.add(ZooManagementPanel.TITLE, mgmtTab);
+        tabbedPane.add(EmployeePanel.TITLE, employeeTab);
+        tabbedPane.add(AnimalPanel.TITLE, animalTab);
+        tabbedPane.add(CustomerPanel.TITLE, customerTab);
 
         mainPanel.add(tabbedPane);
+    }
 
+    public void display() {
         frame.pack();
         frame.setVisible(true);
     }

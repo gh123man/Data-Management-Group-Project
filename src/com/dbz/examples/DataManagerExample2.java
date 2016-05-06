@@ -2,7 +2,7 @@ package com.dbz.examples;
 
 import com.dbz.bl.ConnectionProvider;
 import com.dbz.bl.DataManager;
-import com.dbz.bl.intermediates.Animal;
+import com.dbz.bl.intermediates.RealTable.Animal;
 import com.dbz.bl.query.GetAnimalsByName;
 
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -58,7 +58,7 @@ public class Membership implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return Membership.class.getName();
+        return Membership.class.getSimpleName();
     }
 
     @Override

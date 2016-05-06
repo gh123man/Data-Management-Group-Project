@@ -1,4 +1,4 @@
-package com.dbz.bl.intermediates;
+package com.dbz.bl.intermediates.RealTable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class JobType implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return JobType.class.getName();
+        return JobType.class.getSimpleName();
     }
 
     @Override

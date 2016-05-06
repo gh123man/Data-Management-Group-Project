@@ -1,9 +1,8 @@
 package com.dbz.bl;
 
 import com.dbz.bl.intermediates.Table;
-import com.dbz.bl.intermediates.UpdatableTable;
+import com.dbz.bl.intermediates.RealTable.UpdatableTable;
 import com.dbz.bl.query.Query;
-import com.dbz.bl.query.RawQuery;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -54,17 +53,24 @@ public class DataManagerBackend {
     public List<Table> exec(Query query) throws InvalidRequestException {
         ArrayList<Table> results = new ArrayList<>();
         try {
-            ResultSet rs = executeQuery(query.getQuery());
-            while (rs.next()) {
-                results.add(query.mapResult(rs));
+            try (Statement stmt = mConn.createStatement()) {
+                if (stmt.execute(query.getQuery())) {
+                    ResultSet rs = stmt.getResultSet();
+                    while (rs.next()) {
+                        results.add(query.mapResult(rs));
+                    }
+                    rs.close();
+                }
+                stmt.close();
+
             }
         } catch (SQLException e) {
+            e.printStackTrace(); //Very helpful for debugging
             throw new InvalidRequestException(query);
         }
         return results;
     }
 
-    // TODO Handle stored procedures
     private ResultSet executeQuery(String query) throws SQLException {
         ResultSet rs = null;
         try (Statement stmt = mConn.createStatement()) {
@@ -104,13 +110,5 @@ public class DataManagerBackend {
         public InvalidRequestException(Query query) {
             super(String.format(query.getQuery()));
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        String queryStr = "CREATE TABLE IF NOT EXISTS Person( ID INT PRIMARY KEY AUTO_INCREMENT, FirstName VARCHAR(128) NOT NULL, MiddleInitial VARCHAR(1) NOT NULL, LastName VARCHAR(128) NOT NULL);";
-        Connection conn = ConnectionProvider.getConnection();
-        DataManagerBackend mgr = new DataManagerBackend(conn);
-        mgr.executeQuery(queryStr);
-        conn.close();
     }
 }
