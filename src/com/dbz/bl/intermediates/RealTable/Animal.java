@@ -16,7 +16,7 @@ public class Animal implements UpdatableTable {
     public static final String EXHIBIT_ID   = "ExhibitID";
     public static final String GENDER       = "Gender";
     public static final String AGE          = "Age";
-    public static final String[] columnNames = new String[] { NAME, ANIMAL_CLASS, EXHIBIT_ID, GENDER, AGE };
+    public static final String[] columnNames = new String[] { ID, NAME, ANIMAL_CLASS, EXHIBIT_ID, GENDER, AGE };
 
     public enum Gender {
         Male,

@@ -1,6 +1,7 @@
 package com.dbz.test.res;
 
 import com.dbz.bl.IDataManager;
+import com.dbz.bl.intermediates.RealTable.Animal;
 import com.dbz.bl.intermediates.RealTable.Employee;
 import com.dbz.bl.intermediates.RealTable.Membership;
 import com.dbz.bl.intermediates.RealTable.UpdatableTable;
@@ -47,6 +48,11 @@ public class MockDataManager implements IDataManager {
             handler.onExec(query, new ArrayList<Table>() {{
                 add(new Employee(1, 30000, 1));
                 add(new Employee(2, 50000, 6));
+            }});
+        } else if (query instanceof GetAnimalsQuery) {
+            handler.onExec(query, new ArrayList<Table>() {{
+                add(new Animal(0, "Human", 33, 0, "MALE", 5));
+                add(new Animal(1, "Crocodile", 2, 0, "MALE", 34));
             }});
         }
     }

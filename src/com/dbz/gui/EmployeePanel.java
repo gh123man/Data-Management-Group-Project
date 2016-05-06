@@ -51,6 +51,7 @@ public class EmployeePanel extends JPanel
 
     public EmployeePanel(IDataManager adm)
     {
+//        TODO: This button can probably be removed since its queried implicitly -- but it is there as a manual option.
         getEmployeeInfo.addActionListener(e -> employeeview.setModel(getPopulatedTableModel()));
 
         removeEmployee.addActionListener(e -> {
@@ -78,6 +79,11 @@ public class EmployeePanel extends JPanel
                 adm.exec(new RawQuery(""), ((query, results) -> {
                     System.out.println("TODO: add query addEmployee.");
                 }));
+
+//                Clear on success.
+                newPersonId.setText("");
+                newSalaryAmount.setText("");
+                newJobTitle.setText("");
             }
 
             employeeview.setModel(getPopulatedTableModel());
@@ -105,6 +111,7 @@ public class EmployeePanel extends JPanel
         EmployeeTableModel tm = getPopulatedTableModel();
         employeeview = new JTable(tm);
         employeeview.setAutoCreateRowSorter(true);
+        employeeview.getTableHeader().setReorderingAllowed(false);
         JScrollPane employeeviewpane = new JScrollPane(employeeview);
 
         add(queries, BorderLayout.NORTH);
