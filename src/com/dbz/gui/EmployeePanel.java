@@ -13,7 +13,7 @@ public class EmployeePanel extends JPanel
     public static final String TITLE = "Employees";
 
     private static JButton getEmployeeInfo = new JButton("Get Employee Contact Info");
-    private static JButton removeEmployee = new JButton("Remove Employee");
+    private static JButton removeEmployee = new JButton("Remove Selected Employee(s)");
     private static JButton addEmployee = new JButton("Add Employee");
     private static JTextField newPersonId = new JTextField(5);
     private static JTextField newSalaryAmount = new JTextField(7);
