@@ -2,6 +2,7 @@ package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Employee;
+import com.dbz.bl.query.GetEmployeeInfoQuery;
 import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
@@ -37,13 +38,7 @@ public class EmployeePanel extends JPanel
         for (String col : Employee.columnNames)
             tm.addColumn(col);
 
-        Object[] o1 = {1, 30000, "Handler"};
-        tm.addRow(o1);
-        Object[] o2 = {2, 123123, "ceo"};
-        tm.addRow(o2);
-
-        System.out.println("TODO: add query getEmployeeInfo.");
-        adm.exec(new RawQuery(""), (query, results) -> {
+        adm.exec(new GetEmployeeInfoQuery(), (query, results) -> {
             java.util.List<Employee> employees = (java.util.List<Employee>)(java.util.List) results;
             for (Employee employee : employees) {
                 Object[] obj = {employee.getPersonId(), employee.getSalary(), employee.getJob()};

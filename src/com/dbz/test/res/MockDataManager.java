@@ -1,15 +1,13 @@
 package com.dbz.test.res;
 
 import com.dbz.bl.IDataManager;
+import com.dbz.bl.intermediates.RealTable.Employee;
 import com.dbz.bl.intermediates.RealTable.Membership;
 import com.dbz.bl.intermediates.RealTable.UpdatableTable;
 import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.VirtualTable.ExhibitOverview;
 import com.dbz.bl.intermediates.VirtualTable.Expense;
-import com.dbz.bl.query.ExhibitOverviewQuery;
-import com.dbz.bl.query.ExpenseBreakDownQuery;
-import com.dbz.bl.query.GetMailingListQuery;
-import com.dbz.bl.query.Query;
+import com.dbz.bl.query.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -44,6 +42,11 @@ public class MockDataManager implements IDataManager {
             handler.onExec(query, new ArrayList<Table>() {{
                 add(new Membership(1, new Date(123432)));
                 add(new Membership(2, new Date(123432)));
+            }});
+        } else if (query instanceof GetEmployeeInfoQuery) {
+            handler.onExec(query, new ArrayList<Table>() {{
+                add(new Employee(1, 30000, 1));
+                add(new Employee(2, 50000, 6));
             }});
         }
     }
