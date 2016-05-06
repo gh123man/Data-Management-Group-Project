@@ -18,7 +18,7 @@ public class Main
     private static JPanel mgmtTab;
     private static JPanel employeeTab;
     private static JPanel animalTab;
-    private static JPanel customerTab;
+    private static JPanel membershipTab;
 
     public static void main(String[] args)
     {
@@ -44,12 +44,12 @@ public class Main
         mgmtTab = new ZooManagementPanel(adm);
         employeeTab = new EmployeePanel(adm);
         animalTab = new AnimalPanel(adm);
-        customerTab = new CustomerPanel(adm);
+        membershipTab = new MembershipPanel(adm);
 
         tabbedPane.add(ZooManagementPanel.TITLE, mgmtTab);
         tabbedPane.add(EmployeePanel.TITLE, employeeTab);
         tabbedPane.add(AnimalPanel.TITLE, animalTab);
-        tabbedPane.add(CustomerPanel.TITLE, customerTab);
+        tabbedPane.add(MembershipPanel.TITLE, membershipTab);
 
         mainPanel.add(tabbedPane);
     }
