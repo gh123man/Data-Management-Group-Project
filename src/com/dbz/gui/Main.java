@@ -1,6 +1,7 @@
 package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
+import com.dbz.test.res.MockDataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,13 @@ public class Main
     private static JPanel employeeTab;
     private static JPanel animalTab;
     private static JPanel customerTab;
+
+    public static void main(String[] args)
+    {
+        MockDataManager mdm = new MockDataManager();
+        Main main = new Main(mdm);
+        main.display();
+    }
 
     public Main(IDataManager adm) {
         if (adm == null) {
