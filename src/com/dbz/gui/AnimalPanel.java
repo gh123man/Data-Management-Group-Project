@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 public class AnimalPanel extends JPanel
 {
     private static JButton getAnimals = new JButton("Get Animals");
-    private static JButton getFoodQuantity = new JButton("Food Quantity");
     private static JButton removeAnimal = new JButton("Remove Animal");
     private static JButton addAnimal = new JButton("Add Animal");
     private static JButton moveAnimal = new JButton("Move Animal");
@@ -23,13 +22,6 @@ public class AnimalPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("TODO: add query getAnimals.");
-            }
-        });
-
-        getFoodQuantity.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("TODO: add query getFoodQuantity.");
             }
         });
 
@@ -59,7 +51,6 @@ public class AnimalPanel extends JPanel
         this.adm = adm;
         setLayout(new FlowLayout());
         add(getAnimals);
-        add(getFoodQuantity);
         add(removeAnimal);
         add(addAnimal);
         add(moveAnimal);

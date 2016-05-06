@@ -20,6 +20,7 @@ public class ZooManagementPanel extends JPanel
 {
     private static JButton getCapacitiesAvailability = new JButton("Show Exhibit Capacities/Availability");
     private static JButton getExpenseBreakdown = new JButton("Get Expense Breakdown");
+    private static JButton getFoodQuantity = new JButton("Food Quantity");
     private static JScrollPane dataviewpane;
     private static JTable mgmtview;
 
@@ -93,17 +94,26 @@ public class ZooManagementPanel extends JPanel
             }
         });
 
+        getFoodQuantity.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("TODO: add query getFoodQuantity.");
+            }
+        });
+
         this.adm = adm;
         setLayout(new BorderLayout());
 
         JPanel buttons = new JPanel();
         buttons.add(getCapacitiesAvailability);
         buttons.add(getExpenseBreakdown);
+        buttons.add(getFoodQuantity);
         add(buttons, BorderLayout.NORTH);
 
         DefaultTableModel tm = new DefaultTableModel();
         tm.addColumn("Welcome to DBZ");
         mgmtview = new JTable(tm);
+        mgmtview.setAutoCreateRowSorter(true);
         dataviewpane = new JScrollPane(mgmtview);
 
         add(dataviewpane, BorderLayout.SOUTH);

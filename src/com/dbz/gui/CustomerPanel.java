@@ -75,6 +75,7 @@ public class CustomerPanel extends JPanel
             tm.addColumn(s);
 
         mailinglist = new JTable(tm);
+        mailinglist.setAutoCreateRowSorter(true);
         dataviewpane = new JScrollPane(mailinglist);
 
         view.add(dataviewpane);
