@@ -54,11 +54,12 @@ public class DataManagerBackend {
         ArrayList<Table> results = new ArrayList<>();
         try {
             try (Statement stmt = mConn.createStatement()) {
-                ResultSet rs = stmt.executeQuery(query.getQuery());
-                if (rs != null && !rs.isClosed()) {
+                if (stmt.execute(query.getQuery())) {
+                    ResultSet rs = stmt.getResultSet();
                     while (rs.next()) {
                         results.add(query.mapResult(rs));
                     }
+                    rs.close();
                 }
                 stmt.close();
 
