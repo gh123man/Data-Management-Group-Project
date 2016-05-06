@@ -81,8 +81,9 @@ CREATE TABLE IF NOT EXISTS Animal (
 );
 
 CREATE TABLE IF NOT EXISTS Eats (
-    AnimalID    INT NOT NULL,
-    FoodID      INT NOT NULL,
+    AnimalID        INT NOT NULL,
+    FoodID          INT NOT NULL,
+    DailyQuantity   INT NOT NULL,
     PRIMARY KEY(AnimalID, FoodID),
     FOREIGN KEY(AnimalID) REFERENCES Animal(ID),
     FOREIGN KEY(FoodID) REFERENCES Food(ID)
