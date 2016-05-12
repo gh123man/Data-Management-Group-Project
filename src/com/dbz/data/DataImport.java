@@ -238,6 +238,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
     }
 
     public void makeEverything() throws SQLException{
+        makePeople();
         makeAddress();
         makeAnimal();
         makeAnimalClass();
