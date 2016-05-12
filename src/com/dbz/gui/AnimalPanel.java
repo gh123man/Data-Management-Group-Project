@@ -1,6 +1,5 @@
 package com.dbz.gui;
 
-import com.dbz.bl.DataManager;
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Animal;
 import com.dbz.bl.query.DeleteByIdQuery;
@@ -8,7 +7,6 @@ import com.dbz.bl.query.GetAnimalsQuery;
 import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -101,14 +99,14 @@ public class AnimalPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 String lid,lname,lclass,lexhibitid,lgender,lage;
-                lid = inputId.getText();
+//                lid = inputId.getText();
                 lname = inputName.getText();
                 lclass = inputClassId.getText();
                 lexhibitid = inputExhibitId.getText();
                 lgender = inputGender.getText();
                 lage = inputAge.getText();
 
-                if ((lid.length() * lname.length() * lclass.length() * lexhibitid.length() * lgender.length() * lage.length()) == 0)
+                if ((lname.length() * lclass.length() * lexhibitid.length() * lgender.length() * lage.length()) == 0)
                     return;
 
 //                TODO
