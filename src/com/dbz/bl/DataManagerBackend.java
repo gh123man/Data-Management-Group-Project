@@ -32,12 +32,16 @@ public class DataManagerBackend {
      * @param table
      */
     public void commit(UpdatableTable table) throws InvalidRequestException, SQLException {
-        String query = "";
+        String query;
         // Following the isNew procedure - Commit the table as a new row in the table
         if (table.isNew()) {
-            query += "INSERT INTO " + table.getTableName() + " VALUES ( " + paramMapToInsertString(table.getChanged()) + " )";
+            String[] columnNames = table.getColumnNames().toArray(new String[0]);
+            query = String.format("INSERT INTO %s (%s) VALUES (%s)",
+                    table.getTableName(),
+                    String.join(",", columnNames),
+                    paramMapToInsertString(columnNames, table.getChanged()));
         } else {
-            query += "UPDATE " + table.getTableName() + " SET " + paramMapToUpdateString(table.getChanged()) + " WHERE " + table.getInsertCond();
+            query = "UPDATE " + table.getTableName() + " SET " + paramMapToUpdateString(table.getChanged()) + " WHERE " + table.getInsertCond();
         }
         executeQuery(query);
         // TODO: make the Insert section populate the ID and return the original object.
@@ -88,13 +92,19 @@ public class DataManagerBackend {
         else if (param instanceof Float)
             return Float.toString((Float) param);
         else if ((param) instanceof String)
-            return ((String) param);
+            // TODO Implement proper escaping. This is a temporary workaround to make records work.
+            return "'" + param + "'";
         return null;
     }
 
-    private static String paramMapToInsertString(Map<String, Object> in) {
+    private static String paramMapToInsertString(String[] orderedKeys, Map<String, Object> in) {
+        // TODO This is an ugly workaround to map ordering not matching column name ordering. Can be better implemented.
+
         ArrayList<String> params = new ArrayList<>();
-        in.entrySet().stream().forEach((entry) -> params.add(paramToString(entry.getValue())));
+        for( String key : orderedKeys ) {
+            params.add(paramToString(in.get(key)));
+        }
+//        in.entrySet().stream().forEach((entry) -> params.add(paramToString(entry.getValue())));
         return params.stream().reduce((a, b) -> a + ", " + b).get();
     }
 
