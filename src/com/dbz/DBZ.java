@@ -7,6 +7,7 @@ import com.dbz.bl.IDataManager;
 import com.dbz.bl.query.Query;
 import com.dbz.bl.query.RawQuery;
 import com.dbz.gui.Main;
+import com.dbz.data.DataImport;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,8 +62,10 @@ public class DBZ {
         mgr.exec(createTables);
     }
 
-    private static void loadTableDataFromCsvs(Connection dbConn) {
+    private static void loadTableDataFromCsvs(Connection dbConn) throws SQLException  {
         // TODO Justin - add CSV parsing step in this method after the create table statements have been executed.
+        DataImport d = new DataImport(dbConn);
+        d.makeEverything();
     }
 
     public static void initializeGUI() throws SQLException {
