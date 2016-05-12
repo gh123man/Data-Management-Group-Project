@@ -1,4 +1,4 @@
-from faker import Factory # fake factory link: https://pypi.python.org/pypi/fake-factory
+from faker import Factory
 from datetime import date
 import random
 import csv
@@ -26,7 +26,7 @@ def generateNames(n):
             firstname = fake.first_name()
             lastname = fake.last_name()
             mi = MI[random.randrange(26)]
-            writer.writerow([firstname,mi,lastname,i])
+            writer.writerow([firstname,mi,lastname,i+1])
 
 def generateDates(n):
     with open('csv/memberships.csv','w') as csvfile:
@@ -35,7 +35,7 @@ def generateDates(n):
             start_date = date.today().replace(day=1, month=1).toordinal()
             end_date = date.today().replace(day=31, month=12, year=2017).toordinal()
             random_day = date.fromordinal(random.randint(start_date, end_date))
-            writer.writerow([i,random_day])
+            writer.writerow([i+1,random_day])
 
 def generateJobs():
     with open('csv/jobs.csv','w') as csvfile:
@@ -44,15 +44,15 @@ def generateJobs():
         "ZOO DIRECTOR","ASSISTANT DIRECTOR","DIRECTOR","CURATOR","AFFAIRS MANAGER","OFFICER","MANAGER","COORDINATOR",
         "VOLUNTEER","HEAD KEEPER","SENIOR KEEPER","JANITOR"]
         for i in range(0,len(jobs)):
-            writer.writerow([i,jobs[i]])
+            writer.writerow([i+1,jobs[i]])
 
 def randomEmployee(n):
     with open('csv/employee.csv','w') as csvfile:
         writer = csv.writer(csvfile)
         for i in range(0,n):
-            job = random.randrange(0,19)
+            job = random.randrange(1,20)
             salary = random.randrange(15000,40000,2)
-            writer.writerow([i,salary,job])
+            writer.writerow([i+1,salary,job])
 
 def generateLocation(n):
     locations = ["Bird Sancuatry","Reptile House","Safari Zone","Winter World","Forest Zone","Bug Zone"]
@@ -65,12 +65,12 @@ def generateLocation(n):
     with open('csv/exhibit.csv','w') as csvfile:
         writer = csv.writer(csvfile)
         for i in range(0,6):
-            writer.writerow([i,capacity2[i]])
+            writer.writerow([i+1,capacity2[i]])
     with open('csv/employee_exhibit.csv','w') as csvfile:
         writer = csv.writer(csvfile)
         for i in range(0,n):
             worksin = random.randrange(6)
-            writer.writerow([i,worksin])
+            writer.writerow([i+1,worksin+1])
 
 
 
@@ -119,7 +119,8 @@ def generateAnimals(n):
     with open('csv/eats.csv','w') as csvfile:
         writer = csv.writer(csvfile)
         for i in range(0,60):
-            writer.writerow([i,i])
+            eats = random.randrange(1,11)
+            writer.writerow([i+1,i+1,eats])
 
 
 def main():
