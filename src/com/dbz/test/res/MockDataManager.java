@@ -8,6 +8,7 @@ import com.dbz.bl.intermediates.RealTable.UpdatableTable;
 import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.VirtualTable.ExhibitOverview;
 import com.dbz.bl.intermediates.VirtualTable.Expense;
+import com.dbz.bl.intermediates.VirtualTable.MembershipRecord;
 import com.dbz.bl.query.*;
 
 import java.sql.Date;
@@ -41,8 +42,8 @@ public class MockDataManager implements IDataManager {
 
         } else if (query instanceof GetMailingListQuery) {
             handler.onExec(query, new ArrayList<Table>() {{
-                add(new Membership(1, new Date(123432)));
-                add(new Membership(2, new Date(123432)));
+                add(new MembershipRecord("Big Tom", "123 Fake St", "Apt 2", "Rochester", "NY", "14620", new Date(123431)));
+                add(new MembershipRecord("David Shapiro", "87 RIT Boulevard", "", "Rochester", "NY", "14546",new Date(123432)));
             }});
         } else if (query instanceof GetEmployeeInfoQuery) {
             handler.onExec(query, new ArrayList<Table>() {{

@@ -108,8 +108,7 @@ public class EmployeePanel extends JPanel
 
         queries.add(getEmployeeInfo);
 
-        EmployeeTableModel tm = getPopulatedTableModel();
-        employeeview = new JTable(tm);
+        employeeview = new JTable(getPopulatedTableModel());
         employeeview.setAutoCreateRowSorter(true);
         employeeview.getTableHeader().setReorderingAllowed(false);
         JScrollPane employeeviewpane = new JScrollPane(employeeview);

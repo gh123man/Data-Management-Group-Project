@@ -23,8 +23,17 @@ public class MembershipPanel extends JPanel
     // DB components
     private final IDataManager adm;
 
-    public MembershipPanel(IDataManager adm) {
-        final DefaultTableModel tableModel = new DefaultTableModel();
+    private class MembershipTableModel extends DefaultTableModel
+    {
+        public boolean isCellEditable(int row, int col)
+        {
+            return false;
+        }
+    }
+
+    private MembershipTableModel getPopulatedTableModel()
+    {
+        final MembershipTableModel tableModel = new MembershipTableModel();
         tableModel.addColumn("Member Name");
         tableModel.addColumn("Street Address 1");
         tableModel.addColumn("Street Address 2");
@@ -33,21 +42,25 @@ public class MembershipPanel extends JPanel
         tableModel.addColumn("ZIP Code");
         tableModel.addColumn("Expiration Date");
 
-        getMailingList.addActionListener(e -> {
-            adm.exec(new GetMailingListQuery(), (query, results) -> {
-                tableModel.setRowCount(0);
+        adm.exec(new GetMailingListQuery(), (query, results) -> {
+            tableModel.setRowCount(0);
 
-                List<MembershipRecord> membs = (List<MembershipRecord>)(List) results;
-                for (MembershipRecord memb : membs) {
-                    Object[] obj = {memb.getFullName(), memb.getStreetAddress1(), memb.getStreetAddress2(),
-                                    memb.getCityName(), memb.getStateAbbrev(), memb.getZIPCode(),
-                                    dateFormat.format(memb.getMemberExpireDate())};
-                    tableModel.addRow(obj);
-                }
-                mailinglist.setModel(tableModel);
-            });
-
+            List<MembershipRecord> membs = (List<MembershipRecord>)(List) results;
+            for (MembershipRecord memb : membs) {
+                Object[] obj = {memb.getFullName(), memb.getStreetAddress1(), memb.getStreetAddress2(),
+                        memb.getCityName(), memb.getStateAbbrev(), memb.getZIPCode(),
+                        dateFormat.format(memb.getMemberExpireDate())};
+                tableModel.addRow(obj);
+            }
         });
+
+        return tableModel;
+    }
+
+    public MembershipPanel(IDataManager adm) {
+
+        getMailingList.addActionListener(e -> mailinglist.setModel(getPopulatedTableModel()));
+
         this.adm = adm;
 
         setLayout(new BorderLayout());
@@ -55,13 +68,14 @@ public class MembershipPanel extends JPanel
         buttons.add(getMailingList);
         add(buttons, BorderLayout.NORTH);
 
-        JPanel view = new JPanel(new FlowLayout());
+        JPanel view = new JPanel();
 
-        mailinglist = new JTable(tableModel);
+        mailinglist = new JTable(getPopulatedTableModel());
         mailinglist.setAutoCreateRowSorter(true);
+        mailinglist.getTableHeader().setReorderingAllowed(false);
         dataviewpane = new JScrollPane(mailinglist);
 
         view.add(dataviewpane);
-        add(view, BorderLayout.SOUTH);
+        add(view, BorderLayout.CENTER);
     }
 }
