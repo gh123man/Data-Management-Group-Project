@@ -42,9 +42,12 @@ public class AnimalPanel extends JPanel
     {
         AnimalTableModel tm = new AnimalTableModel();
 
-        for (String col : Animal.columnNames) {
-            tm.addColumn(col);
-        }
+        tm.addColumn("ID"); //This gets hidden
+        tm.addColumn("Name");
+        tm.addColumn("Class");
+        tm.addColumn("Exhibit ID");
+        tm.addColumn("Gender");
+        tm.addColumn("Age");
 
         adm.exec(new GetAnimalsQuery(), ((query, results) -> {
             java.util.List<AnimalRecord> animals = (java.util.List<AnimalRecord>)(java.util.List) results;
