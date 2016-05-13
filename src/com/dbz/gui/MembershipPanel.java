@@ -68,7 +68,7 @@ public class MembershipPanel extends JPanel
         buttons.add(getMailingList);
         add(buttons, BorderLayout.NORTH);
 
-        JPanel view = new JPanel();
+        JPanel view = new JPanel(new BorderLayout());
 
         mailinglist = new JTable(getPopulatedTableModel());
         mailinglist.setAutoCreateRowSorter(true);
