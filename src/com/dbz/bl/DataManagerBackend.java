@@ -93,7 +93,7 @@ public class DataManagerBackend {
             return Float.toString((Float) param);
         else if ((param) instanceof String)
             // TODO Implement proper escaping. This is a temporary workaround to make records work.
-            return "'" + param + "'";
+            return "'" + ((String) param).replace("'", "''") + "'";
         return null;
     }
 
@@ -104,7 +104,6 @@ public class DataManagerBackend {
         for( String key : orderedKeys ) {
             params.add(paramToString(in.get(key)));
         }
-//        in.entrySet().stream().forEach((entry) -> params.add(paramToString(entry.getValue())));
         return params.stream().reduce((a, b) -> a + ", " + b).get();
     }
 

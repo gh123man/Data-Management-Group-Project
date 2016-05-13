@@ -238,18 +238,19 @@ public class DataImport implements IDataManager.ExecEventHandler,
     }
 
     public void makeEverything() throws SQLException{
-        makePeople();
+        // Order is important due to foreign keys with the not null constraint.
         makeAddress();
-        makeAnimal();
-        makeAnimalClass();
-        makeEats();
-        makeEmployee();
-        makeEmployeeExhibit();
-        makeExhibit();
-        makeFood();
-        makeJobType();
-        makeLocation();
+        makePeople();
         makeMembership();
+        makeAnimalClass();
+        makeAnimal();
+        makeFood();
+        makeEats();
+        makeJobType();
+        makeEmployee();
+        makeLocation();
+        makeExhibit();
+        makeEmployeeExhibit();
     }
 
 
@@ -267,6 +268,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
     @Override
     public void onError(UpdatableTable query, Exception e) {
         //handle stuff
+        e.printStackTrace();
     }
 
     public static void main(String[] args) throws SQLException{
