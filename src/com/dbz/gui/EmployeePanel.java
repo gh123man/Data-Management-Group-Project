@@ -19,10 +19,17 @@ public class EmployeePanel extends JPanel
     private static JButton getEmployeeInfo = new JButton("Get Employee Contact Info");
     private static JButton removeEmployee = new JButton("Remove Selected Employee(s)");
     private static JButton addEmployee = new JButton("Add Employee");
-//    private static JTextField newPersonId = new JTextField(5);
     private static JTextField newSalaryAmount = new JTextField(7);
-    private static JTextField newJobTitle = new JTextField(10);
     private static JComboBox newJobSelect;
+    private static JTextField newFName = new JTextField(7);
+    private static JTextField newMI = new JTextField(1);
+    private static JTextField newLName = new JTextField(7);
+    private static JTextField newAddr1 = new JTextField(10);
+    private static JTextField newAddr2 = new JTextField(6);
+    private static JTextField newState = new JTextField(2);
+    private static JTextField newZip = new JTextField(5);
+
+
     private static LeftAlignedJTable employeeview;
 
     private final IDataManager adm;
@@ -128,8 +135,22 @@ public class EmployeePanel extends JPanel
         JPanel addPanel = new JPanel(new FlowLayout());
 //        addPanel.add(new JLabel("ID"));
 //        addPanel.add(newPersonId);
+        addPanel.add(new JLabel("First"));
+        addPanel.add(newFName);
+        addPanel.add(new JLabel("M.I."));
+        addPanel.add(newMI);
+        addPanel.add(new JLabel("Last"));
+        addPanel.add(newLName);
         addPanel.add(new JLabel("Salary"));
         addPanel.add(newSalaryAmount);
+        addPanel.add(new JLabel("Street1"));
+        addPanel.add(newAddr1);
+        addPanel.add(new JLabel("Street2"));
+        addPanel.add(newAddr2);
+        addPanel.add(new JLabel("State"));
+        addPanel.add(newState);
+        addPanel.add(new JLabel("Zip"));
+        addPanel.add(newZip);
         addPanel.add(new JLabel("Job"));
         populateKnownJobs();
         newJobSelect = new JComboBox(jobs.keySet().toArray());
