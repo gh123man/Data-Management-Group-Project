@@ -103,7 +103,7 @@ public class EmployeePanel extends JPanel
 
             String newSalary = newSalaryAmount.getText();
             Integer jobType = jobs.get(newJobSelect.getSelectedItem());
-            if (newSalary.length() != 0)
+            if (newSalary.length() != 0 && jobType != null)
             {
                 System.out.println("new employee: jobid = " + jobType + " salary: " + newSalary);
 
