@@ -27,13 +27,13 @@ public class AnimalPanel extends JPanel
     private static JButton removeAnimal = new JButton("Remove Selected Animal(s)");
     private static JButton addAnimal = new JButton("Add Animal");
     private static JButton moveAnimal = new JButton("Move Animal");
-    private static JTable animalview;
+    private static LeftAlignedJTable animalview;
 
     private final int ID_COL_IDX = 0;
 
     private final IDataManager adm;
 
-    private class AnimalTableModel extends DefaultTableModel
+    private class AnimalTableModel extends BetterSortingTableModel
     {
         public boolean isCellEditable(int row, int col)
         {
@@ -170,7 +170,7 @@ public class AnimalPanel extends JPanel
         modify.add(crud);
         modify.add(removeAnimal);
 
-        animalview = new JTable(getPopulatedTableModel());
+        animalview = new LeftAlignedJTable(getPopulatedTableModel());
 
         // This allows us to prevent display of the ID, but preserve it for use in update/remove queries.
         animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));

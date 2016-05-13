@@ -2,7 +2,6 @@ package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Employee;
-import com.dbz.bl.intermediates.RealTable.JobType;
 import com.dbz.bl.query.GetEmployeeInfoQuery;
 import com.dbz.bl.query.RawQuery;
 
@@ -20,13 +19,12 @@ public class EmployeePanel extends JPanel
     private static JTextField newPersonId = new JTextField(5);
     private static JTextField newSalaryAmount = new JTextField(7);
     private static JTextField newJobTitle = new JTextField(10);
-    private static JComboBox newJobSelection;
-    private static JTable employeeview;
+    private static LeftAlignedJTable employeeview;
 
     private final IDataManager adm;
     private final int ID_COL_IDX = 0;
 
-    private class EmployeeTableModel extends DefaultTableModel
+    private class EmployeeTableModel extends BetterSortingTableModel
     {
         public boolean isCellEditable(int row, int col)
         {
@@ -49,18 +47,6 @@ public class EmployeePanel extends JPanel
         });
 
         return tm;
-    }
-
-    private java.util.List<String> getKnownJobTypes()
-    {
-        java.util.List<String> jobNames = new java.util.LinkedList<String>();
-        adm.exec(new /*JobTypeQuery*/ RawQuery(""), (query, results) -> {
-            java.util.List<JobType> jobs = (java.util.List<JobType>)(java.util.List) results;
-            for (JobType job : jobs)
-                jobNames.add(job.getName());
-        });
-        
-        return jobNames;
     }
 
     public EmployeePanel(IDataManager adm)
@@ -122,7 +108,7 @@ public class EmployeePanel extends JPanel
 
         queries.add(getEmployeeInfo);
 
-        employeeview = new JTable(getPopulatedTableModel());
+        employeeview = new LeftAlignedJTable(getPopulatedTableModel());
         employeeview.setAutoCreateRowSorter(true);
         employeeview.getTableHeader().setReorderingAllowed(false);
         JScrollPane employeeviewpane = new JScrollPane(employeeview);

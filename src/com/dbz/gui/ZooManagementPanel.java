@@ -21,14 +21,14 @@ public class ZooManagementPanel extends JPanel
     private static JButton getExpenseBreakdown = new JButton("Get Expense Breakdown");
     private static JButton getFoodQuantity = new JButton("Food Quantity");
     private static JScrollPane dataviewpane;
-    private static JTable mgmtview;
+    private static LeftAlignedJTable mgmtview;
 
     private final IDataManager adm;
 
     public ZooManagementPanel(IDataManager adm)
     {
         getCapacitiesAvailability.addActionListener(e -> {
-            DefaultTableModel tm = new DefaultTableModel();
+            BetterSortingTableModel tm = new BetterSortingTableModel();
             tm.addColumn("Location Name");
             tm.addColumn("Number of Exhibits in Location");
             tm.addColumn("Animals in Location");
@@ -47,7 +47,7 @@ public class ZooManagementPanel extends JPanel
         });
 
         getExpenseBreakdown.addActionListener(e -> {
-            DefaultTableModel tm = new DefaultTableModel();
+            BetterSortingTableModel tm = new BetterSortingTableModel();
             tm.addColumn("Cost class");
             tm.addColumn("$ Cost per year");
 
@@ -61,12 +61,7 @@ public class ZooManagementPanel extends JPanel
             });
         });
 
-        getFoodQuantity.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("TODO: add query getFoodQuantity.");
-            }
-        });
+        getFoodQuantity.addActionListener(e -> System.out.println("TODO: add query getFoodQuantity."));
 
         this.adm = adm;
         setLayout(new BorderLayout());
@@ -79,7 +74,7 @@ public class ZooManagementPanel extends JPanel
 
         DefaultTableModel tm = new DefaultTableModel();
         tm.addColumn("Welcome to DBZ");
-        mgmtview = new JTable(tm);
+        mgmtview = new LeftAlignedJTable(tm);
         mgmtview.setAutoCreateRowSorter(true);
         dataviewpane = new JScrollPane(mgmtview);
 
