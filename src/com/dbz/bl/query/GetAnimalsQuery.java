@@ -14,7 +14,7 @@ public class GetAnimalsQuery extends Query
     @Override
     public String getQuery()
     {
-        return "SELECT * FROM " + Animal.class.getSimpleName();
+        return "SELECT * FROM " + Animal.class.getSimpleName() + ";";
     }
 
     @Override

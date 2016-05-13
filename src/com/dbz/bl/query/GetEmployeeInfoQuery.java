@@ -15,7 +15,7 @@ public class GetEmployeeInfoQuery extends Query
     @Override
     public String getQuery()
     {
-        return "SELECT * FROM " + Employee.class.getSimpleName();
+        return "SELECT * FROM " + Employee.class.getSimpleName() + ";";
     }
 
     @Override

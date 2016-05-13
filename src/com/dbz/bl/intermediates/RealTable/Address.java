@@ -14,7 +14,7 @@ public class Address implements UpdatableTable {
     public static final String STREET_2 = "Street2";
     public static final String CITY     = "City";
     public static final String STATE    = "State";
-    public static final String ZIP_CODE = "ZipCOde";
+    public static final String ZIP_CODE = "ZipCode";
     public static final String[] columnNames = new String[] { STREET_1, STREET_2, CITY, STATE, ZIP_CODE };
 
     private Integer mId;

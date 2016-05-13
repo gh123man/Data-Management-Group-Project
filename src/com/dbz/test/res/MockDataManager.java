@@ -25,6 +25,7 @@ public class MockDataManager implements IDataManager {
 
     @Override
     public void exec(Query query, ExecEventHandler handler) {
+        System.out.println("MockDataManager: " + query.getQuery());
         if (query instanceof ExhibitOverviewQuery) {
             handler.onExec(query, new ArrayList<Table>() {{
                 add(new ExhibitOverview("Exhibit1", 100, 20));

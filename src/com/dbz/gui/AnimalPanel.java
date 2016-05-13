@@ -4,6 +4,7 @@ import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Animal;
 import com.dbz.bl.query.DeleteByIdQuery;
 import com.dbz.bl.query.GetAnimalsQuery;
+import com.dbz.bl.query.MoveAnimal;
 import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
@@ -125,8 +126,6 @@ public class AnimalPanel extends JPanel
         moveAnimal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("TODO: add query moveAnimal.");
-
                 String lid, lexhibitid;
                 lid = inputId.getText();
                 lexhibitid = inputExhibitId.getText();
@@ -134,8 +133,7 @@ public class AnimalPanel extends JPanel
                 if ((lid.length() * lexhibitid.length()) == 0)
                     return;
 
-//                TODO
-                adm.exec(new RawQuery(""), ((query, results) -> {
+                adm.exec(new MoveAnimal(Integer.parseInt(lid), Integer.parseInt(lexhibitid)), ((query, results) -> {
 
                 }));
                 clearJInputs();

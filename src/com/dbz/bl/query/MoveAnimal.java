@@ -6,23 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by Patrick on 5/6/2016.
+ * Created by Patrick on 5/12/2016.
  */
-public class DeleteByIdQuery extends Query
+public class MoveAnimal extends Query
 {
-    private String table;
-    private int id;
+    private int id, newExhibit;
 
-    public DeleteByIdQuery(String table, int id)
+    public MoveAnimal(int id, int newExhibit)
     {
-        this.table = table;
         this.id = id;
+        this.newExhibit = newExhibit;
     }
 
     @Override
     public String getQuery()
     {
-        return "DELETE FROM " + table + " WHERE ID = " + id + ";";
+        return "UPDATE Animal SET ExhibitId = " + this.newExhibit + " WHERE ID = " + this.id + ";";
     }
 
     @Override
