@@ -8,10 +8,10 @@ import java.math.BigDecimal;
  * Created by brian on 5/13/16.
  */
 public class EmployeeInfo implements Table {
-    private String mFname, mLname, mMi, mS1, mS2, mState, mZip;
+    private String mFname, mLname, mMi, mS1, mS2, mState, mZip, mJob;
     private BigDecimal mSalary;
 
-    public EmployeeInfo(String mZip, String mFname, String mLname, String mMi, String mS1, String mS2, String mState, BigDecimal mSalary) {
+    public EmployeeInfo(String mZip, String mFname, String mLname, String mMi, String mS1, String mS2, String mState, BigDecimal mSalary, String job) {
         this.mZip = mZip;
         this.mFname = mFname;
         this.mLname = mLname;
@@ -20,6 +20,7 @@ public class EmployeeInfo implements Table {
         this.mS2 = mS2;
         this.mState = mState;
         this.mSalary = mSalary;
+        mJob = job;
     }
 
     public String getFname() {
@@ -84,5 +85,16 @@ public class EmployeeInfo implements Table {
 
     public void setSalary(BigDecimal mSalary) {
         this.mSalary = mSalary;
+    }public String getmJob() {
+        return mJob;
     }
+
+    public void setJob(String mJob) {
+        this.mJob = mJob;
+    }
+
+    public String getJob() {
+        return mJob;
+    }
+
 }

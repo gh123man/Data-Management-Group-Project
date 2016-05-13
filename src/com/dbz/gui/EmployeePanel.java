@@ -44,6 +44,7 @@ public class EmployeePanel extends JPanel
         tm.addColumn("First Name");
         tm.addColumn("Middle Initial");
         tm.addColumn("Last Name");
+        tm.addColumn("Job Title");
         tm.addColumn("Salary $");
         tm.addColumn("Street 1");
         tm.addColumn("Street 2");
@@ -58,6 +59,7 @@ public class EmployeePanel extends JPanel
                         employee.getFname(),
                         employee.getMi(),
                         employee.getLname(),
+                        employee.getJob(),
                         employee.getSalary(),
                         employee.getS1(),
                         employee.getS2(),

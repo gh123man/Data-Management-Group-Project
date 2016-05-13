@@ -21,11 +21,14 @@ public class GetEmployeeInfoQuery extends Query {
                 "Employee.Salary, " +
                 "Address.Street1 as s1," +
                 "Address.Street2 as s2, " +
-                "Address.City, Address.State," +
-                " Address.ZipCode  " +
+                "Address.City, " +
+                "Address.State," +
+                "Address.ZipCode,  " +
+                "JobType.Name as Job " +
                 "FROM Employee LEFT JOIN " +
                 "Person ON Person.ID = Employee.PersonID " +
-                "LEFT JOIN Address ON Address.ID = Person.AddressID";
+                "LEFT JOIN Address ON Address.ID = Person.AddressID " +
+                "LEFT JOIN JobType ON JobType.ID = Employee.Job";
     }
 
     @Override
@@ -37,6 +40,7 @@ public class GetEmployeeInfoQuery extends Query {
                 rs.getString("s1"),
                 rs.getString("s2"),
                 rs.getString("State"),
-                rs.getBigDecimal("Salary"));
+                rs.getBigDecimal("Salary"),
+                rs.getString("Job"));
     }
 }
