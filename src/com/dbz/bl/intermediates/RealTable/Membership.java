@@ -19,12 +19,12 @@ public class Membership implements UpdatableTable {
     private Date mExpirationDate;
     private Integer mPersonId;
 
-    private boolean mCPersonId, mCExperationDate;
+    private boolean mCPersonId, mCExpirationDate;
 
     public Membership(Integer personId, Date date) {
         mPersonId = personId;
         mExpirationDate = date;
-        mCExperationDate = mCPersonId = true;
+        mCExpirationDate = mCPersonId = true;
     }
 
     // ONLY FOR BACKEND USE - may need refactoring
@@ -33,7 +33,7 @@ public class Membership implements UpdatableTable {
         mId = id;
         mPersonId = personId;
         mExpirationDate = date;
-        mCExperationDate = mCPersonId = false;
+        mCExpirationDate = mCPersonId = false;
     }
 
     public Integer getID() {
@@ -53,7 +53,7 @@ public class Membership implements UpdatableTable {
     }
     public void setDate(Date v) {
         mExpirationDate = v;
-        mCExperationDate = true;
+        mCExpirationDate = true;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class Membership implements UpdatableTable {
     public Map<String, Object> getChanged() {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCPersonId) changelist.put(PERSON_ID, mPersonId);
-        if (mCExperationDate) changelist.put(EXPIRATION_DATE, mExpirationDate);
+        if (mCExpirationDate) changelist.put(EXPIRATION_DATE, mExpirationDate);
         return changelist;
     }
 

@@ -1,13 +1,10 @@
 package com.dbz.bl;
 
-import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.RealTable.UpdatableTable;
+import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.query.Query;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +91,9 @@ public class DataManagerBackend {
         else if ((param) instanceof String)
             // TODO Implement proper escaping. This is a temporary workaround to make records work.
             return "'" + ((String) param).replace("'", "''") + "'";
+        else if (param instanceof Date) {
+            return String.format("parsedatetime(%s, %s)", param.toString(), param.toString(), "yyyy-MM-dd");
+        }
         return null;
     }
 

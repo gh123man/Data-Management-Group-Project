@@ -1,5 +1,5 @@
 package com.dbz.data;
-import com.dbz.bl.ConnectionProvider;
+
 import com.dbz.bl.DataManager;
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.*;
@@ -9,10 +9,11 @@ import com.dbz.bl.query.Query;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
-import java.sql.Date;
 /**
  * Created by justincohen on 5/9/16.
  */
@@ -231,37 +232,28 @@ public class DataImport implements IDataManager.ExecEventHandler,
             int year = Integer.parseInt(date[0]);
             int month = Integer.parseInt(date[1]);
             int day = Integer.parseInt(date[2]);
-            Membership m = new Membership(Integer.parseInt(data[0]),new Date(year,month,day));
-
+            Calendar cal = Calendar.getInstance();
+            cal.set(year, month, day);
+            Membership m = new Membership(Integer.parseInt(data[0]), new Date(cal.getTimeInMillis()));
+            dm.commit(m, this, this);
         }
         scan.close();
     }
 
     public void makeEverything() throws SQLException{
         // Order is important due to foreign keys with the not null constraint.
-        // TODO Sleeps are only being used for ease of testing. Remove when no longer needed.
         makeAddress();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         makePeople();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         makeMembership();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeJobType();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeLocation();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeExhibit();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeEmployee();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeFood();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeAnimalClass();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeAnimal();
-//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        makeEats();
-        makeEmployeeExhibit();
+//        makeJobType();
+//        makeLocation();
+//        makeExhibit();
+//        makeEmployee();
+//        makeFood();
+//        makeAnimalClass();
+//        makeAnimal();
+//        makeEats();
+//        makeEmployeeExhibit();
     }
 
 
