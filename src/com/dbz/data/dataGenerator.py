@@ -81,7 +81,7 @@ def generateAnimals(n):
     winter = ["Penguin","Polar Bear","Walrus","Seal","Narwhal","Wolf","Moose","Ox","Reindeer","Puffin"]
     forest = ["Bear","Owl","Badger","Bat","Deer","Fox","Rabbit","Tiger","Hedgehog","Coyote"]
     bug = ["Ant","Bee","Butterfly","Beetle","Grasshopper","Mantis","Dragonfly","Ladybug","Fly","Worm"]
-    locationIds = {0:birds,1:reptile,2:safari,3:winter,4:forest,5:bug}
+    locationIds = {1:birds,2:reptile,3:safari,4:winter,5:forest,6:bug}
     with open('csv/food.csv','w') as csvfile:
         writer = csv.writer(csvfile)
         for k in locationIds:
@@ -90,7 +90,7 @@ def generateAnimals(n):
                 food = a+" Food"
                 writer.writerow([food,amount])
     animalid={}
-    index = 0
+    index = 1
     with open('csv/animal_class.csv','w') as csvfile:
         writer = csv.writer(csvfile)
         for k in locationIds:
