@@ -255,10 +255,11 @@ public class DataImport implements IDataManager.ExecEventHandler,
         makeFood();
         makeAnimalClass();
 
+        // More kludge.
         try { Thread.sleep(1000); } catch(InterruptedException e) {}
         makeAnimal();
-//        makeEats();
-//        makeEmployeeExhibit();
+        makeEats();
+        makeEmployeeExhibit();
     }
 
 
