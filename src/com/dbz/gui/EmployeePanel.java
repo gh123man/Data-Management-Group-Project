@@ -1,17 +1,16 @@
 package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
-import com.dbz.bl.intermediates.RealTable.Employee;
 import com.dbz.bl.intermediates.RealTable.JobType;
+import com.dbz.bl.intermediates.VirtualTable.EmployeeInfo;
 import com.dbz.bl.query.GetEmployeeInfoQuery;
 import com.dbz.bl.query.JobQuery;
 import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.*;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EmployeePanel extends JPanel
 {
@@ -42,13 +41,29 @@ public class EmployeePanel extends JPanel
     private EmployeeTableModel getPopulatedTableModel()
     {
         EmployeeTableModel tm = new EmployeeTableModel();
-        for (String col : Employee.columnNames)
-            tm.addColumn(col);
+        tm.addColumn("First Name");
+        tm.addColumn("Middle Initial");
+        tm.addColumn("Last Name");
+        tm.addColumn("Salary $");
+        tm.addColumn("Street 1");
+        tm.addColumn("Street 2");
+        tm.addColumn("State");
+        tm.addColumn("Zip Code");
+
 
         adm.exec(new GetEmployeeInfoQuery(), (query, results) -> {
-            java.util.List<Employee> employees = (java.util.List<Employee>)(java.util.List) results;
-            for (Employee employee : employees) {
-                Object[] obj = {employee.getPersonId(), employee.getSalary(), jobs.get(employee.getJob())};
+            java.util.List<EmployeeInfo> employees = (java.util.List<EmployeeInfo>)(java.util.List) results;
+            for (EmployeeInfo employee : employees) {
+                Object[] obj = {
+                        employee.getFname(),
+                        employee.getMi(),
+                        employee.getLname(),
+                        employee.getSalary(),
+                        employee.getS1(),
+                        employee.getS2(),
+                        employee.getState(),
+                        employee.getZip()
+                };
                 tm.addRow(obj);
             }
         });
