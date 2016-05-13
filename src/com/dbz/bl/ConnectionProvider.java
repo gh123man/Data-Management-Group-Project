@@ -49,6 +49,7 @@ public class ConnectionProvider {
         return Files.exists( dbPath );
     }
 
+    /*
     public static void main( String[] args ) throws Exception {
         Path dbPath = Paths.get( DB_FILEPATH );
         if ( Files.exists( dbPath ) ) {
@@ -59,4 +60,5 @@ public class ConnectionProvider {
         conn.close();
         System.out.printf( "File exists at project root: %b\n", Files.exists( dbPath ) );
     }
+    */
 }

@@ -9,6 +9,7 @@ import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +17,6 @@ import java.awt.event.ActionListener;
 public class AnimalPanel extends JPanel
 {
     public static final String TITLE = "Animals";
-    private static JTextField inputId = new JTextField(3);
     private static JTextField inputName = new JTextField(7);
     private static JTextField inputClassId = new JTextField(3);
     private static JTextField inputExhibitId= new JTextField(3);
@@ -44,8 +44,9 @@ public class AnimalPanel extends JPanel
     {
         AnimalTableModel tm = new AnimalTableModel();
 
-        for (String col : Animal.columnNames)
+        for (String col : Animal.columnNames) {
             tm.addColumn(col);
+        }
 
         adm.exec(new GetAnimalsQuery(), ((query, results) -> {
             java.util.List<Animal> animals = (java.util.List<Animal>)(java.util.List) results;
@@ -68,7 +69,6 @@ public class AnimalPanel extends JPanel
 
     private void clearJInputs()
     {
-        inputId.setText("");
         inputName.setText("");
         inputClassId.setText("");
         inputExhibitId.setText("");
@@ -78,17 +78,20 @@ public class AnimalPanel extends JPanel
 
     public AnimalPanel(IDataManager adm)
     {
-        getAnimals.addActionListener(e -> animalview.setModel(getPopulatedTableModel()));
+        getAnimals.addActionListener(e -> {
+            animalview.setModel(getPopulatedTableModel());
+            // This allows us to prevent display of the ID, but preserve it for use in update/remove queries.
+            animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));
+        });
 
         removeAnimal.addActionListener(e -> {
-            for (int row : animalview.getSelectedRows())
-            {
+            for (int row : animalview.getSelectedRows()) {
+                final Integer animalID = (Integer) animalview.getModel().getValueAt(row, ID_COL_IDX);
                 System.out.println("TODO: add query removeAnimal.");
-                System.out.println("Deleting Animal " + row + ", ID: " + animalview.getValueAt(row, ID_COL_IDX));
+                System.out.println("Deleting Animal " + row + ", ID: " + animalID);
 
-                adm.exec(new DeleteByIdQuery(Animal.class.getSimpleName(), (Integer)animalview.getValueAt(row, ID_COL_IDX)),
-                        (query, results) ->
-                        {
+                adm.exec(new DeleteByIdQuery(Animal.class.getSimpleName(), animalID),
+                        (query, results) -> {
 //                            I don't think there is a result we care about.
                         });
             }
@@ -96,30 +99,27 @@ public class AnimalPanel extends JPanel
         });
 
 
-        addAnimal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String lid,lname,lclass,lexhibitid,lgender,lage;
+        addAnimal.addActionListener(e -> {
+            String lname,lclass,lexhibitid,lgender,lage;
 //                lid = inputId.getText();
-                lname = inputName.getText();
-                lclass = inputClassId.getText();
-                lexhibitid = inputExhibitId.getText();
-                lgender = inputGender.getText();
-                lage = inputAge.getText();
+            lname = inputName.getText();
+            lclass = inputClassId.getText();
+            lexhibitid = inputExhibitId.getText();
+            lgender = inputGender.getText();
+            lage = inputAge.getText();
 
-                if ((lname.length() * lclass.length() * lexhibitid.length() * lgender.length() * lage.length()) == 0)
-                    return;
+            if ((lname.length() * lclass.length() * lexhibitid.length() * lgender.length() * lage.length()) == 0)
+                return;
 
 //                TODO
-                System.out.println("TODO: add query addAnimal.");
-                adm.exec(new RawQuery(""), ((query, results) -> {
+            System.out.println("TODO: add query addAnimal.");
+            adm.exec(new RawQuery(""), ((query, results) -> {
 
-                }));
+            }));
 
 //                Clear inputs
-                clearJInputs();
-                animalview.setModel(getPopulatedTableModel());
-            }
+            clearJInputs();
+            animalview.setModel(getPopulatedTableModel());
         });
 
 
@@ -127,7 +127,7 @@ public class AnimalPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 String lid, lexhibitid;
-                lid = inputId.getText();
+                lid = (String) animalview.getModel().getValueAt(animalview.getSelectedRow(), ID_COL_IDX);
                 lexhibitid = inputExhibitId.getText();
 
                 if ((lid.length() * lexhibitid.length()) == 0)
@@ -148,8 +148,6 @@ public class AnimalPanel extends JPanel
         queries.add(getAnimals);
 
         JPanel crud = new JPanel(new FlowLayout());
-        crud.add(new JLabel("ID"));
-        crud.add(inputId);
         crud.add(new JLabel("Name"));
         crud.add(inputName);
         crud.add(new JLabel("Class"));
@@ -169,6 +167,10 @@ public class AnimalPanel extends JPanel
         modify.add(removeAnimal);
 
         animalview = new JTable(getPopulatedTableModel());
+
+        // This allows us to prevent display of the ID, but preserve it for use in update/remove queries.
+        animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));
+
         animalview.setAutoCreateRowSorter(true);
         animalview.getTableHeader().setReorderingAllowed(false);
         JScrollPane animalviewpane = new JScrollPane(animalview);
