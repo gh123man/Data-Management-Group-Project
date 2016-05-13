@@ -2,21 +2,23 @@ package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Animal;
+import com.dbz.bl.intermediates.RealTable.AnimalClass;
 import com.dbz.bl.intermediates.VirtualTable.AnimalRecord;
 import com.dbz.bl.query.DeleteByIdQuery;
 import com.dbz.bl.query.GetAnimalsQuery;
+import com.dbz.bl.query.GetClass;
 import com.dbz.bl.query.MoveAnimal;
 import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
+import java.util.Vector;
 
-public class AnimalPanel extends JPanel
-{
+public class AnimalPanel extends JPanel {
     public static final String TITLE = "Animals";
     private static JTextField inputName = new JTextField(7);
-    private static JTextField inputClassId = new JTextField(3);
-    private static JTextField inputExhibitId= new JTextField(3);
+    private static JTextField inputExhibitId = new JTextField(3);
     private static JTextField inputAge = new JTextField(3);
     private static JButton getAnimals = new JButton("Get Animals");
     private static JButton removeAnimal = new JButton("Remove Selected Animal(s)");
@@ -28,18 +30,15 @@ public class AnimalPanel extends JPanel
 
     private final IDataManager adm;
 
-    private JComboBox genderBox;
+    private JComboBox genderBox, classBox;
 
-    private class AnimalTableModel extends BetterSortingTableModel
-    {
-        public boolean isCellEditable(int row, int col)
-        {
+    private class AnimalTableModel extends BetterSortingTableModel {
+        public boolean isCellEditable(int row, int col) {
             return col != ID_COL_IDX;
         }
     }
 
-    private AnimalTableModel getPopulatedTableModel()
-    {
+    private AnimalTableModel getPopulatedTableModel() {
         AnimalTableModel tm = new AnimalTableModel();
 
         tm.addColumn("ID"); //This gets hidden
@@ -50,9 +49,8 @@ public class AnimalPanel extends JPanel
         tm.addColumn("Age");
 
         adm.exec(new GetAnimalsQuery(), ((query, results) -> {
-            java.util.List<AnimalRecord> animals = (java.util.List<AnimalRecord>)(java.util.List) results;
-            for (AnimalRecord animal : animals)
-            {
+            java.util.List<AnimalRecord> animals = (java.util.List<AnimalRecord>) (java.util.List) results;
+            for (AnimalRecord animal : animals) {
                 Object[] obj = {
                         animal.getAnimalID(),
                         animal.getName(),
@@ -68,16 +66,13 @@ public class AnimalPanel extends JPanel
         return tm;
     }
 
-    private void clearJInputs()
-    {
+    private void clearJInputs() {
         inputName.setText("");
-        inputClassId.setText("");
         inputExhibitId.setText("");
         inputAge.setText("");
     }
 
-    public AnimalPanel(IDataManager adm)
-    {
+    public AnimalPanel(IDataManager adm) {
         getAnimals.addActionListener(e -> {
             animalview.setModel(getPopulatedTableModel());
             // This allows us to prevent display of the ID, but preserve it for use in update/remove queries.
@@ -98,27 +93,30 @@ public class AnimalPanel extends JPanel
 
 
         addAnimal.addActionListener(e -> {
-            String lname,lclass,lexhibitid,lgender,lage;
+            Integer lclass;
+            String lname, lexhibitid, lgender, lage;
 //                lid = inputId.getText();
             lname = inputName.getText();
 
             // TODO Change this to a dropdown, users shouldn't need to know the numeric ID.
-            lclass = inputClassId.getText();
+            lclass = ((AnimalClass) classBox.getSelectedItem()).getId();
             lexhibitid = inputExhibitId.getText();
-            lgender = (String)genderBox.getSelectedItem();
+            lgender = (String) genderBox.getSelectedItem();
             lage = inputAge.getText();
-
-            if ((lname.length() * lclass.length() * lexhibitid.length() * lgender.length() * lage.length()) == 0)
+            //Not sure what to change here    V
+            if ((lname.length() /** lclass.length()*/ * lexhibitid.length() * lgender.length() * lage.length()) == 0)
                 return;
 
 //                TODO
-            Animal animal = new Animal(lname, Integer.parseInt(lclass),
+            Animal animal = new Animal(lname, lclass,
                     Integer.parseInt(lexhibitid),
                     lgender,
-                    Integer.parseInt(lage) );
+                    Integer.parseInt(lage));
             adm.commit(animal,
-                    (a) -> { System.out.println(((Animal)a).getId());},
-                    (a,b) -> b.printStackTrace());
+                    (a) -> {
+                        System.out.println(((Animal) a).getId());
+                    },
+                    (a, b) -> b.printStackTrace());
 
 //                Clear inputs
             clearJInputs();
@@ -154,11 +152,31 @@ public class AnimalPanel extends JPanel
         crud.add(new JLabel("Name"));
         crud.add(inputName);
         crud.add(new JLabel("Class"));
-        crud.add(inputClassId);
+
+
+        // ----- HOLY HELL THIS HIS HACKY IM SO SORRY ----
+        Vector model = new Vector();
+        adm.exec(new GetClass(), (query, results) -> {
+            java.util.List<AnimalClass> classes = (java.util.List<AnimalClass>) (java.util.List) results;
+            classes.forEach(c -> model.addElement(c));
+        });
+        classBox = new JComboBox(model);
+        classBox.setRenderer(new BasicComboBoxRenderer() {
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value != null) {
+                    AnimalClass item = (AnimalClass) value;
+                    setText(item.getName());
+                }
+                return this;
+            }
+        });
+        crud.add(classBox);
+        // ---------- END HACKY STUFF ----------
         crud.add(new JLabel("Exhibit"));
         crud.add(inputExhibitId);
         crud.add(new JLabel("Gender"));
-        crud.add(new JComboBox<String>(){{
+        crud.add(new JComboBox<String>() {{
             genderBox = this;
             addItem("M");
             addItem("F");
