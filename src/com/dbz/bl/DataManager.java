@@ -27,8 +27,7 @@ public class DataManager implements IDataManager {
     public void commit(final UpdatableTable table, final CommitEventHandler handler, final InvalidCommitHandler errorHandler) {
         new Thread(() -> {
             try {
-                mDataManagerBackend.commit(table);
-                handler.onCommit(table);
+                handler.onCommit(mDataManagerBackend.commit(table));
             } catch (DataManagerBackend.InvalidRequestException e) {
                 errorHandler.onError(table, e);
             } catch (SQLException e) {

@@ -1,5 +1,5 @@
 package com.dbz.bl;
-
+import com.dbz.bl.intermediates.RealTable.KeyedTable;
 import com.dbz.bl.intermediates.RealTable.UpdatableTable;
 import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.query.Query;
@@ -28,7 +28,7 @@ public class DataManagerBackend {
      *  - If the table instance is new, insert the data
      * @param table
      */
-    public void commit(UpdatableTable table) throws InvalidRequestException, SQLException {
+    public UpdatableTable commit(UpdatableTable table) throws InvalidRequestException, SQLException {
         String query;
         // Following the isNew procedure - Commit the table as a new row in the table
         if (table.isNew()) {
@@ -40,9 +40,19 @@ public class DataManagerBackend {
         } else {
             query = "UPDATE " + table.getTableName() + " SET " + paramMapToUpdateString(table.getChanged()) + " WHERE " + table.getInsertCond();
         }
-        executeQuery(query);
+        PreparedStatement stmt = mConn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.executeUpdate();
+        ResultSet rs = stmt.getGeneratedKeys();
+        if(rs.next()) {
+            if (table instanceof KeyedTable) {
+                ((KeyedTable) table).setId(rs.getInt(1));
+            }
+
+        }
+        stmt.close();
         // TODO: make the Insert section populate the ID and return the original object.
         // This will require some refactoring
+        return table;
     }
 
     /**
@@ -72,6 +82,7 @@ public class DataManagerBackend {
         return results;
     }
 
+    //I dont think this is used anymore. but lets leave it for now
     private ResultSet executeQuery(String query) throws SQLException {
         ResultSet rs = null;
         try (Statement stmt = mConn.createStatement()) {

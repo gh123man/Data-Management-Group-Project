@@ -8,13 +8,12 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class JobType implements UpdatableTable {
+public class JobType extends KeyedTable {
 
     public static final String NAME = "Name";
     public static final String ID = "ID";
     public static final String[] columnNames = new String[] { ID, NAME };
 
-    private Integer mId;
     private String mName;
 
     private boolean mCName;
@@ -27,14 +26,11 @@ public class JobType implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  JobType(Integer id, String name) {
-        mId = id;
+        setId(id);
         mName = name;
         mCName = false;
     }
 
-    public Integer getID() {
-        return mId;
-    }
     public String getName() {
         return mName;
     }
@@ -59,16 +55,6 @@ public class JobType implements UpdatableTable {
         HashMap<String, Object> changelist = new HashMap<>();
         if (mCName) changelist.put(NAME, mName);
         return changelist;
-    }
-
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
     }
 
 }

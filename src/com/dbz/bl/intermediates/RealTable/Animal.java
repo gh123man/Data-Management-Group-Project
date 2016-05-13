@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by brian on 4/5/16.
  */
-public class Animal implements UpdatableTable {
+public class Animal extends KeyedTable {
 
     public static final String ID           = "ID";
     public static final String NAME         = "Name";
@@ -23,7 +23,6 @@ public class Animal implements UpdatableTable {
         Female
     }
 
-    private Integer mId;
     private String mName, mGender;
     public Integer mAnimalClassId, mExhibitId, mAge;
     private boolean mCName, mCGender, mCAnimalClassId, mCExhibitId, mCAge;
@@ -40,7 +39,7 @@ public class Animal implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public Animal(Integer id, String name, Integer animalClass, Integer exhibitId, String gender, Integer age) {
-        mId = id;
+        setId(id);
         mName = name;
         mAnimalClassId = animalClass;
         mExhibitId = exhibitId;
@@ -49,9 +48,6 @@ public class Animal implements UpdatableTable {
         mCName = mCGender = mCAnimalClassId = mCExhibitId = mCAge = false;
     }
 
-    public Integer getID() {
-        return mId;
-    }
     public String getName() {
         return mName;
     }
@@ -104,15 +100,5 @@ public class Animal implements UpdatableTable {
         if (mCGender) changelist.put(GENDER, mGender);
         if (mCAge) changelist.put(AGE, mAge);
         return changelist;
-    }
-
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
     }
 }

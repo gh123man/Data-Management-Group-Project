@@ -8,13 +8,12 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Exhibit implements UpdatableTable {
+public class Exhibit extends KeyedTable {
 
     public static final String LOCATION        = "Location";
     public static final String ANIMAL_CAPACITY = "AnimalCapacity";
     public static final String[] columnNames = new String[] { LOCATION, ANIMAL_CAPACITY };
 
-    private Integer mId;
     public Integer mLocation, mAnimalCapacity;
     private boolean mCLocation, mCAnimalCapacity;
 
@@ -27,7 +26,7 @@ public class Exhibit implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  Exhibit(Integer id, Integer location, Integer animalCap) {
-        mId = id;
+        setId(id);
         mLocation = location;
         mAnimalCapacity = animalCap;
         mCLocation = mCAnimalCapacity = false;
@@ -67,13 +66,4 @@ public class Exhibit implements UpdatableTable {
         return changelist;
     }
 
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
-    }
 }

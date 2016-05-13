@@ -9,13 +9,12 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Membership implements UpdatableTable {
+public class Membership extends KeyedTable {
 
     public static final String PERSON_ID       = "PersonID";
     public static final String EXPIRATION_DATE = "ExpirationDate";
     public static final String[] columnNames = new String[] { PERSON_ID, EXPIRATION_DATE };
 
-    private Integer mId;
     private Date mExpirationDate;
     private Integer mPersonId;
 
@@ -30,15 +29,12 @@ public class Membership implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  Membership(Integer id, Integer personId, Date date) {
-        mId = id;
+        setId(id);
         mPersonId = personId;
         mExpirationDate = date;
         mCExpirationDate = mCPersonId = false;
     }
 
-    public Integer getID() {
-        return mId;
-    }
     public Integer getPersonId() {
         return mPersonId;
     }
@@ -72,16 +68,6 @@ public class Membership implements UpdatableTable {
         if (mCPersonId) changelist.put(PERSON_ID, mPersonId);
         if (mCExpirationDate) changelist.put(EXPIRATION_DATE, mExpirationDate);
         return changelist;
-    }
-
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
     }
 
 }

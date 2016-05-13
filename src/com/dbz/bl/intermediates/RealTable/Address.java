@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Address implements UpdatableTable {
+public class Address extends KeyedTable {
 
     public static final String STREET_1 = "Street1";
     public static final String STREET_2 = "Street2";
@@ -17,7 +17,6 @@ public class Address implements UpdatableTable {
     public static final String ZIP_CODE = "ZipCode";
     public static final String[] columnNames = new String[] { STREET_1, STREET_2, CITY, STATE, ZIP_CODE };
 
-    private Integer mId;
     private String mStreet1, mStreet2, mCity, mState, mZipCode;
     private boolean mCStreet1, mCStreet2, mCCity, mCState, mCZipCode;
 
@@ -33,7 +32,7 @@ public class Address implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  Address(Integer id, String street1, String street2, String city, String state, String zipCode) {
-        mId = id;
+        setId(id);
         mStreet1 = street1;
         mStreet2 = street2;
         mCity = city;
@@ -42,9 +41,6 @@ public class Address implements UpdatableTable {
         mCStreet1 = mCStreet2 = mCCity = mCState = mCZipCode = false;
     }
 
-    public Integer getID() {
-        return mId;
-    }
     public String getStreet1() {
         return mStreet1;
     }
@@ -107,13 +103,4 @@ public class Address implements UpdatableTable {
         return changelist;
     }
 
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
-    }
 }

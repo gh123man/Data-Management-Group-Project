@@ -8,13 +8,12 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Food implements UpdatableTable {
+public class Food extends KeyedTable {
 
     public static final String NAME = "Name";
     public static final String UNIT_COST = "UnitCost";
     public static final String[] columnNames = new String[] { NAME, UNIT_COST };
 
-    private Integer mId;
     private String mName;
     private Float mUnitCost;
 
@@ -29,15 +28,12 @@ public class Food implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  Food(Integer id, String name, Float unitCost) {
-        mId = id;
+        setId(id);
         mName = name;
         mUnitCost = unitCost;
         mCName = mCUnitCost = false;
     }
 
-    public Integer getID() {
-        return mId;
-    }
     public String getName() {
         return mName;
     }
@@ -73,13 +69,4 @@ public class Food implements UpdatableTable {
         return changelist;
     }
 
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
-    }
 }

@@ -8,12 +8,11 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class AnimalClass implements UpdatableTable {
+public class AnimalClass extends KeyedTable {
 
     public static final String NAME = "Name";
     public static final String[] columnNames = new String[] { NAME };
 
-    private Integer mId;
     private String mName;
 
     private boolean mCName;
@@ -26,14 +25,11 @@ public class AnimalClass implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  AnimalClass(Integer id, String name) {
-        mId = id;
+        setId(id);
         mName = name;
         mCName = false;
     }
 
-    public Integer getID() {
-        return mId;
-    }
     public String getName() {
         return mName;
     }
@@ -60,13 +56,4 @@ public class AnimalClass implements UpdatableTable {
         return changelist;
     }
 
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
-    }
 }

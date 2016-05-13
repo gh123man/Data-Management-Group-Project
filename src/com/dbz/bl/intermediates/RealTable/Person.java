@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Person implements UpdatableTable {
+public class Person extends KeyedTable {
 
     public static final String FIRST_NAME     = "FirstName";
     public static final String MIDDLE_INITIAL = "MiddleInitial";
@@ -17,7 +17,6 @@ public class Person implements UpdatableTable {
     public static final String[] contactNames = new String[]{FIRST_NAME, MIDDLE_INITIAL, LAST_NAME, ADDRESS_ID};
 
 
-    private Integer mId;
     private String mFirstName, mMiddleInitial, mLastName;
     public Integer mAddressId;
     private boolean mCFirstName, mCMiddleInitial, mCLastName, mCAddressId;
@@ -33,7 +32,7 @@ public class Person implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  Person(Integer id, String fname, String middleI, String lname, Integer addressId) {
-        mId = id;
+        setId(id);
         mFirstName = fname;
         mMiddleInitial = middleI;
         mLastName = lname;
@@ -41,9 +40,6 @@ public class Person implements UpdatableTable {
         mCFirstName = mCMiddleInitial = mCLastName = mCAddressId = false;
     }
 
-    public Integer getID() {
-        return mId;
-    }
     public String getFirstName() {
         return mFirstName;
     }
@@ -93,15 +89,5 @@ public class Person implements UpdatableTable {
         if (mCLastName) changelist.put(LAST_NAME, mLastName);
         if (mCAddressId) changelist.put(ADDRESS_ID, mAddressId);
         return changelist;
-    }
-
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
     }
 }

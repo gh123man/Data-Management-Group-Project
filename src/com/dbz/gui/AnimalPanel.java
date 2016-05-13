@@ -117,7 +117,7 @@ public class AnimalPanel extends JPanel
                     lgender,
                     Integer.parseInt(lage) );
             adm.commit(animal,
-                    (a) -> { /* TODO actually handle*/ },
+                    (a) -> { System.out.println(((Animal)a).getId());},
                     (a,b) -> b.printStackTrace());
 
 //                Clear inputs

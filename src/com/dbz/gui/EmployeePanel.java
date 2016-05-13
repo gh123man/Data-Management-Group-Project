@@ -85,7 +85,7 @@ public class EmployeePanel extends JPanel
         adm.exec(new JobQuery(), (query, results) -> {
             for (JobType job : (java.util.List<JobType>)(java.util.List)results)
             {
-                jobs.put(job.getName(), job.getID());
+                jobs.put(job.getName(), job.getId());
             }
         });
     }

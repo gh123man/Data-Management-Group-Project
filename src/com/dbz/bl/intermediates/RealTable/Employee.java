@@ -8,13 +8,12 @@ import java.util.Map;
 /**
  * Created by brian on 4/4/16.
  */
-public class Employee implements UpdatableTable {
+public class Employee extends KeyedTable {
     public static final String PERSON_ID = "PersonID";
     public static final String SALARY    = "Salary";
     public static final String JOB       = "Job";
     public static final String[] columnNames = new String[] { PERSON_ID, SALARY, JOB };
 
-    private Integer mId;
     public Integer mPersonId, mSalary, mJob;
     private boolean mCPersonId, mCSalary, mCJob;
 
@@ -28,7 +27,7 @@ public class Employee implements UpdatableTable {
     // ONLY FOR BACKEND USE - may need refactoring
     // Cant be protected due to package structure
     public  Employee(Integer id, Integer personId, Integer salary, Integer job) {
-        mId = id;
+        setId(id);
         mPersonId = personId;
         mSalary = salary;
         mJob = job;
@@ -77,13 +76,4 @@ public class Employee implements UpdatableTable {
         return changelist;
     }
 
-    @Override
-    public boolean isNew() {
-        return mId == null;
-    }
-
-    @Override
-    public String getInsertCond() {
-        return "ID = " + mId;
-    }
 }
