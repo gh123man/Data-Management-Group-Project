@@ -75,5 +75,6 @@ public class ZooManagementPanel extends JPanel
         dataviewpane = new JScrollPane(mgmtview);
 
         add(dataviewpane, BorderLayout.SOUTH);
+        getCapacitiesAvailability.doClick();
     }
 }
