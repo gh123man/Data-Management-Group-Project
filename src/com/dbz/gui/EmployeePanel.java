@@ -19,12 +19,12 @@ public class EmployeePanel extends JPanel
     private static JTextField newPersonId = new JTextField(5);
     private static JTextField newSalaryAmount = new JTextField(7);
     private static JTextField newJobTitle = new JTextField(10);
-    private static JTable employeeview;
+    private static LeftAlignedJTable employeeview;
 
     private final IDataManager adm;
     private final int ID_COL_IDX = 0;
 
-    private class EmployeeTableModel extends DefaultTableModel
+    private class EmployeeTableModel extends BetterSortingTableModel
     {
         public boolean isCellEditable(int row, int col)
         {
@@ -108,7 +108,7 @@ public class EmployeePanel extends JPanel
 
         queries.add(getEmployeeInfo);
 
-        employeeview = new JTable(getPopulatedTableModel());
+        employeeview = new LeftAlignedJTable(getPopulatedTableModel());
         employeeview.setAutoCreateRowSorter(true);
         employeeview.getTableHeader().setReorderingAllowed(false);
         JScrollPane employeeviewpane = new JScrollPane(employeeview);
