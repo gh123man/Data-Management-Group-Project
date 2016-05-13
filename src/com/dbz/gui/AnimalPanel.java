@@ -2,6 +2,7 @@ package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Animal;
+import com.dbz.bl.intermediates.VirtualTable.AnimalRecord;
 import com.dbz.bl.query.DeleteByIdQuery;
 import com.dbz.bl.query.GetAnimalsQuery;
 import com.dbz.bl.query.MoveAnimal;
@@ -49,14 +50,14 @@ public class AnimalPanel extends JPanel
         }
 
         adm.exec(new GetAnimalsQuery(), ((query, results) -> {
-            java.util.List<Animal> animals = (java.util.List<Animal>)(java.util.List) results;
-            for (Animal animal : animals)
+            java.util.List<AnimalRecord> animals = (java.util.List<AnimalRecord>)(java.util.List) results;
+            for (AnimalRecord animal : animals)
             {
                 Object[] obj = {
-                        animal.getID(),
+                        animal.getAnimalID(),
                         animal.getName(),
-                        animal.getAnimalClassId(),
-                        animal.getExhibitId(),
+                        animal.getAnimalClass(),
+                        animal.getExhibitID(),
                         animal.getGender(),
                         animal.getAge()
                 };
@@ -87,15 +88,13 @@ public class AnimalPanel extends JPanel
         removeAnimal.addActionListener(e -> {
             for (int row : animalview.getSelectedRows()) {
                 final Integer animalID = (Integer) animalview.getModel().getValueAt(row, ID_COL_IDX);
-                System.out.println("TODO: add query removeAnimal.");
-                System.out.println("Deleting Animal " + row + ", ID: " + animalID);
-
                 adm.exec(new DeleteByIdQuery(Animal.class.getSimpleName(), animalID),
                         (query, results) -> {
-//                            I don't think there is a result we care about.
+                            // I don't think there is a result we care about.
                         });
             }
             animalview.setModel(getPopulatedTableModel());
+            animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));
         });
 
 
@@ -126,18 +125,21 @@ public class AnimalPanel extends JPanel
         moveAnimal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String lid, lexhibitid;
-                lid = (String) animalview.getModel().getValueAt(animalview.getSelectedRow(), ID_COL_IDX);
+                Integer lid;
+                String lexhibitid;
+                lid = (Integer) animalview.getModel().getValueAt(animalview.getSelectedRow(), ID_COL_IDX);
                 lexhibitid = inputExhibitId.getText();
 
-                if ((lid.length() * lexhibitid.length()) == 0)
+                if (lid == null || lexhibitid.length() == 0) {
                     return;
+                }
 
-                adm.exec(new MoveAnimal(Integer.parseInt(lid), Integer.parseInt(lexhibitid)), ((query, results) -> {
-
+                adm.exec(new MoveAnimal(lid, Integer.parseInt(lexhibitid)), ((query, results) -> {
+                    // TODO Do anything with results?
                 }));
                 clearJInputs();
                 animalview.setModel(getPopulatedTableModel());
+                animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));
             }
         });
 
