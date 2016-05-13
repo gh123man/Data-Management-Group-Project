@@ -8,6 +8,7 @@ import com.dbz.bl.query.JobQuery;
 import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -133,8 +134,10 @@ public class EmployeePanel extends JPanel
         setLayout(new BorderLayout());
 
         JPanel queries = new JPanel(new FlowLayout());
-        JPanel crud = new JPanel((new FlowLayout()));
+        JPanel bottomCont = new JPanel((new BorderLayout()));
+        JPanel crud = new JPanel((new BorderLayout()));
         JPanel addPanel = new JPanel(new FlowLayout());
+        JPanel addPanel1 = new JPanel(new FlowLayout());
 //        addPanel.add(new JLabel("ID"));
 //        addPanel.add(newPersonId);
         addPanel.add(new JLabel("First"));
@@ -145,24 +148,29 @@ public class EmployeePanel extends JPanel
         addPanel.add(newLName);
         addPanel.add(new JLabel("Salary"));
         addPanel.add(newSalaryAmount);
-        addPanel.add(new JLabel("Street1"));
-        addPanel.add(newAddr1);
-        addPanel.add(new JLabel("Street2"));
-        addPanel.add(newAddr2);
-        addPanel.add(new JLabel("State"));
-        addPanel.add(newState);
-        addPanel.add(new JLabel("Zip"));
-        addPanel.add(newZip);
-        addPanel.add(new JLabel("Job"));
+
+        addPanel1.add(new JLabel("Street1"));
+        addPanel1.add(newAddr1);
+        addPanel1.add(new JLabel("Street2"));
+        addPanel1.add(newAddr2);
+        addPanel1.add(new JLabel("State"));
+        addPanel1.add(newState);
+        addPanel1.add(new JLabel("Zip"));
+        addPanel1.add(newZip);
+        addPanel1.add(new JLabel("Job"));
         populateKnownJobs();
         newJobSelect = new JComboBox(jobs.keySet().toArray());
         addPanel.add(newJobSelect);
-        addPanel.add(addEmployee);
-        addPanel.setBorder(BorderFactory.createEtchedBorder());
-        crud.add(addPanel);
-        crud.add(removeEmployee);
+        addPanel1.add(addEmployee);
+        crud.add(addPanel, BorderLayout.NORTH);
+        crud.add(addPanel1, BorderLayout.SOUTH);
+        crud.setBorder(BorderFactory.createEtchedBorder());
+
+        bottomCont.add(crud, BorderLayout.WEST);
+        bottomCont.add(removeEmployee, BorderLayout.EAST);
 
         queries.add(getEmployeeInfo);
+
 
         employeeview = new LeftAlignedJTable(getPopulatedTableModel());
         employeeview.setAutoCreateRowSorter(true);
@@ -170,7 +178,7 @@ public class EmployeePanel extends JPanel
         JScrollPane employeeviewpane = new JScrollPane(employeeview);
 
         add(queries, BorderLayout.NORTH);
-        add(crud, BorderLayout.SOUTH);
+        add(bottomCont, BorderLayout.SOUTH);
         add(employeeviewpane, BorderLayout.CENTER);
     }
 }
