@@ -6,14 +6,10 @@ import com.dbz.bl.intermediates.VirtualTable.AnimalRecord;
 import com.dbz.bl.query.DeleteByIdQuery;
 import com.dbz.bl.query.GetAnimalsQuery;
 import com.dbz.bl.query.MoveAnimal;
-import com.dbz.bl.query.RawQuery;
+import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AnimalPanel extends JPanel
 {
@@ -21,7 +17,6 @@ public class AnimalPanel extends JPanel
     private static JTextField inputName = new JTextField(7);
     private static JTextField inputClassId = new JTextField(3);
     private static JTextField inputExhibitId= new JTextField(3);
-    private static JTextField inputGender = new JTextField(6);
     private static JTextField inputAge = new JTextField(3);
     private static JButton getAnimals = new JButton("Get Animals");
     private static JButton removeAnimal = new JButton("Remove Selected Animal(s)");
@@ -32,6 +27,8 @@ public class AnimalPanel extends JPanel
     private final int ID_COL_IDX = 0;
 
     private final IDataManager adm;
+
+    private JComboBox genderBox;
 
     private class AnimalTableModel extends BetterSortingTableModel
     {
@@ -73,7 +70,6 @@ public class AnimalPanel extends JPanel
         inputName.setText("");
         inputClassId.setText("");
         inputExhibitId.setText("");
-        inputGender.setText("");
         inputAge.setText("");
     }
 
@@ -106,7 +102,7 @@ public class AnimalPanel extends JPanel
             // TODO Change this to a dropdown, users shouldn't need to know the numeric ID.
             lclass = inputClassId.getText();
             lexhibitid = inputExhibitId.getText();
-            lgender = inputGender.getText();
+            lgender = (String)genderBox.getSelectedItem();
             lage = inputAge.getText();
 
             if ((lname.length() * lclass.length() * lexhibitid.length() * lgender.length() * lage.length()) == 0)
@@ -159,7 +155,11 @@ public class AnimalPanel extends JPanel
         crud.add(new JLabel("Exhibit"));
         crud.add(inputExhibitId);
         crud.add(new JLabel("Gender"));
-        crud.add(inputGender);
+        crud.add(new JComboBox<String>(){{
+            genderBox = this;
+            addItem("M");
+            addItem("F");
+        }});
         crud.add(new JLabel("Age"));
         crud.add(inputAge);
         crud.add(addAnimal);
