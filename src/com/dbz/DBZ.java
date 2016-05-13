@@ -63,7 +63,6 @@ public class DBZ {
     }
 
     private static void loadTableDataFromCsvs(Connection dbConn) throws SQLException  {
-        // TODO Justin - add CSV parsing step in this method after the create table statements have been executed.
         DataImport d = new DataImport(dbConn);
         d.makeEverything();
     }

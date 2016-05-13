@@ -19,6 +19,8 @@ import java.sql.Date;
 public class DataImport implements IDataManager.ExecEventHandler,
         IDataManager.CommitEventHandler,
         IDataManager.InvalidCommitHandler {
+    private static final String CSV_BASE_PATH = "src/com/dbz/data/csv/";
+
 
     private Connection dbConn;
     private DataManager dm;
@@ -31,8 +33,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
     public void makePeople() throws SQLException {
         Scanner scan = null;
         try {
-            scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/names.csv"));
+            scan = new Scanner(new File(CSV_BASE_PATH + "names.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -48,8 +49,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
     public void makeAddress() throws SQLException{
         Scanner scan = null;
         try {
-            scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/addresses.csv"));
+            scan = new Scanner(new File(CSV_BASE_PATH + "addresses.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -66,7 +66,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/animal.csv"));
+                    File(CSV_BASE_PATH + "animal.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/animal_class.csv"));
+                    File(CSV_BASE_PATH + "animal_class.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/eats.csv"));
+                    File(CSV_BASE_PATH + "eats.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -118,7 +118,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/employee.csv"));
+                    File(CSV_BASE_PATH + "employee.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -135,7 +135,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/employee_exhibit.csv"));
+                    File(CSV_BASE_PATH + "employee_exhibit.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -152,7 +152,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/exhibit.csv"));
+                    File(CSV_BASE_PATH + "exhibit.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -169,7 +169,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/food.csv"));
+                    File(CSV_BASE_PATH + "food.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -186,7 +186,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/jobs.csv"));
+                    File(CSV_BASE_PATH + "jobs.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -203,7 +203,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/location.csv"));
+                    File(CSV_BASE_PATH + "location.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -220,7 +220,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         Scanner scan = null;
         try {
             scan = new Scanner(new
-                    File("/Data-Managment-Group-Project/src/com/dbz/data/csv/memberships.csv"));
+                    File(CSV_BASE_PATH + "memberships.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
