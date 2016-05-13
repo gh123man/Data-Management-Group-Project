@@ -239,17 +239,28 @@ public class DataImport implements IDataManager.ExecEventHandler,
 
     public void makeEverything() throws SQLException{
         // Order is important due to foreign keys with the not null constraint.
+        // TODO Sleeps are only being used for ease of testing. Remove when no longer needed.
         makeAddress();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         makePeople();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         makeMembership();
-        makeAnimalClass();
-        makeAnimal();
-        makeFood();
-        makeEats();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         makeJobType();
-        makeEmployee();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         makeLocation();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
         makeExhibit();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        makeEmployee();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        makeFood();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        makeAnimalClass();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        makeAnimal();
+//        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        makeEats();
         makeEmployeeExhibit();
     }
 
@@ -270,7 +281,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         //handle stuff
         e.printStackTrace();
     }
-
+/*
     public static void main(String[] args) throws SQLException{
         Connection dbConn = null;
         dbConn = ConnectionProvider.getConnection();
@@ -278,5 +289,5 @@ public class DataImport implements IDataManager.ExecEventHandler,
         d.makeEverything();
 
     }
-
+*/
 }

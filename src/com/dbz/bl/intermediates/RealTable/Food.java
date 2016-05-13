@@ -57,7 +57,7 @@ public class Food implements UpdatableTable {
 
     @Override
     public String getTableName() {
-        return JobType.class.getSimpleName();
+        return Food.class.getSimpleName();
     }
 
     @Override

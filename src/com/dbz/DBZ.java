@@ -42,9 +42,6 @@ public class DBZ {
 
     private static void initializeDB() throws SQLException, IOException, DataManagerBackend.InvalidRequestException {
         if (!ConnectionProvider.isDbAlreadyInitialized()) {
-            // Note: While it may be preferred to just create the connection in main and pass it into both methods, the
-            //       act of creating a connection generates the artifact that isDbAlreadyInitialized checks for.
-            //       TODO When isDbAlreadyInitialized is given a better init check, consider moving conn up to main.
             Connection dbConn = ConnectionProvider.getConnection();
             createTables(dbConn);
             loadTableDataFromCsvs(dbConn);

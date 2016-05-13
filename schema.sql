@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS Employee_Exhibit ( /* works in? */
 CREATE TABLE IF NOT EXISTS Food (
     ID          INT PRIMARY KEY AUTO_INCREMENT,
     Name        VARCHAR(64) NOT NULL,
-    UnitCost    DECIMAL(4,2)
+    UnitCost    DECIMAL(6,2)
 );
 
 CREATE TABLE IF NOT EXISTS AnimalClass (
