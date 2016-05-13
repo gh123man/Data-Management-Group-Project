@@ -10,8 +10,10 @@ import com.dbz.bl.query.RawQuery;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 public class EmployeePanel extends JPanel
 {
@@ -88,6 +90,8 @@ public class EmployeePanel extends JPanel
             {
                 jobs.put(job.getName(), job.getId());
             }
+            DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>(new Vector(jobs.keySet()));
+            newJobSelect.setModel(cbm);
         });
     }
 
@@ -126,7 +130,6 @@ public class EmployeePanel extends JPanel
                 newSalaryAmount.setText("");
 //                newJobTitle.setText("");
             }
-//            TODO: add back in when the full employee query exists
             employeeview.setModel(getPopulatedTableModel());
         });
 
@@ -159,7 +162,15 @@ public class EmployeePanel extends JPanel
         addPanel1.add(newZip);
         addPanel1.add(new JLabel("Job"));
         populateKnownJobs();
-        newJobSelect = new JComboBox(jobs.keySet().toArray());
+
+        DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>();
+
+        for (String job : jobs.keySet())
+        {
+            cbm.addElement(job);
+        }
+
+        newJobSelect = new JComboBox();
         addPanel.add(newJobSelect);
         addPanel1.add(addEmployee);
         crud.add(addPanel, BorderLayout.NORTH);
