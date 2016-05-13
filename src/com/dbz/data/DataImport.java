@@ -245,13 +245,18 @@ public class DataImport implements IDataManager.ExecEventHandler,
         makeAddress();
         makePeople();
         makeMembership();
-//        makeJobType();
-//        makeLocation();
-//        makeExhibit();
-//        makeEmployee();
-//        makeFood();
-//        makeAnimalClass();
-//        makeAnimal();
+        makeJobType();
+        makeLocation();
+
+        // This is a kludge - we should just provide a synchronous method to execute queries. Good enough for now though.
+        try { Thread.sleep(1000); } catch(InterruptedException e) {}
+        makeExhibit();
+        makeEmployee();
+        makeFood();
+        makeAnimalClass();
+
+        try { Thread.sleep(1000); } catch(InterruptedException e) {}
+        makeAnimal();
 //        makeEats();
 //        makeEmployeeExhibit();
     }
