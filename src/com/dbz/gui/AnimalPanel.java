@@ -159,6 +159,7 @@ public class AnimalPanel extends JPanel {
         adm.exec(new GetClass(), (query, results) -> {
             java.util.List<AnimalClass> classes = (java.util.List<AnimalClass>) (java.util.List) results;
             classes.forEach(c -> model.addElement(c));
+            classBox.setSelectedIndex(1);
         });
         classBox = new JComboBox(model);
         classBox.setRenderer(new BasicComboBoxRenderer() {
