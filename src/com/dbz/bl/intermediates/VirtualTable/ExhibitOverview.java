@@ -2,28 +2,31 @@ package com.dbz.bl.intermediates.VirtualTable;
 
 import com.dbz.bl.intermediates.Table;
 
-import java.util.List;
-
 /**
  * Created by brian on 5/4/16.
  */
 public class ExhibitOverview implements Table {
 
-    private String mName;
-    private Integer mCap, mAnimalCount;
+    private final String mName;
+    private final Integer mNumExhibits, mAnimalCapacity, mAnimalCount;
 
-    public ExhibitOverview(String name, Integer cap, Integer count) {
+    public ExhibitOverview(String name, Integer numExhibits, Integer animalCapacity, Integer animalCount) {
         mName = name;
-        mCap = cap;
-        mAnimalCount = count;
+        mNumExhibits = numExhibits;
+        mAnimalCount = animalCount;
+        mAnimalCapacity = animalCapacity;
     }
 
     public String getName() {
         return mName;
     }
 
-    public Integer getCapacity() {
-        return mCap;
+    public Integer getNumExhibits() {
+        return mNumExhibits;
+    }
+
+    public Integer getAnimalCapacity() {
+        return mAnimalCapacity;
     }
 
     public Integer getAnimalCount() {

@@ -28,10 +28,10 @@ public class MockDataManager implements IDataManager {
         System.out.println("MockDataManager: " + query.getQuery());
         if (query instanceof ExhibitOverviewQuery) {
             handler.onExec(query, new ArrayList<Table>() {{
-                add(new ExhibitOverview("Exhibit1", 100, 20));
-                add(new ExhibitOverview("Exhibit2", 1001, 201));
-                add(new ExhibitOverview("Exhibit3", 1002, 202));
-                add(new ExhibitOverview("Exhibit4", 1003, 203));
+                add(new ExhibitOverview("Exhibit1", 100, 25, 20));
+                add(new ExhibitOverview("Exhibit2", 1001, 52, 201));
+                add(new ExhibitOverview("Exhibit3", 1002, 25, 202));
+                add(new ExhibitOverview("Exhibit4", 1003, 52, 203));
             }});
 
         } else if (query instanceof ExpenseBreakDownQuery) {

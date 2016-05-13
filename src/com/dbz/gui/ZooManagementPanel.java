@@ -29,15 +29,16 @@ public class ZooManagementPanel extends JPanel
     {
         getCapacitiesAvailability.addActionListener(e -> {
             DefaultTableModel tm = new DefaultTableModel();
-            tm.addColumn("Name");
-            tm.addColumn("Capacity");
-            tm.addColumn("Availability");
+            tm.addColumn("Location Name");
+            tm.addColumn("Number of Exhibits in Location");
+            tm.addColumn("Animals in Location");
+            tm.addColumn("Available Animal Spaces");
 
             adm.exec(new ExhibitOverviewQuery(), (query, results) -> {
                 List<ExhibitOverview> exhibits = (List<ExhibitOverview>) (List) results;
                 exhibits.forEach(ex -> {
                     System.out.println(ex.getName());
-                    Object[] obj = {ex.getName(), ex.getCapacity(), ex.getAnimalCount()};
+                    Object[] obj = {ex.getName(), ex.getNumExhibits(), ex.getAnimalCount(), ex.getAnimalCapacity()-ex.getAnimalCount()};
                     tm.addRow(obj);
                 });
                 mgmtview.setModel(tm);
