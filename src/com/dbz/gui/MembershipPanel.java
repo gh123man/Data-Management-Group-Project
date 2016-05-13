@@ -18,7 +18,7 @@ public class MembershipPanel extends JPanel
     // GUI components
     private static JButton getMailingList = new JButton("Get Mailing List");
     private static JScrollPane dataviewpane;
-    private static JTable mailinglist;
+    private static LeftAlignedJTable mailinglist;
 
     // DB components
     private final IDataManager adm;
@@ -70,7 +70,7 @@ public class MembershipPanel extends JPanel
 
         JPanel view = new JPanel(new BorderLayout());
 
-        mailinglist = new JTable(getPopulatedTableModel());
+        mailinglist = new LeftAlignedJTable(getPopulatedTableModel());
         mailinglist.setAutoCreateRowSorter(true);
         mailinglist.getTableHeader().setReorderingAllowed(false);
         dataviewpane = new JScrollPane(mailinglist);
