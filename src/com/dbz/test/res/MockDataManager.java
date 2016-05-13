@@ -1,11 +1,9 @@
 package com.dbz.test.res;
 
 import com.dbz.bl.IDataManager;
-import com.dbz.bl.intermediates.RealTable.Animal;
-import com.dbz.bl.intermediates.RealTable.Employee;
-import com.dbz.bl.intermediates.RealTable.Membership;
-import com.dbz.bl.intermediates.RealTable.UpdatableTable;
+import com.dbz.bl.intermediates.RealTable.*;
 import com.dbz.bl.intermediates.Table;
+import com.dbz.bl.intermediates.VirtualTable.AnimalRecord;
 import com.dbz.bl.intermediates.VirtualTable.ExhibitOverview;
 import com.dbz.bl.intermediates.VirtualTable.Expense;
 import com.dbz.bl.intermediates.VirtualTable.MembershipRecord;
@@ -53,8 +51,13 @@ public class MockDataManager implements IDataManager {
             }});
         } else if (query instanceof GetAnimalsQuery) {
             handler.onExec(query, new ArrayList<Table>() {{
-                add(new Animal(0, "Human", 33, 0, "MALE", 5));
-                add(new Animal(1, "Crocodile", 2, 0, "MALE", 34));
+                add(new AnimalRecord(0, "David", "Human", 0, "MALE", 5));
+                add(new AnimalRecord(1, "Bitey", "Crocodile", 0, "MALE", 34));
+            }});
+        } else if (query instanceof JobQuery) {
+            handler.onExec(query, new ArrayList<Table>() {{
+                add(new JobType(0, "CEO"));
+                add(new JobType(1, "Trainer"));
             }});
         }
     }

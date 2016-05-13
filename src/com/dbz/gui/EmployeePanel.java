@@ -2,12 +2,16 @@ package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Employee;
+import com.dbz.bl.intermediates.RealTable.JobType;
 import com.dbz.bl.query.GetEmployeeInfoQuery;
+import com.dbz.bl.query.JobQuery;
 import com.dbz.bl.query.RawQuery;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class EmployeePanel extends JPanel
 {
@@ -16,13 +20,16 @@ public class EmployeePanel extends JPanel
     private static JButton getEmployeeInfo = new JButton("Get Employee Contact Info");
     private static JButton removeEmployee = new JButton("Remove Selected Employee(s)");
     private static JButton addEmployee = new JButton("Add Employee");
-    private static JTextField newPersonId = new JTextField(5);
+//    private static JTextField newPersonId = new JTextField(5);
     private static JTextField newSalaryAmount = new JTextField(7);
     private static JTextField newJobTitle = new JTextField(10);
+    private static JComboBox newJobSelect;
     private static LeftAlignedJTable employeeview;
 
     private final IDataManager adm;
     private final int ID_COL_IDX = 0;
+
+    private Map<String, Integer> jobs = new HashMap<>();
 
     private class EmployeeTableModel extends BetterSortingTableModel
     {
@@ -41,12 +48,22 @@ public class EmployeePanel extends JPanel
         adm.exec(new GetEmployeeInfoQuery(), (query, results) -> {
             java.util.List<Employee> employees = (java.util.List<Employee>)(java.util.List) results;
             for (Employee employee : employees) {
-                Object[] obj = {employee.getPersonId(), employee.getSalary(), employee.getJob()};
+                Object[] obj = {employee.getPersonId(), employee.getSalary(), jobs.get(employee.getJob())};
                 tm.addRow(obj);
             }
         });
 
         return tm;
+    }
+
+    private void populateKnownJobs()
+    {
+        adm.exec(new JobQuery(), (query, results) -> {
+            for (JobType job : (java.util.List<JobType>)(java.util.List)results)
+            {
+                jobs.put(job.getName(), job.getID());
+            }
+        });
     }
 
     public EmployeePanel(IDataManager adm)
@@ -67,25 +84,24 @@ public class EmployeePanel extends JPanel
         });
 
         addEmployee.addActionListener(e -> {
-            String[] newEmployee = {newPersonId.getText(), newSalaryAmount.getText(), newJobTitle.getText()};
+//            Onbject[] newEmployee = {newSalaryAmount.getText(), jobs.get((String)newJobSelect.getSelectedItem())};
 
-            if (newEmployee[0].length() != 0 && newEmployee[1].length() != 0 && newEmployee[2].length() != 0)
+            String newSalary = newSalaryAmount.getText();
+            Integer jobType = jobs.get(newJobSelect.getSelectedItem());
+            if (newSalary.length() != 0)
             {
-                System.out.print("new employee: ");
-                for (String s : newEmployee)
-                    System.out.print(s + ", ");
-                System.out.println();
+                System.out.println("new employee: jobid = " + jobType + " salary: " + newSalary);
 
                 adm.exec(new RawQuery(""), ((query, results) -> {
                     System.out.println("TODO: add query addEmployee.");
                 }));
 
 //                Clear on success.
-                newPersonId.setText("");
+//                newPersonId.setText("");
                 newSalaryAmount.setText("");
-                newJobTitle.setText("");
+//                newJobTitle.setText("");
             }
-
+//            TODO: add back in when the full employee query exists
             employeeview.setModel(getPopulatedTableModel());
         });
 
@@ -95,12 +111,14 @@ public class EmployeePanel extends JPanel
         JPanel queries = new JPanel(new FlowLayout());
         JPanel crud = new JPanel((new FlowLayout()));
         JPanel addPanel = new JPanel(new FlowLayout());
-        addPanel.add(new JLabel("ID"));
-        addPanel.add(newPersonId);
+//        addPanel.add(new JLabel("ID"));
+//        addPanel.add(newPersonId);
         addPanel.add(new JLabel("Salary"));
         addPanel.add(newSalaryAmount);
         addPanel.add(new JLabel("Job"));
-        addPanel.add(newJobTitle);
+        populateKnownJobs();
+        newJobSelect = new JComboBox(jobs.keySet().toArray());
+        addPanel.add(newJobSelect);
         addPanel.add(addEmployee);
         addPanel.setBorder(BorderFactory.createEtchedBorder());
         crud.add(addPanel);

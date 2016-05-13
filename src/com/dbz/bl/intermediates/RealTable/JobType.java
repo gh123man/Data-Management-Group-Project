@@ -11,7 +11,8 @@ import java.util.Map;
 public class JobType implements UpdatableTable {
 
     public static final String NAME = "Name";
-    public static final String[] columnNames = new String[] { NAME };
+    public static final String ID = "ID";
+    public static final String[] columnNames = new String[] { ID, NAME };
 
     private Integer mId;
     private String mName;
