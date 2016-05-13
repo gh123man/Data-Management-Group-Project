@@ -102,6 +102,8 @@ public class AnimalPanel extends JPanel
             String lname,lclass,lexhibitid,lgender,lage;
 //                lid = inputId.getText();
             lname = inputName.getText();
+
+            // TODO Change this to a dropdown, users shouldn't need to know the numeric ID.
             lclass = inputClassId.getText();
             lexhibitid = inputExhibitId.getText();
             lgender = inputGender.getText();
@@ -111,36 +113,36 @@ public class AnimalPanel extends JPanel
                 return;
 
 //                TODO
-            System.out.println("TODO: add query addAnimal.");
-            adm.exec(new RawQuery(""), ((query, results) -> {
-
-            }));
+            Animal animal = new Animal(lname, Integer.parseInt(lclass),
+                    Integer.parseInt(lexhibitid),
+                    lgender,
+                    Integer.parseInt(lage) );
+            adm.commit(animal,
+                    (a) -> { /* TODO actually handle*/ },
+                    (a,b) -> b.printStackTrace());
 
 //                Clear inputs
             clearJInputs();
             animalview.setModel(getPopulatedTableModel());
+            animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));
         });
 
+        moveAnimal.addActionListener(e -> {
+            Integer lid;
+            String lexhibitid;
+            lid = (Integer) animalview.getModel().getValueAt(animalview.getSelectedRow(), ID_COL_IDX);
+            lexhibitid = inputExhibitId.getText();
 
-        moveAnimal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Integer lid;
-                String lexhibitid;
-                lid = (Integer) animalview.getModel().getValueAt(animalview.getSelectedRow(), ID_COL_IDX);
-                lexhibitid = inputExhibitId.getText();
-
-                if (lid == null || lexhibitid.length() == 0) {
-                    return;
-                }
-
-                adm.exec(new MoveAnimal(lid, Integer.parseInt(lexhibitid)), ((query, results) -> {
-                    // TODO Do anything with results?
-                }));
-                clearJInputs();
-                animalview.setModel(getPopulatedTableModel());
-                animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));
+            if (lid == null || lexhibitid.length() == 0) {
+                return;
             }
+
+            adm.exec(new MoveAnimal(lid, Integer.parseInt(lexhibitid)), ((query, results) -> {
+                // TODO Do anything with results?
+            }));
+            clearJInputs();
+            animalview.setModel(getPopulatedTableModel());
+            animalview.removeColumn(animalview.getColumnModel().getColumn(ID_COL_IDX));
         });
 
         this.adm = adm;
