@@ -19,8 +19,8 @@ public class Eats implements UpdatableTable {
     private boolean mCAnimalId, mCFoodId, mCDailyQuantity;
     private boolean mIsNew;
 
-    public static Eats makeNew(Integer animalId, Integer exhibitId, Integer dailyQuantity) {
-        return new Eats(animalId, exhibitId, dailyQuantity).setNew(true);
+    public static Eats makeNew(Integer animalId, Integer foodId, Integer dailyQuantity) {
+        return new Eats(animalId, foodId, dailyQuantity).setNew(true);
     }
 
     public Eats(Integer animalId, Integer exhibitId, Integer dailyQuantity) {

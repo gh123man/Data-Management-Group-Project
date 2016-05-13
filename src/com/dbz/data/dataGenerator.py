@@ -43,8 +43,8 @@ def generateJobs():
         jobs = ["VETERINARIAN","VETERINARY TECHNICIAN","ANIMAL CURATOR","ZOOLOGIST","KEEPER","REGISTRAR","GENERAL CURATOR",
         "ZOO DIRECTOR","ASSISTANT DIRECTOR","DIRECTOR","CURATOR","AFFAIRS MANAGER","OFFICER","MANAGER","COORDINATOR",
         "VOLUNTEER","HEAD KEEPER","SENIOR KEEPER","JANITOR"]
-        for i in range(0,len(jobs)):
-            writer.writerow([i+1,jobs[i]])
+        for job in jobs:
+            writer.writerow([job])
 
 def randomEmployee(n):
     with open('csv/employee.csv','w') as csvfile:

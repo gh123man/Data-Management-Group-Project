@@ -108,7 +108,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         while (scan.hasNext()){
             String l = scan.nextLine();
             String[] data = l.split(",");
-            Eats e = new Eats(Integer.parseInt(data[0]),Integer.parseInt(data[1]),Integer.parseInt(data[2]));
+            Eats e = Eats.makeNew(Integer.parseInt(data[0]),Integer.parseInt(data[1]),Integer.parseInt(data[2]));
             dm.commit(e,this,this);
         }
         scan.close();
@@ -142,7 +142,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         while (scan.hasNext()) {
             String l = scan.nextLine();
             String[] data = l.split(",");
-            EmployeeExhibit e = new EmployeeExhibit(Integer.parseInt(data[0]),Integer.parseInt(data[1]));
+            EmployeeExhibit e = EmployeeExhibit.makeNew(Integer.parseInt(data[0]),Integer.parseInt(data[1]));
             dm.commit(e,this,this);
         }
         scan.close();
@@ -193,7 +193,7 @@ public class DataImport implements IDataManager.ExecEventHandler,
         while (scan.hasNext()) {
             String l = scan.nextLine();
             String[] data = l.split(",");
-            JobType j = new JobType(Integer.parseInt(data[0]),data[1]);
+            JobType j = new JobType(data[0]);
             dm.commit(j,this,this);
         }
         scan.close();
