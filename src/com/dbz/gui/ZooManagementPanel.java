@@ -49,7 +49,7 @@ public class ZooManagementPanel extends JPanel
         getExpenseBreakdown.addActionListener(e -> {
             DefaultTableModel tm = new DefaultTableModel();
             tm.addColumn("Cost class");
-            tm.addColumn("$$$");
+            tm.addColumn("$ Cost per year");
 
             adm.exec(new ExpenseBreakDownQuery(), (query, results) -> {
                 List<Expense> expenses = (List<Expense>)(List) results;

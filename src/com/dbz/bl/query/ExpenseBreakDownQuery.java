@@ -13,9 +13,9 @@ public class ExpenseBreakDownQuery extends Query {
 
     @Override
     public String getQuery() {
-        return "SELECT (Select Person.FirstName From Person where ID = Employee.PersonId) as Name, Salary as amnt FROM Employee " +
+        return "SELECT (Select 'Salary: ' || Person.FirstName || ' ' || Person.MiddleInitial || '. ' || Person.LastName From Person where ID = Employee.PersonId) as Name, Salary as amnt FROM Employee " +
                 "UNION " +
-                "SELECT Name as Name, UnitCost as amnt FROM Food";
+                "SELECT 'Animal: ' || Food.Name as Name, UnitCost as amnt FROM Food";
     }
 
     @Override
