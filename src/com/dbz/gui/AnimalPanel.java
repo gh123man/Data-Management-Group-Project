@@ -4,11 +4,7 @@ import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Animal;
 import com.dbz.bl.intermediates.RealTable.AnimalClass;
 import com.dbz.bl.intermediates.VirtualTable.AnimalRecord;
-import com.dbz.bl.query.DeleteByIdQuery;
-import com.dbz.bl.query.GetAnimalsQuery;
-import com.dbz.bl.query.GetClass;
-import com.dbz.bl.query.MoveAnimal;
-import javafx.scene.control.ComboBox;
+import com.dbz.bl.query.*;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
@@ -82,6 +78,11 @@ public class AnimalPanel extends JPanel {
         removeAnimal.addActionListener(e -> {
             for (int row : animalview.getSelectedRows()) {
                 final Integer animalID = (Integer) animalview.getModel().getValueAt(row, ID_COL_IDX);
+
+                adm.exec(new DeleteEatsForAnimalQuery(animalID),
+                        (query, results) -> {
+                            // Probably don't need to handle this either.
+                        });
                 adm.exec(new DeleteByIdQuery(Animal.class.getSimpleName(), animalID),
                         (query, results) -> {
                             // I don't think there is a result we care about.
