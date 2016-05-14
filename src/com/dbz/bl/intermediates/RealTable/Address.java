@@ -15,7 +15,8 @@ public class Address extends KeyedTable {
     public static final String CITY     = "City";
     public static final String STATE    = "State";
     public static final String ZIP_CODE = "ZipCode";
-    public static final String[] columnNames = new String[] { STREET_1, STREET_2, CITY, STATE, ZIP_CODE };
+    public static final String ID       = "ID";
+    public static final String[] columnNames = new String[] { ID, STREET_1, STREET_2, CITY, STATE, ZIP_CODE };
 
     private String mStreet1, mStreet2, mCity, mState, mZipCode;
     private boolean mCStreet1, mCStreet2, mCCity, mCState, mCZipCode;

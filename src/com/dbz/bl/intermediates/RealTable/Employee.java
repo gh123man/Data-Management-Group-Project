@@ -12,7 +12,8 @@ public class Employee extends KeyedTable {
     public static final String PERSON_ID = "PersonID";
     public static final String SALARY    = "Salary";
     public static final String JOB       = "Job";
-    public static final String[] columnNames = new String[] { PERSON_ID, SALARY, JOB };
+    public static final String ID        = "ID";
+    public static final String[] columnNames = new String[] {ID, PERSON_ID, SALARY, JOB };
 
     public Integer mPersonId, mSalary, mJob;
     private boolean mCPersonId, mCSalary, mCJob;

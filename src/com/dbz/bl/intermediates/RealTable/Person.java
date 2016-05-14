@@ -14,7 +14,8 @@ public class Person extends KeyedTable {
     public static final String MIDDLE_INITIAL = "MiddleInitial";
     public static final String LAST_NAME      = "LastName";
     public static final String ADDRESS_ID     = "AddressID";
-    public static final String[] contactNames = new String[]{FIRST_NAME, MIDDLE_INITIAL, LAST_NAME, ADDRESS_ID};
+    public static final String ID             = "ID";
+    public static final String[] contactNames = new String[]{ID, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME, ADDRESS_ID};
 
 
     private String mFirstName, mMiddleInitial, mLastName;

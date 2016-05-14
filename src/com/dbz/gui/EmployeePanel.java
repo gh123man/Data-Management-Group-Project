@@ -1,16 +1,14 @@
 package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
+import com.dbz.bl.intermediates.RealTable.Address;
 import com.dbz.bl.intermediates.RealTable.JobType;
+import com.dbz.bl.intermediates.RealTable.Person;
 import com.dbz.bl.intermediates.VirtualTable.EmployeeInfo;
-import com.dbz.bl.query.GetEmployeeInfoQuery;
-import com.dbz.bl.query.JobQuery;
-import com.dbz.bl.query.RawQuery;
+import com.dbz.bl.query.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -23,12 +21,13 @@ public class EmployeePanel extends JPanel
     private static JButton removeEmployee = new JButton("Remove Selected Employee(s)");
     private static JButton addEmployee = new JButton("Add Employee");
     private static JTextField newSalaryAmount = new JTextField(7);
-    private static JComboBox newJobSelect;
+    private static JComboBox newJobSelect = new JComboBox();
     private static JTextField newFName = new JTextField(7);
     private static JTextField newMI = new JTextField(1);
     private static JTextField newLName = new JTextField(7);
     private static JTextField newAddr1 = new JTextField(10);
     private static JTextField newAddr2 = new JTextField(6);
+    private static JTextField newCity = new JTextField(6);
     private static JTextField newState = new JTextField(2);
     private static JTextField newZip = new JTextField(5);
 
@@ -44,7 +43,7 @@ public class EmployeePanel extends JPanel
     {
         public boolean isCellEditable(int row, int col)
         {
-            return ID_COL_IDX != col;
+            return false;
         }
     }
 
@@ -113,22 +112,68 @@ public class EmployeePanel extends JPanel
         });
 
         addEmployee.addActionListener(e -> {
-//            Onbject[] newEmployee = {newSalaryAmount.getText(), jobs.get((String)newJobSelect.getSelectedItem())};
 
-            String newSalary = newSalaryAmount.getText();
-            Integer jobType = jobs.get(newJobSelect.getSelectedItem());
-            if (newSalary.length() != 0 && jobType != null)
+            try
             {
+                String fname = newFName.getText();
+                String mi = newMI.getText();
+                String lname = newLName.getText();
+                int newSalary = Integer.parseInt(newSalaryAmount.getText());
+                Integer jobType = jobs.get(newJobSelect.getSelectedItem());
+                String street1 = newAddr1.getText();
+                String street2 = newAddr2.getText();
+                String city = newCity.getText();
+                String state = newState.getText();
+                if (state.length() != 2)
+                {
+                    return;
+                }
+                String zip = newZip.getText();
+                if (zip.length() != 5)
+                {
+                    return;
+                }
+
+                if (fname.length() * lname.length() * street1.length() * state.length() * zip.length() * city.length() == 0)
+                    return;
+
                 System.out.println("new employee: jobid = " + jobType + " salary: " + newSalary);
 
-                adm.exec(new RawQuery(""), ((query, results) -> {
-                    System.out.println("TODO: add query addEmployee.");
+                final Integer[] addrId = new Integer[1];
+                // Address first
+                adm.exec(new AddAddress(street1, street2, city, state, zip), ((query, results) -> {
+                    java.util.List<Address> addresses = (java.util.List<Address>)(java.util.List)results;
+                    if (addresses.size() > 1)
+                        System.err.println("Too many results in add address");
+                    addrId[0] = addresses.get(0).getId();
                 }));
 
-//                Clear on success.
-//                newPersonId.setText("");
+                final Integer[] personId = new Integer[1];
+                // Person second
+                adm.exec(new AddPerson(fname, mi, lname, addrId[0]), (query, results) -> {
+                    java.util.List<Person> people = (java.util.List<Person>)(java.util.List)results;
+                    if (people.size() > 0)
+                        System.err.println("Too many results in add Person");
+                    personId[0] = people.get(0).getId();
+                });
+
+                // Last to Employee
+                adm.exec(new AddEmployee(personId[0], newSalary, jobType), (query, results) -> {
+
+                });
+
+                // Clear on success.
+                newFName.setText("");
+                newLName.setText("");
+                newMI.setText("");
                 newSalaryAmount.setText("");
-//                newJobTitle.setText("");
+                newAddr1.setText("");
+                newAddr2.setText("");
+                newState.setText("");
+                newZip.setText("");
+            } catch (Exception exc)
+            {
+
             }
             employeeview.setModel(getPopulatedTableModel());
         });
@@ -141,8 +186,6 @@ public class EmployeePanel extends JPanel
         JPanel crud = new JPanel((new BorderLayout()));
         JPanel addPanel = new JPanel(new FlowLayout());
         JPanel addPanel1 = new JPanel(new FlowLayout());
-//        addPanel.add(new JLabel("ID"));
-//        addPanel.add(newPersonId);
         addPanel.add(new JLabel("First"));
         addPanel.add(newFName);
         addPanel.add(new JLabel("M.I."));
@@ -156,6 +199,8 @@ public class EmployeePanel extends JPanel
         addPanel1.add(newAddr1);
         addPanel1.add(new JLabel("Street2"));
         addPanel1.add(newAddr2);
+        addPanel1.add(new JLabel("City"));
+        addPanel1.add(newCity);
         addPanel1.add(new JLabel("State"));
         addPanel1.add(newState);
         addPanel1.add(new JLabel("Zip"));
@@ -170,7 +215,6 @@ public class EmployeePanel extends JPanel
             cbm.addElement(job);
         }
 
-        newJobSelect = new JComboBox();
         addPanel.add(newJobSelect);
         addPanel1.add(addEmployee);
         crud.add(addPanel, BorderLayout.NORTH);

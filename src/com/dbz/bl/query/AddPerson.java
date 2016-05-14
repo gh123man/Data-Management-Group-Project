@@ -1,5 +1,6 @@
 package com.dbz.bl.query;
 
+import com.dbz.bl.intermediates.RealTable.Person;
 import com.dbz.bl.intermediates.Table;
 
 import java.sql.ResultSet;
@@ -46,6 +47,11 @@ public class AddPerson extends Query
     @Override
     public Table mapResult(ResultSet rs) throws SQLException
     {
-        return null;
+        return new Person(
+                rs.getInt(Person.ID),
+                rs.getString(Person.FIRST_NAME),
+                rs.getString(Person.MIDDLE_INITIAL),
+                rs.getString(Person.LAST_NAME),
+                rs.getInt(Person.ADDRESS_ID));
     }
 }
