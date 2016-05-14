@@ -153,7 +153,7 @@ public class EmployeePanel extends JPanel
                         // Last to Employee
                         Employee newEmployee = new Employee(personId[0], newSalary, jobType);
                         adm.commit(newEmployee, (a2) -> {
-
+                            employeeview.setModel(getPopulatedTableModel());
                         }, (a2, b) -> {
                             System.err.println("err committing employee");
 
@@ -182,7 +182,7 @@ public class EmployeePanel extends JPanel
             {
 
             }
-            employeeview.setModel(getPopulatedTableModel());
+
         });
 
         this.adm = adm;
