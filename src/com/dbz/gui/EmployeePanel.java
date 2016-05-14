@@ -145,28 +145,26 @@ public class EmployeePanel extends JPanel
                 Address newAddress = new Address(street1, street2, city, state, zip);
                 adm.commit(newAddress, (a) -> {
                     addrId[0] = ((Address)a).getId();
+                    Person newPerson = new Person(fname, mi, lname, addrId[0]);
+                    final Integer[] personId = new Integer[1];
+                    // Person second
+                    adm.commit(newPerson, (a1) -> {
+                        personId[0] = ((Person)a1).getId();
+                        // Last to Employee
+                        Employee newEmployee = new Employee(personId[0], newSalary, jobType);
+                        adm.commit(newEmployee, (a2) -> {
+
+                        }, (a2, b) -> {
+                            System.err.println("err committing employee");
+
+                            return;
+                        });
+                    }, (a3,b) -> {
+                        System.err.println("err committing person");
+                        return;
+                    });
                 }, (a, b) -> {
                     System.err.println("err committing address");
-                    return;
-                });
-
-                Person newPerson = new Person(fname, mi, lname, addrId[0]);
-                final Integer[] personId = new Integer[1];
-                // Person second
-                adm.commit(newPerson, (a) -> {
-                    personId[0] = ((Person)a).getId();
-                }, (a,b) -> {
-                    System.err.println("err committing person");
-                    return;
-                });
-
-                // Last to Employee
-                Employee newEmployee = new Employee(personId[0], newSalary, jobType);
-                adm.commit(newEmployee, (a) -> {
-
-                }, (a, b) -> {
-                    System.err.println("err committing employee");
-
                     return;
                 });
 
@@ -176,6 +174,7 @@ public class EmployeePanel extends JPanel
                 newMI.setText("");
                 newSalaryAmount.setText("");
                 newAddr1.setText("");
+                newCity.setText("");
                 newAddr2.setText("");
                 newState.setText("");
                 newZip.setText("");
