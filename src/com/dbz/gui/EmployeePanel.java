@@ -2,6 +2,7 @@ package com.dbz.gui;
 
 import com.dbz.bl.IDataManager;
 import com.dbz.bl.intermediates.RealTable.Address;
+import com.dbz.bl.intermediates.RealTable.Employee;
 import com.dbz.bl.intermediates.RealTable.JobType;
 import com.dbz.bl.intermediates.RealTable.Person;
 import com.dbz.bl.intermediates.VirtualTable.EmployeeInfo;
@@ -141,25 +142,32 @@ public class EmployeePanel extends JPanel
 
                 final Integer[] addrId = new Integer[1];
                 // Address first
-                adm.exec(new AddAddress(street1, street2, city, state, zip), ((query, results) -> {
-                    java.util.List<Address> addresses = (java.util.List<Address>)(java.util.List)results;
-                    if (addresses.size() > 1)
-                        System.err.println("Too many results in add address");
-                    addrId[0] = addresses.get(0).getId();
-                }));
+                Address newAddress = new Address(street1, street2, city, state, zip);
+                adm.commit(newAddress, (a) -> {
+                    addrId[0] = ((Address)a).getId();
+                }, (a, b) -> {
+                    System.err.println("err committing address");
+                    return;
+                });
 
+                Person newPerson = new Person(fname, mi, lname, addrId[0]);
                 final Integer[] personId = new Integer[1];
                 // Person second
-                adm.exec(new AddPerson(fname, mi, lname, addrId[0]), (query, results) -> {
-                    java.util.List<Person> people = (java.util.List<Person>)(java.util.List)results;
-                    if (people.size() > 0)
-                        System.err.println("Too many results in add Person");
-                    personId[0] = people.get(0).getId();
+                adm.commit(newPerson, (a) -> {
+                    personId[0] = ((Person)a).getId();
+                }, (a,b) -> {
+                    System.err.println("err committing person");
+                    return;
                 });
 
                 // Last to Employee
-                adm.exec(new AddEmployee(personId[0], newSalary, jobType), (query, results) -> {
+                Employee newEmployee = new Employee(personId[0], newSalary, jobType);
+                adm.commit(newEmployee, (a) -> {
 
+                }, (a, b) -> {
+                    System.err.println("err committing employee");
+
+                    return;
                 });
 
                 // Clear on success.
