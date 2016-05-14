@@ -10,8 +10,11 @@ import java.math.BigDecimal;
 public class EmployeeInfo implements Table {
     private String mFname, mLname, mMi, mS1, mS2, mState, mZip, mJob;
     private BigDecimal mSalary;
+    private Integer pId;
+    private Integer eId;
+    private Integer aId;
 
-    public EmployeeInfo(String mZip, String mFname, String mLname, String mMi, String mS1, String mS2, String mState, BigDecimal mSalary, String job) {
+    public EmployeeInfo(String mZip, String mFname, String mLname, String mMi, String mS1, String mS2, String mState, BigDecimal mSalary, String job, int pid, int eid, int aid) {
         this.mZip = mZip;
         this.mFname = mFname;
         this.mLname = mLname;
@@ -21,6 +24,9 @@ public class EmployeeInfo implements Table {
         this.mState = mState;
         this.mSalary = mSalary;
         mJob = job;
+        pId = pid;
+        eId = eid;
+        aId = aid;
     }
 
     public String getFname() {
@@ -96,5 +102,29 @@ public class EmployeeInfo implements Table {
     public String getJob() {
         return mJob;
     }
+    public Integer getpId() {
+        return pId;
+    }
+
+    public void setpId(Integer pId) {
+        this.pId = pId;
+    }
+
+    public Integer geteId() {
+        return eId;
+    }
+
+    public void seteId(Integer eId) {
+        this.eId = eId;
+    }
+
+    public Integer getaId() {
+        return aId;
+    }
+
+    public void setaId(Integer aId) {
+        this.aId = aId;
+    }
+
 
 }

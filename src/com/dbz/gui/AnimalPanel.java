@@ -8,7 +8,6 @@ import com.dbz.bl.query.DeleteByIdQuery;
 import com.dbz.bl.query.GetAnimalsQuery;
 import com.dbz.bl.query.GetClass;
 import com.dbz.bl.query.MoveAnimal;
-import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;

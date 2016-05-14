@@ -5,11 +5,15 @@ import com.dbz.bl.intermediates.RealTable.Address;
 import com.dbz.bl.intermediates.RealTable.Employee;
 import com.dbz.bl.intermediates.RealTable.JobType;
 import com.dbz.bl.intermediates.RealTable.Person;
+import com.dbz.bl.intermediates.Table;
 import com.dbz.bl.intermediates.VirtualTable.EmployeeInfo;
 import com.dbz.bl.query.*;
+import sun.management.snmp.jvmmib.EnumJvmMemPoolCollectThreshdSupport;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -51,6 +55,9 @@ public class EmployeePanel extends JPanel
     private EmployeeTableModel getPopulatedTableModel()
     {
         EmployeeTableModel tm = new EmployeeTableModel();
+        tm.addColumn("0");
+        tm.addColumn("1");
+        tm.addColumn("2");
         tm.addColumn("First Name");
         tm.addColumn("Middle Initial");
         tm.addColumn("Last Name");
@@ -61,11 +68,13 @@ public class EmployeePanel extends JPanel
         tm.addColumn("State");
         tm.addColumn("Zip Code");
 
-
         adm.exec(new GetEmployeeInfoQuery(), (query, results) -> {
             java.util.List<EmployeeInfo> employees = (java.util.List<EmployeeInfo>)(java.util.List) results;
             for (EmployeeInfo employee : employees) {
                 Object[] obj = {
+                        employee.geteId(),
+                        employee.getaId(),
+                        employee.getpId(),
                         employee.getFname(),
                         employee.getMi(),
                         employee.getLname(),
@@ -78,6 +87,9 @@ public class EmployeePanel extends JPanel
                 };
                 tm.addRow(obj);
             }
+            employeeview.removeColumn(employeeview.getColumnModel().getColumn(0));
+            employeeview.removeColumn(employeeview.getColumnModel().getColumn(0));
+            employeeview.removeColumn(employeeview.getColumnModel().getColumn(0));
         });
 
         return tm;
@@ -104,9 +116,29 @@ public class EmployeePanel extends JPanel
             for (int row : employeeview.getSelectedRows())
             {
                 System.out.println("TODO: add query removeEmployee.");
-                System.out.println("Deleting Employee " + row + ", ID: " + employeeview.getValueAt(row, ID_COL_IDX));
-                adm.exec(new RawQuery(""), ((query, results) -> {
-                }));
+                System.out.println("Deleting Employee " + row + ", ID: " + row);
+                int ep = (int) employeeview.getModel().getValueAt(row, 0);
+                int a = (int) employeeview.getModel().getValueAt(row, 1);
+                int p = (int) employeeview.getModel().getValueAt(row, 2);
+                adm.exec(new Query() {
+                    @Override
+                    public String getQuery() {
+                        return "Delete from Employee_Exhibit where EmployeeID = " + (ep);
+                    }
+
+                    @Override
+                    public Table mapResult(ResultSet rs) throws SQLException {
+                        return null;
+                    }
+                }, (query0, results0) -> {
+                    adm.exec(new DeleteByIdQuery(Employee.class.getSimpleName(), ep), ((query, results) -> {
+//                        adm.exec(new DeleteByIdQuery(Person.class.getSimpleName(), p), ((query1, results1) -> {
+//                            adm.exec(new DeleteByIdQuery(Address.class.getSimpleName(), a), ((query2, results2) -> {
+//
+//                            }));
+//                        }));
+                    }));
+                });
             }
 
             employeeview.setModel(getPopulatedTableModel());

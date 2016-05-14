@@ -15,10 +15,13 @@ public class GetEmployeeInfoQuery extends Query {
     @Override
     public String getQuery() {
         return "SELECT " +
+                "Person.ID as pId, " +
                 "Person.FirstName as fname, " +
                 "Person.MiddleInitial as mi," +
                 "Person.LastName as lName, " +
+                "Employee.ID as eId, " +
                 "Employee.Salary, " +
+                "Address.ID as aId, " +
                 "Address.Street1 as s1," +
                 "Address.Street2 as s2, " +
                 "Address.City, " +
@@ -41,6 +44,10 @@ public class GetEmployeeInfoQuery extends Query {
                 rs.getString("s2"),
                 rs.getString("State"),
                 rs.getBigDecimal("Salary"),
-                rs.getString("Job"));
+                rs.getString("Job"),
+                rs.getInt("pId"),
+                rs.getInt("eId"),
+                rs.getInt("aId")
+        );
     }
 }
