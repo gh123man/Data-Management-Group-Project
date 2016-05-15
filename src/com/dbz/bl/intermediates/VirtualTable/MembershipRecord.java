@@ -32,6 +32,6 @@ public class MembershipRecord implements Table {
     public String getStreetAddress2()   { return mStreetAddress2; }
     public String getCityName()         { return mCityName; }
     public String getStateAbbrev()      { return mStateAbbrev; }
-    public String getZIPCode()          { return mFullName; }
+    public String getZIPCode()          { return mZipCode; }
     public Date getMemberExpireDate()   { return mMemberExpireDate; }
 }
